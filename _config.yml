@@ -3,16 +3,16 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Kihoon Tech-note
-subtitle:
+title: KihoonKim:Dev
+subtitle: Tech note
 description:
 author: Kihoon Kim
 language: en
-timezone:
+timezone: Asia/Seoul
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://kihoonkim.github.io/
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -62,6 +62,17 @@ pagination_dir: page
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
+Plugins:
+- hexo-generator-sitemap
+# sitemap auto generator
+sitemap:
+    path: sitemap.xml
+# rss auto generator    
+feed:
+  type: atom
+  path: atom.xml
+  limit: false
+  hub:
 ## Themes: https://hexo.io/themes/
 theme: hueman
 
