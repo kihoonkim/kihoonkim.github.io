@@ -1,8 +1,12 @@
 ---
 title: (SDS 사내 기고) Microservices Architecture 란?
 date: 2017-01-27 15:44:39
-tags: microservices, msa, architecture
+tags:
+  - microservices
+  - msa
+  - architecture
 categories: Microservices
+thumbnail: /images/ms-article.png
 ---
 # Microservices Architecture
 

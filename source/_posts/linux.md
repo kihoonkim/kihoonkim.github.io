@@ -3,6 +3,7 @@ title: linux 정리
 date: 2017-02-24 17:56:32
 tags: linux
 categories: linux
+thumbnail: /images/centos_logo.jpg
 ---
 # Linux System Administration
 

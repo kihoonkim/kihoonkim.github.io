@@ -1,7 +1,9 @@
 ---
 title: Definition of Done
 date: 2017-01-27 16:16:39
-tags: agile, dod
+tags:
+  - agile
+  - dod
 categories: Agile
 ---
 # Avoid Chaos in Agile Development by Defining "Done"

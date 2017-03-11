@@ -1,8 +1,11 @@
 ---
 title: Microservices Reading List
 date: 2017-01-27 15:44:40
-tags: microservices, msa, architecture
+tags: 
+  - microservices
+  - msa
 categories: Microservices
+thumbnail: /images/ms-article.png
 ---
 # Microservice Architecture
 ### James Lewis

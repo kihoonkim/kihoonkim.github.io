@@ -1,8 +1,13 @@
 ---
 title: ELK Installation Guide v2
 date: 2016-01-20 16:17:39
-tags: elk
+tags:
+  - elasticsearch
+  - kibana
+  - logstash
+  - filebeat
 categories: ELK
+thumbnail: /images/elasticsearch.png
 ---
 # E(B)LK Installation Guide
 

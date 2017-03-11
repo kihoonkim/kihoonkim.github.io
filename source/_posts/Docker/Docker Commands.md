@@ -3,6 +3,7 @@ title: Docker Commands
 date: 2016-01-20 16:16:39
 tags: docker
 categories: Docker
+thumbnail: /images/docker.png
 ---
 # search image
 ```bash
