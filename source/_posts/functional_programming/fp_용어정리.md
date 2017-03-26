@@ -2,7 +2,9 @@
 title: FP 주요 용어
 date: 2016-12-31 16:17:39
 tags: FP
-categories: FP
+categories:
+  - programming
+  - FP
 thumbnail: /images/fp.jpg
 ---
 # Functional Programming

@@ -4,7 +4,10 @@ date: 2017-01-01 16:17:39
 tags:
   - FP
   - java 8
-categories: Java
+categories:
+  - programming
+  - Java
+  - Java8
 thumbnail: /images/java8.png
 ---
 # Java 8 알아보기

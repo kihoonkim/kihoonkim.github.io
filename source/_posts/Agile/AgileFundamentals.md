@@ -5,6 +5,10 @@ tags: agile course
 categories: Agile
 thumbnail: /images/agile_manifesto.jpg
 ---
-[Agile fundamentals Slide](https://docs.google.com/presentation/d/1IITWa2bP5VS36y3IcxWRmXm_0b83VbadaHJbqpZzriw/edit?usp=sharing)  
+[Agile fundamentals Slide](http://www.slideshare.net/koreakihoon/agile-fundamentals-73040911)  
 
-{% pdf /slides/Agile_fundamentals.pdf %}
+{% pdf http://www.slideshare.net/slideshow/embed_code/key/yVsWsXgeFbRVR4 %}  
+
+# Agile 강의
+- SCSA 6기
+- SCSA 7기

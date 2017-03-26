@@ -6,7 +6,9 @@ tags:
   - kibana
   - logstash
   - filebeat
-categories: ELK
+categories:
+  - DevTools
+  - ELK
 thumbnail: /images/elasticsearch.png
 ---
 
