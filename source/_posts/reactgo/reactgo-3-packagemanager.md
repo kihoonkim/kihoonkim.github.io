@@ -16,7 +16,7 @@ thumbnail:
 또한 이는 CI/CD를 위해서도 매우 중요하다.  
 
 회사에서 프로젝트 할때는 [glide](https://glide.sh/)를 사용하는데..  
-[dep](https://github.com/golang/dep)이 goglang의 공식 PM으로 될 것 같아 이번에는 dep을 설치 및 삽질을 해 보았다.  
+[dep](https://github.com/golang/dep)이 golang의 공식 PM으로 될 것 같아 이번에는 dep을 설치 및 삽질을 해 보았다.  
 현재 기준(17.04.02)으로 아직 오피셜 하지는 않은 것 같다. 깃헙에 아래와 같이 나와 있다.  
 `dep is NOT an official tool. Yet.`
 `Note that the manifest and lock file formats are not finalized`
@@ -41,7 +41,7 @@ C:\Users\kihoonkim\goworkspace\src\github.com\kihoonkim\gogo> dep init
 
 `dep ensure` 를 통해 새로운 패키지를 설치, 업데이트를 할 수 있다.  
 glide는 버전을 명시 하지 않으면 최신 버전을 자동으로 받아 오는 것 같았는데..  
-dep는 `@^0.1` 처럼 버전을 정확히 명시해 줘야 했다.  
+dep는 `@^1.0` 처럼 버전을 정확히 명시해 줘야 했다.  
 ```
 gogo > dep ensure github.com/jinzhu/gorm@^1.0
 ```
@@ -102,19 +102,24 @@ C:\Users\kihoonkim\goworkspace\src\github.com\kihoonkim\gogo>  glide install
 ```
 
 #### Glide 명령어 정리
-- get glide : `curl https://glide.sh/get | sh`
-- initialization : `glide init`
-- configuration : `vi glide.yaml`
-- resolve the dependency : `glide update`
-- reporoducible installations : `glide install`
-- add more dependencies :
+- get glide
+`curl https://glide.sh/get | sh`
+- initialization
+`glide init`
+- configuration
+`vi glide.yaml`
+- resolve the dependency
+`glide update`
+- reporoducible installations
+ `glide install`
+- add more dependencies
     `glide get github.com/foo/bar`  
     `glide get github.com/foo/bar#^1.2.3`
 
 #### Glide 관련 파일, 디렉토리
-- vendor : https://glide.readthedocs.io/en/latest/vendor/
-- glide.lock : https://glide.readthedocs.io/en/latest/glide.lock/
-- glide.yaml : https://glide.readthedocs.io/en/latest/glide.yaml/
+- [vendor](https://glide.readthedocs.io/en/latest/vendor/)
+- [glide.lock](https://glide.readthedocs.io/en/latest/glide.lock/)
+- [glide.yaml](https://glide.readthedocs.io/en/latest/glide.yaml/)
 
 
 ### gitingore

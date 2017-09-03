@@ -5,7 +5,6 @@ tags:
   - FP
   - java 8
 categories:
-  - programming
   - Java
   - Java8
 thumbnail: /images/java8.png
