@@ -1,6 +1,6 @@
 ---
 title: 페어 프로그래밍이란 무엇 일까?
-date: 2017-07-19 16:16:39
+date: 2018-01-01 16:16:39
 tags:
   - agile
   - pair programming
