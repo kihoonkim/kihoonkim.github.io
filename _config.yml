@@ -80,5 +80,5 @@ theme: hueman
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/kihoonkim/kihoonkim.github.io
+  repo: git@github.com:kihoonkim/kihoonkim.github.io.git
   branch: master

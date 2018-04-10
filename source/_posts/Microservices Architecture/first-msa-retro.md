@@ -9,7 +9,7 @@ categories: Microservices
 thumbnail: /images/ms-article.png
 ---
 
-2015년 쯤 아키텍처 연구팀에 잠깐 있었는데, auto Scale in/out, 도커, 대용량 데이터베이스, 대용량 스토리지 등이 연구되고 있었다. 내가 있던 셀은 SaaS나 멀티테넌트 아키텍처가 주된 관심사 였다. 이런 주제들에 적합한 아키텍쳐가 무엇인지 알아보다 보니 자연스레 MSA로 초점이 맞춰졌다. 그때 조대협 님을 초청해서 세미나도 듣고, Chris Richardson (http://microservices.io/)의 일주일짜리 강의도 듣을 수 있었다. 그 당시 MSA계의 국내외 최고의 거장이자 연예인이 아니었나 싶다.
+2015년 쯤 아키텍처 연구팀에 잠깐 있었는데, auto Scale in/out, 도커, 대용량 데이터베이스, 대용량 스토리지 등이 연구되고 있었다. 내가 있던 셀은 SaaS나 멀티테넌트 아키텍처가 주된 관심사 였다. 이런 주제들에 적합한 아키텍쳐가 무엇인지 알아보다 보니 자연스레 MSA로 초점이 맞춰졌다. 그때 조대협 님을 초청해서 세미나도 듣고, [Chris Richardson](http://microservices.io/) 의 일주일짜리 강의도 듣을 수 있었다. 그 당시 MSA계의 국내외 최고의 거장이자 연예인이 아니었나 싶다.
 
 ![Chris Richardson](/images/chris.jpg "")
 
@@ -52,10 +52,10 @@ The microservice architecture enables teams to be agile and autonomous. Together
 
 **테스트 전략**은 백엔드 서비스에서는 크게 4단계로 진행했다. (*각 테스트의 이름은 흔히 통용되는 것과 좀 다를 수 있다. 전체 팀이 모여서 각 테스트 단계의 목적과 의미에 대한 합의가 필요하다.*)(참조: [Testing Strategies in a Microservice Architecture](https://martinfowler.com/articles/microservice-testing/))
 
-- unit test: 클래스 레벨, 주로 의존관계에 있는 클래스는 mocking.
-- functional test: 서비스 레벨, 다른 서비스의 API or Message queue는 stubbing. 자신의 서비스 내에서는 end-to-end (api호출 ~ database까지)
-- contract test: 서비스간 api 사용하는 spec만 테스트
-- integration test: 실제 테스트 환경에서 실행. 전체 서비스와 database, rest api, message queue 등 모두 실제로 흐름
+- **unit test**: 클래스 레벨, 주로 의존관계에 있는 클래스는 mocking.
+- **functional test**: 서비스 레벨, 다른 서비스의 API or Message queue는 stubbing. 자신의 서비스 내에서는 end-to-end (api호출 ~ database까지)
+- **contract test**: 서비스간 api 사용하는 spec만 테스트
+- **integration test**: 실제 테스트 환경에서 실행. 전체 서비스와 database, rest api, message queue 등 모두 실제로 흐름
 
 각 기술스택이나 테스트 단계에 대해서는 다음에 다시 정리하기로 하고, 이번 글의 본래 목적이었던 **MSA로 진행하면서 겪었던 문제들**에 대해서 되돌아 보고자 한다.
 
@@ -78,7 +78,7 @@ MSA에서는 Circuit Breaker 패턴을 사용할 수 있다. 우리는 이를 �
 하지만, 인증관련 서비스가 내려가있다면...휴...
 
 #### ACID가 보장이 안된다.
-MSA는 기본적으로 분산환경이다. 모든 서비스가 네트워크 상에 존재한다. 따라서 데이터의 일관성을 보장 하기 어렵다. 전체 서비스가 엮이면 @Transactional 어노테이션의 마법이 통하지 않는다. 2PC는 어렵고, 해본적도 없다. 포기하는 편이 마음이 편하다. http로 요정을 보냈는데, 서비스가 죽어있다면 다른 서비스에 데이터 반영하는 것을 포기하고 내꺼만 잘 반영하자는 의미가 아니다. 우리는 이런 문제를 위해 다른 서비스에 CUD를 발생시켜야 하는 경우에 Event Driven Architecture를 적용하고 Eventual Consistency를 달성하고자 노력했다. Rabbitmq를 통해 message를 전달했다. rabbitmq가 qos level 1을 지원하므로 최소 한번은 전달하는 것을 보장해 준다.
+MSA는 기본적으로 분산환경이다. 모든 서비스가 네트워크 상에 존재한다. 따라서 데이터의 일관성을 보장 하기 어렵다. 전체 서비스가 엮이면 @Transactional 어노테이션의 마법이 통하지 않는다. 2PC는 어렵고, 해본적도 없다. 포기하는 편이 마음이 편하다. http로 요청을 보냈는데, 서비스가 죽어있다면 다른 서비스에 데이터 반영하는 것을 포기하고 내꺼만 잘 반영하자는 의미가 아니다. 우리는 이런 문제를 위해 다른 서비스에 CUD를 발생시켜야 하는 경우에 Event Driven Architecture를 적용하고 Eventual Consistency를 달성하고자 노력했다. Rabbitmq를 통해 message를 전달했다. rabbitmq가 qos level 1을 지원하므로 최소 한번은 전달하는 것을 보장해 준다.
 하지만 message 전달이 실패하거나 서비스에서 처리 중 에 오류가 난 경우 보상작업을 해주거나 별도 비즈니스 흐름을 가져가야 하는 복잡함이 추가로 생겨났다.
 
 #### 다른 서비스의 모델이 변경되는 것에 영향을 받는다.
@@ -120,7 +120,7 @@ Microservices Architecture는 말 그대로 아키텍처이다. 언급되는 대
 MSA와 항상 같이 언급되는 것들이 있다. DDD, CQRS, Event-Driven, Event sourcing 등등..
 객체지향을 잘 이해하면 java로 더 아름답게 개발할 수 있는 것처럼, DDD를 이해하면 MSA를 더 잘 개발할 수는 있을 것이다. 하지만 필수는 아니라고 생각한다. 이런 용어들에 겁먹고 MSA를 시도조차 못하지는 않았으면 좋겠다.
 내 서비스에서 다루는 데이터를 API를 통해서 연결만 해 준다면, 내부 구현은 기존에 사용하던 방식 그대로 해도 된다. 다른 서비스와 의존관계를 더 잘 분리 할 수 있도록 도와주는 도구들일 뿐이고, 필요에 의해서만 도입하면 된다.
-개인적으로는 MSA에서 서비스 개발시 가장 중요한 것은 **Metaphor** 라고 생각한다. 본래의 의미에 가장 적절한 이름을 짖는 것, 같은 이름이라도 각 서비스에 맞는 의미를 부여하는 것, 이 것이 PM, Designer, Dev가 팀으로서 함께 고민해야 하는 가장 중요한 부분이다. 
+개인적으로는 MSA에서 서비스 개발시 가장 중요한 것은 **Metaphor** 라고 생각한다. 본래의 의미에 가장 적절한 이름을 짓는 것, 같은 이름이라도 각 서비스에 맞는 의미를 부여하는 것, 이 것이 PM, Designer, Dev가 팀으로서 함께 고민해야 하는 가장 중요한 부분이다. 
 
 
 ### 결론적으로..
