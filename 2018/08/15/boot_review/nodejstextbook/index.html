@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-5196265384506352",
+    enable_page_level_ads: true
+  });
+</script> -->
+    <meta charset="utf-8">
+    
+    <title>(책리뷰) Node.js 교과서 | KihoonKim:Dev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="book,nodejs" />
+    
+    <meta name="description" content="제목 : Node.js 교과서저자 : 조현영출판사: 길벗초판발행: 2018. 08 Node.js를 공부하다 보면 자주 참고하던 블로그가 하나 있는데, 바로 ZeroCho 이다. 이 책의 저자 블로그 이다. 블로그를 보면서도 참 꼼꼼하게 잘 정리해놨다는 생각이 들었는데, 책도 참 잘 쓴 것 같다. 이 책은 말그대로 교과서다. 당장 웹 어플리케이션을 만들어야">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(책리뷰) Node.js 교과서">
+<meta property="og:url" content="https://kihoonkim.github.io/2018/08/15/boot_review/nodejstextbook/index.html">
+<meta property="og:site_name" content="KihoonKim:Dev">
+<meta property="og:description" content="제목 : Node.js 교과서저자 : 조현영출판사: 길벗초판발행: 2018. 08 Node.js를 공부하다 보면 자주 참고하던 블로그가 하나 있는데, 바로 ZeroCho 이다. 이 책의 저자 블로그 이다. 블로그를 보면서도 참 꼼꼼하게 잘 정리해놨다는 생각이 들었는데, 책도 참 잘 쓴 것 같다. 이 책은 말그대로 교과서다. 당장 웹 어플리케이션을 만들어야">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://kihoonkim.github.io/images/nodejs교과서.jpg">
+<meta property="article:published_time" content="2018-08-15T04:36:00.000Z">
+<meta property="article:modified_time" content="2021-07-31T09:28:29.079Z">
+<meta property="article:author" content="Kihoon Kim">
+<meta property="article:tag" content="book">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kihoonkim.github.io/images/nodejs교과서.jpg">
+    
+
+    
+        <link rel="alternate" href="/" title="KihoonKim:Dev" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-90999360-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Agile/">Agile</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/">DevTools</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/ELK/">ELK</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JPA/">JPA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Java8/">Java8</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Life/">Life</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Microservices/">Microservices</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/React/">React</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/">ReactGo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/golang/">golang</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/intro/">intro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/reactjs/">reactjs</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Retro/">Retro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linux/">linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" target="_blank" rel="noopener" href="https://about.me/kihoon">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-boot_review/nodejstextbook" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        (책리뷰) Node.js 교과서
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/2018/08/15/boot_review/nodejstextbook/" class="article-date">
+    <time datetime="2018-08-15T04:36:00.000Z" itemprop="datePublished">2018-08-15</time>
+</a>
+                
+    <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/book/" rel="tag">book</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li></ul>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p><img src="/images/nodejs%EA%B5%90%EA%B3%BC%EC%84%9C.jpg" alt="(길벗) Node.js 교과서"></p>
+<p>제목 : <a target="_blank" rel="noopener" href="http://www.yes24.com/24/goods/62597864">Node.js 교과서</a><br>저자 : 조현영<br>출판사: 길벗<br>초판발행: 2018. 08</p>
+<p>Node.js를 공부하다 보면 자주 참고하던 블로그가 하나 있는데, 바로 <a target="_blank" rel="noopener" href="https://www.zerocho.com/">ZeroCho</a> 이다. 이 책의 저자 블로그 이다. 블로그를 보면서도 참 꼼꼼하게 잘 정리해놨다는 생각이 들었는데, 책도 참 잘 쓴 것 같다.</p>
+<p>이 책은 말그대로 교과서다. 당장 <strong>웹 어플리케이션</strong>을 만들어야 한다면 이 책 한권이면 될 것 같다. 실무에 바로 가져다 써도 될만한 예제 코드들이 가득하고, 사용하는 모듈 들도 참고할 만한 것들이 많다. </p>
+<p>책의 구성은 다른 Node.js 책들과 크게 다르지 않다. Node.js 특징을 설명하고, 웹 서비스 개발을 위해 http, ws, express, passport 등의 모듈을 소개한다. database도 sequelize를 통해 mysql과 mongodb 를 함께 다루고 있다. 배포 환경을 위해 aws, gcp를 다루고 있다. step by step으로 되어있어 천천히 따라가면 정말 그럴싸한 웹개발을 할 수 있을 것이다.   </p>
+<p>이 책의 가장 큰 장점은 친절함 인 것 같다. 짧게 설명하고 길게 한번더 설명해주고 그래도 이해가 안될까봐 그림으로 한번 더 설명을 해 준다. 그리고 대부분의 책에서는 이정도는 알겠지 하고 넘어가는 부분도 꼭 집고 넘어간다. 이런 걸 보면 괜히 교과서라는 타이틀을 붙인 것이 아니다.  </p>
+<p>이 책의 대상 독자는 웹 서비스 개발을 하는 초, 중급 개발자인 것 같다. 서버와 데이터베이스를 모르는 초보도 볼 수 있게 책을 썼다고 한다. 더 깊이 들어간다면 아마도 1000 페이지가 넘어 갔을 것 같다. 그래서 인지 자세한 설명은 각 장의 마지막에 함께보면 좋은 자료에 링크를 넣어 둔 것 같다. </p>
+<p>아쉬운 점은 process나 stream, connect 등에 대한 설명이 잘 나와 있지는 않다. 웹 서비스를 개발할 목적이 아니라면 이 책외의 다른 책의 도움을 받아야 할 것 같다.</p>
+<p>또하나 개인적으로 아쉬운 점은 Rest API 개발 비중이 좀더 컸으면 좋았을 것 같다. 실무에 바로 쓸수 있는 내용들 인데, 대부분 예제 코드가 Pug 템플릿 엔진을 통해 서버 사이드 렌더링에 초점이 맞춰져 있다. 최근에는 react나 vue 같은 라이브러리를 이용해 프론트와 백엔드를 나눠서 개발을 많이 하는데, Rest Api는 짧게 소개하고 넘어가는 것같아 아쉬웠다. 최신 javascript, nodejs 스펙을 반영한 만큼 예제 소스도 이런 트렌드를 반영했으면 좀 더 실무에 바로 사용할 수 있지 않았을까 하는 아쉬움이 남는다. 하지만, 초급자가 아니라면 이책에서 설명하는 내용으로도 충분할 것이다.</p>
+<p>한마디로 정리해보면, Node.js 교과서는 말그대로 교과서 같은 책이다. 웹 개발을 한다면 최선의 선택일 것 이다.</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://kihoonkim.github.io/2018/08/15/boot_review/nodejstextbook/" data-id="cksej5pu0001s9lv6gyw7aqsk" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/koreakihoon" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/kihoonkim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2018/10/05/boot_review/spring5recipes/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            (책리뷰) 스프링5 레시피
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2018/08/15/boot_review/%EB%AA%A8%EB%8D%98%EC%8A%A4%ED%83%80%ED%8A%B8%EC%97%85/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">(책리뷰) 모던 스타트업</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/08/16/retro/10-years/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/10-years.png)" alt="지난 10년. 어떤 기술 흐름속에 살았을까?" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2021/08/16/retro/10-years/" class="title">지난 10년. 어떤 기술 흐름속에 살았을까?</a></p>
+                            <p class="item-date"><time datetime="2021-08-15T15:00:00.000Z" itemprop="datePublished">2021-08-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/12/31/retro/retro-2020/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2020/12/31/retro/retro-2020/" class="title">2020년 회고</a></p>
+                            <p class="item-date"><time datetime="2020-12-30T15:00:00.000Z" itemprop="datePublished">2020-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/mountain.webp)" alt="언젠가 또 힘들어 하고 있을지 모르는 나에게" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Life/">Life</a></p>
+                            <p class="item-title"><a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="title">언젠가 또 힘들어 하고 있을지 모르는 나에게</a></p>
+                            <p class="item-date"><time datetime="2020-09-25T04:30:00.000Z" itemprop="datePublished">2020-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-day1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/react/eslint-webstorm.png)" alt="React 개발 환경 구성 (react, webstorm)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-day1/" class="title">React 개발 환경 구성 (react, webstorm)</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T16:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-overview/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-overview/" class="title">React로 Whiteboard 만들기 overview</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T15:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Agile/">Agile</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/">DevTools</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/ELK/">ELK</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JPA/">JPA</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Java8/">Java8</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microservices/">Microservices</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/">ReactGo</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/golang/">golang</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/intro/">intro</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/reactjs/">reactjs</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retro/">Retro</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a><span class="category-list-count">8</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Duck-Typing/" style="font-size: 10px;">Duck Typing</a> <a href="/tags/Event-Driven/" style="font-size: 10px;">Event-Driven</a> <a href="/tags/FP/" style="font-size: 11.43px;">FP</a> <a href="/tags/IPC/" style="font-size: 10px;">IPC</a> <a href="/tags/Mockito/" style="font-size: 10px;">Mockito</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Robolectric/" style="font-size: 10px;">Robolectric</a> <a href="/tags/TDD/" style="font-size: 10px;">TDD</a> <a href="/tags/agile/" style="font-size: 12.86px;">agile</a> <a href="/tags/agile-course/" style="font-size: 10px;">agile course</a> <a href="/tags/agilekorea/" style="font-size: 10px;">agilekorea</a> <a href="/tags/agilekorea207/" style="font-size: 10px;">agilekorea207</a> <a href="/tags/api-gatewary/" style="font-size: 10px;">api gatewary</a> <a href="/tags/architecture/" style="font-size: 17.14px;">architecture</a> <a href="/tags/book/" style="font-size: 18.57px;">book</a> <a href="/tags/canvas/" style="font-size: 11.43px;">canvas</a> <a href="/tags/docker/" style="font-size: 11.43px;">docker</a> <a href="/tags/dod/" style="font-size: 10px;">dod</a> <a href="/tags/elasticsearch/" style="font-size: 11.43px;">elasticsearch</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/filebeat/" style="font-size: 11.43px;">filebeat</a> <a href="/tags/generic/" style="font-size: 10px;">generic</a> <a href="/tags/golang/" style="font-size: 17.14px;">golang</a> <a href="/tags/java/" style="font-size: 14.29px;">java</a> <a href="/tags/java-8/" style="font-size: 11.43px;">java 8</a> <a href="/tags/jpa/" style="font-size: 17.14px;">jpa</a> <a href="/tags/kibana/" style="font-size: 11.43px;">kibana</a> <a href="/tags/konvajs/" style="font-size: 11.43px;">konvajs</a> <a href="/tags/life/" style="font-size: 10px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/logstash/" style="font-size: 11.43px;">logstash</a> <a href="/tags/microservices/" style="font-size: 20px;">microservices</a> <a href="/tags/module-programming/" style="font-size: 10px;">module programming</a> <a href="/tags/msa/" style="font-size: 20px;">msa</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/pair-programming/" style="font-size: 10px;">pair programming</a> <a href="/tags/reactjs/" style="font-size: 14.29px;">reactjs</a> <a href="/tags/retro/" style="font-size: 15.71px;">retro</a> <a href="/tags/service-discovery/" style="font-size: 10px;">service discovery</a> <a href="/tags/whiteboard/" style="font-size: 11.43px;">whiteboard</a> <a href="/tags/%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80/" style="font-size: 18.57px;">개발일지</a> <a href="/tags/%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D/" style="font-size: 10px;">기술스택</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842017/" style="font-size: 10px;">애자일코리아2017</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842018/" style="font-size: 10px;">애자일코리아2018</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 Kihoon Kim</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'kihoonkim';
+    
+    
+    var disqus_url = 'https://kihoonkim.github.io/2018/08/15/boot_review/nodejstextbook/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

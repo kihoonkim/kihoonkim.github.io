@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-5196265384506352",
+    enable_page_level_ads: true
+  });
+</script> -->
+    <meta charset="utf-8">
+    
+    <title>5. Event-Driven Data Management for Microservices | KihoonKim:Dev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="microservices,msa,architecture,Event-Driven" />
+    
+    <meta name="description" content="Event-Driven Data Management for MicroservicesEvent-Driven Data Management for Microservices에 대한 요약이다. Microservices and the Problem of Distributed Data Management모놀리틱(monolithic) 어플리케이션은 전형적으로 단일 관계형">
+<meta property="og:type" content="article">
+<meta property="og:title" content="5. Event-Driven Data Management for Microservices">
+<meta property="og:url" content="https://kihoonkim.github.io/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/5.%20Event-Driven%20Data%20Management%20for%20Microservices/index.html">
+<meta property="og:site_name" content="KihoonKim:Dev">
+<meta property="og:description" content="Event-Driven Data Management for MicroservicesEvent-Driven Data Management for Microservices에 대한 요약이다. Microservices and the Problem of Distributed Data Management모놀리틱(monolithic) 어플리케이션은 전형적으로 단일 관계형">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.wp.nginx.com/wp-content/uploads/2015/12/Richardson-microservices-part5-separate-tables-e1449727641793.png">
+<meta property="article:published_time" content="2017-01-27T06:44:35.000Z">
+<meta property="article:modified_time" content="2021-07-31T09:28:29.079Z">
+<meta property="article:author" content="Kihoon Kim">
+<meta property="article:tag" content="microservices">
+<meta property="article:tag" content="msa">
+<meta property="article:tag" content="architecture">
+<meta property="article:tag" content="Event-Driven">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.wp.nginx.com/wp-content/uploads/2015/12/Richardson-microservices-part5-separate-tables-e1449727641793.png">
+    
+
+    
+        <link rel="alternate" href="/" title="KihoonKim:Dev" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-90999360-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Agile/">Agile</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/">DevTools</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/ELK/">ELK</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JPA/">JPA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Java8/">Java8</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Life/">Life</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Microservices/">Microservices</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/React/">React</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/">ReactGo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/golang/">golang</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/intro/">intro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/reactjs/">reactjs</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Retro/">Retro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linux/">linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" target="_blank" rel="noopener" href="https://about.me/kihoon">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Microservices/">Microservices</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Microservices Architecture/Chris Richardson-NGINX Blog Summary/5. Event-Driven Data Management for Microservices" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        5. Event-Driven Data Management for Microservices
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/5.%20Event-Driven%20Data%20Management%20for%20Microservices/" class="article-date">
+    <time datetime="2017-01-27T06:44:35.000Z" itemprop="datePublished">2017-01-27</time>
+</a>
+                
+    <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Event-Driven/" rel="tag">Event-Driven</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/architecture/" rel="tag">architecture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/microservices/" rel="tag">microservices</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/msa/" rel="tag">msa</a></li></ul>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="Event-Driven-Data-Management-for-Microservices"><a href="#Event-Driven-Data-Management-for-Microservices" class="headerlink" title="Event-Driven Data Management for Microservices"></a>Event-Driven Data Management for Microservices</h1><p><a target="_blank" rel="noopener" href="https://www.nginx.com/blog/event-driven-data-management-microservices/">Event-Driven Data Management for Microservices</a>에 대한 요약이다.</p>
+<h2 id="Microservices-and-the-Problem-of-Distributed-Data-Management"><a href="#Microservices-and-the-Problem-of-Distributed-Data-Management" class="headerlink" title="Microservices and the Problem of Distributed Data Management"></a>Microservices and the Problem of Distributed Data Management</h2><p>모놀리틱(monolithic) 어플리케이션은 전형적으로 단일 관계형 데이터베이스를 사용한다.<br><strong>RDB</strong> 의 가장 큰 장점 중 하나는 <strong>ACID 트랜젝션</strong> 을 지원한다는 것이다.  </p>
+<ul>
+<li>원자성(Atomicity) : Changes are made atomically  </li>
+<li>일관성(Consistency) : The state of the database is always consistent</li>
+<li>격리성(Isolation) : Even though transactions are executed concurrently it appears they are executed serially</li>
+<li>지속성(Durable) :  Once a transaction has committed it is not undone</li>
+</ul>
+<p>또 다른 장점 중 하나는 <strong>SQL</strong> 을 지원하는 것 이다.<br>여러 테이블을 쉽게 JOIN 할 수 있고, 쿼리를 최적화된 방법으로 실행해 준다.<br>따라서 내부적으로 어떻게 데이터베이스에 접속하고 처리하는지에 대해 자세히 몰라도 된다.  </p>
+<p>하지만, 마이크로서비스 아키텍쳐는 데이타에 접근하는 것이 더욱 복잡해 진다.<br>각 마이크로서비스 마다 자신의 데이터를 소유하고 다른 서비스에서는 API를 통해서 접근할 수 있다.<br>(참고: <a target="_blank" rel="noopener" href="http://microservices.io/patterns/data/database-per-service.html">Pattern: Database per service</a>)<br>이렇게 데이타를 캡슐화하면 서비스들 간의 결합도를 줄이게 되고(loosely coupled), 다른 서비스들과 독립적으로 수정가능하다.<br>여러서비스가 같은 데이터를 접근한다면, 스키마(schema)를 수정하고<br>관련된 모든 서비스들을 수정해야 되기 때문에 많은 시간이 소요된다.<br><img src="https://cdn.wp.nginx.com/wp-content/uploads/2015/12/Richardson-microservices-part5-separate-tables-e1449727641793.png" alt="fig">  </p>
+<p>각 마이크로서비스들은 상황에 따라 다른 데이터베이스를 사용하곤한다.   요즘 어플리케이션이 저장하고 처리하는 데이터의 종류가 다양해졌기 때문에,<br>RDB가 항상 최선의 선택인 것은 아니다.<br>예를 들면, NoSQL database 의 경우 유연한 데이터모델을 가지고 성능이나 확장성(scalability)면에서 더 나을 것이다.<br>예: 텍스트 서치의 경우 Elasticsearch, social graph data의 경우 Neo4j같은 그래프 데이터베이스<br>마이크로서비스 기반의 어플리케이션은 SQL, NoSQL 데이터베이스를 섞어서 사용하는 경우도 있다.<br>(참고: <a target="_blank" rel="noopener" href="http://martinfowler.com/bliki/PolyglotPersistence.html">polyglot persistence</a>)<br>polyglot persistence 아키텍쳐는 loosely coupled 한 서비스를 만들고 성능 및 확장성 등 많은 장점들을 갖는 반면<br>분산된 데이터 관리에 대한 어려움이 있다.    </p>
+<ol>
+<li><p>여러 서비스간 <strong>데이터 일관성(Consistency)</strong> 은 어떻게 구현 할 것인가?<br>고객 서비스와 주문 서비스가 있는 경우 monolithic 에서는 ACID 트랜젝션으로 묶어 처리할 수 있지만,<br>MSA 에서는 테이블을 직접 참조하지 못하고 API를 통해서만 접근이 가능할 것이다.<br>이를 위해 2PC라고 알려진 분산 트랜젝션(Distributed Transaction)을 사용 할 수 있을 것이다.<br>하지만 일반적으로 최근 어플리케이션에서는 2PC가 사용되지 않는다.<br>CAP 이론은 가용성(Availability)과 ACID 스타일의 일관성 사이에서 선택을 요구한다.<br>NoSQL DB의 대부분은 2PC를 지원하지 않고 가용성을 더 중요하게 생각한다.  </p>
+</li>
+<li><p>여러 서비스로 부터 <strong>데이터 조회</strong> 하는 쿼리는 어떻게 구현 할 것인가?<br>고객 정보와 고객의 최근 구매이력을 조회하려고 할 때, 고객 서비스와 주문 서비스의<br>API를 사용하여 application-side join을 할 수 있을 것이다.<br>하지만 만약, 주문 이력이 NoSQL에 저장되어 있고, PK로만 조회가 가능하다면 필요한 정보를 어떻게 받아야 할까?  </p>
+</li>
+</ol>
+<h2 id="Event-Driven-Architecture"><a href="#Event-Driven-Architecture" class="headerlink" title="Event-Driven Architecture"></a>Event-Driven Architecture</h2><p>이런 문제를 해결하기 위해 많은 어플리케이션에서 Event-Driven Architecture가 사용한다.<br>서비스들은 비지니스 엔티티가 변경되는 등의 주요 작업이 발생한 경우, 이벤트를 발행(publish)한다.<br>다른 서비스에서 이 이벤트에 관심이 있는 경우 구독(subscribe) 하여 다음 작업을 처리하면 된다.<br>이런 이벤트를 통해 여러 서비스간 비지니스 트랜젝션을 구현 할 수 있다.<br>서비스에서 이벤트를 받아 다음 스텝의 작업을 처리하고 다시 이벤트를 발행하면서 처리해 나갈 수 있다.  </p>
+<ol>
+<li>The <em>Order Service</em> creates an Order with status NEW and publishes an <strong>Order Created event</strong>.</li>
+<li>The <em>Customer Service</em> consumes the Order Created event, reserves credit for the order, and publishes a <strong>Credit Reserved event</strong>.</li>
+<li>The Order Service consumes the Credit Reserved event, and changes the status of the order to OPEN.</li>
+</ol>
+<p>각 서비스들은 원자적(atomically)으로 데이터베이스를 업데이트하고, 이벤트를 발행한다.<br>Message Broker가 각 이벤트들이 최소 한번은 전달됨을 보장해 줌으로써,<br>이를 통해 여러 서비스간 비지니스 트랜젝션을 구현한다.<br>이는 ACID 트랜젝션은 아니지만 <strong>Eventual Consistency</strong> 를 제공 할 수 있다.<br>또한 이벤트를 이용하여 pre-join된 view를 제공 할 수 있다.<br>예를 들어, 고객 서비스와 주문 서비스가 발행하는 이벤트를 구독하여 Customer Order View Query 서비스를 만들 수도 있다.  </p>
+<p>Event-Driven Architecture는 몇가지 장단점이 있다.<br>여러 서비스간 사용되는 트랜젝션을 구현 할 수 있고, Eventual Consistency를 제공해 준다.<br>그리고 pre-join된 View를 생성하여 제공 할 수도 있다.<br>반면, ACID 트랜젝션을 사용하는 것에 비해 구현하기 더 복잡하다.<br>오류가 발생한 경우 어플리케이션 레벨에서 취소하는 보상 트랜젝션을 구현해야 한다.<br>또한, View를 사용하는 경우 아직 반영되지 않은 데이터에 대해서 불일치하는 문제가 발행 할 수도 있고,<br>중복된 이벤트를 검출해 내고 이를 무시하는 기능도 구현해야된다.  </p>
+<h2 id="Achieving-Atomicity"><a href="#Achieving-Atomicity" class="headerlink" title="Achieving Atomicity"></a>Achieving Atomicity</h2><p>Event-Driven Architecture에서 데이터베이스를 업데이트하고, 이벤트를 발행하는 작업이 반드시 원자적으로 이루어져야 하는 문제가 있다.<br>만약 데이터베이스를 업데이트하고 이벤트를 발행하기 전에 문제가 생겼다면 시스템은 불일치하게 된다.  </p>
+<h3 id="Publishing-Events-Using-Local-Transactions"><a href="#Publishing-Events-Using-Local-Transactions" class="headerlink" title="Publishing Events Using Local Transactions"></a>Publishing Events Using Local Transactions</h3><p>메세지 큐와 같은 기능을 하는 EVENT 테이블을 비지니스 엔티티 테이블과 같은 데이터베이스에 만든다.<br>비지니스 엔티티를 수정하고, 이벤트를 EVENT 테이블에 insert하는 기능을 한 로컬 트랜젝션으로 수행한다.<br>이런 방법은 2PC없이 이벤트가 발행되는 것을 보장해 주는 장점이 있는 반면,<br>개발자가 이벤트 발행하는 것을 잊어버리는 등의 잠재적인 위험이 있다.<br><img src="https://cdn.wp.nginx.com/wp-content/uploads/2015/12/Richardson-microservices-part5-local-transaction-e1449727484579.png" alt="fig">  </p>
+<h3 id="Mining-a-Database-Transaction-Log"><a href="#Mining-a-Database-Transaction-Log" class="headerlink" title="Mining a Database Transaction Log"></a>Mining a Database Transaction Log</h3><p>데이터베이스의 Transaction/commit log를 수집하여 이벤트를 발행하는 방법이 있다.<br>관련 기술로는 LinkedIn Databus, AWS DynamoDB streams mechanism 등이 있다.<br>2PC 없이 이벤트 발행을 보장해주고 비지니스 로직과 이벤트 발행 기능을 분리할 수 있다는 장점이 있다.<br>반면, 데이터베이스마다 로그의 포멧이 다르고, 버전 사이에도 차이가 있을 수있다.<br>또한 low-level 로그를 통해 high-level 비지니스 이벤트를 생성해 내야하는 어려움이 있다.<br><img src="https://cdn.wp.nginx.com/wp-content/uploads/2015/12/Richardson-microservices-part5-transaction-log-e1449727434678.png" alt="fig">  </p>
+<h3 id="Using-Event-Sourcing"><a href="#Using-Event-Sourcing" class="headerlink" title="Using Event Sourcing"></a>Using Event Sourcing</h3><p>Event Sourcing 은 엔티티의 현재상태를 저장하는 대신, 상태를 변경하는 이벤트를 순서대로 저장하는 방법이다.<br>어플리케이션은 이벤트들을 replay 하면서 현재상태를 재구성한다.<br>이벤트들은 Event Store 라는 데이터베이스에 저장된다.<br>Event Store는 Message Broker와 같은 역할도 동시에 수행한다.  </p>
+<p>Event Sourcing 방법을 사용하면 여러 장점이 있다.<br>상태가 변경될 때마다 이벤트가 발생되는 것을 보장해야 하는 Event-Driven Architecture의 문제를 해결 함으로써<br>MSA의 데이터 일관성 문제를 해결 할 수 있다.<br>또한 이벤트를 저장하기 때문에 객체와 관계형 DB의 불일치 문제를 피할 수도 있다.<br>뿐만아니라 특정 시점의 엔티티의 상태를 조회할 수 있다.  </p>
+<p>Event Sourcing의 단점으로는<br>익숙하지 않은 프로그래밍 스타일이고 학습하는데 시간이 걸린다.<br>Event Store는 PK를 통해서만 엔티티를 조회 할 수 있기 때문에 CQRS를 반드시 적용해야 하고, eventually consistent data를 다뤄야 한다.<br><img src="https://cdn.wp.nginx.com/wp-content/uploads/2015/12/Richardson-microservices-part5-event-sourcing-e1449711558668.png" alt="fig">  </p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>마이크로서비스 아키텍쳐에서 각 서비스틀은 자신만의 고유한 데이터베이스를 가진다.<br>이런 아키텍쳐는 여러 장점을 가지는 반면에 분산된 데이터를 관리해야 하는 어려움이 있다.<br>서비스간 일관성을 유지하기 위한 트랜젝션을 구현해야 되고, 여러서비스에서 데이터를 조회해야 하는 어려움이 있다.  </p>
+<p>이를 위해 많은 어플리케이션에서 Event-Driven Architecture 를 사용하고 있다.<br>하지만 엔티티의 상태를 업데이트하고 이벤트를 발행하는 것을 atomically 하게 구현해야 하는 어려움이 있다.<br>이를 해결하기 위해 데이터베이스를 메시지 큐로 사용하는 방법,<br>데이터베이스의 트랜젝션 로그를 수집하는 방법, Event Sourcing을 사용하는 방법 등이 있다.  </p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://kihoonkim.github.io/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/5.%20Event-Driven%20Data%20Management%20for%20Microservices/" data-id="cksej5pux004k9lv6h2t48dh1" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/koreakihoon" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/kihoonkim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/6.%20Choosing%20a%20Microservices%20Deployment%20Strategy/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            6. Choosing a Microservices Deployment Strategy
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/4.%20Service%20Discovery%20in%20a%20MSA/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">4. Service Discovery in a Microservices Architecture</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/08/16/retro/10-years/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/10-years.png)" alt="지난 10년. 어떤 기술 흐름속에 살았을까?" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2021/08/16/retro/10-years/" class="title">지난 10년. 어떤 기술 흐름속에 살았을까?</a></p>
+                            <p class="item-date"><time datetime="2021-08-15T15:00:00.000Z" itemprop="datePublished">2021-08-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/12/31/retro/retro-2020/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2020/12/31/retro/retro-2020/" class="title">2020년 회고</a></p>
+                            <p class="item-date"><time datetime="2020-12-30T15:00:00.000Z" itemprop="datePublished">2020-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/mountain.webp)" alt="언젠가 또 힘들어 하고 있을지 모르는 나에게" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Life/">Life</a></p>
+                            <p class="item-title"><a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="title">언젠가 또 힘들어 하고 있을지 모르는 나에게</a></p>
+                            <p class="item-date"><time datetime="2020-09-25T04:30:00.000Z" itemprop="datePublished">2020-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-day1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/react/eslint-webstorm.png)" alt="React 개발 환경 구성 (react, webstorm)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-day1/" class="title">React 개발 환경 구성 (react, webstorm)</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T16:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-overview/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-overview/" class="title">React로 Whiteboard 만들기 overview</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T15:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Agile/">Agile</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/">DevTools</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/ELK/">ELK</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JPA/">JPA</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Java8/">Java8</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microservices/">Microservices</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/">ReactGo</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/golang/">golang</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/intro/">intro</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/reactjs/">reactjs</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retro/">Retro</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a><span class="category-list-count">8</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Duck-Typing/" style="font-size: 10px;">Duck Typing</a> <a href="/tags/Event-Driven/" style="font-size: 10px;">Event-Driven</a> <a href="/tags/FP/" style="font-size: 11.43px;">FP</a> <a href="/tags/IPC/" style="font-size: 10px;">IPC</a> <a href="/tags/Mockito/" style="font-size: 10px;">Mockito</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Robolectric/" style="font-size: 10px;">Robolectric</a> <a href="/tags/TDD/" style="font-size: 10px;">TDD</a> <a href="/tags/agile/" style="font-size: 12.86px;">agile</a> <a href="/tags/agile-course/" style="font-size: 10px;">agile course</a> <a href="/tags/agilekorea/" style="font-size: 10px;">agilekorea</a> <a href="/tags/agilekorea207/" style="font-size: 10px;">agilekorea207</a> <a href="/tags/api-gatewary/" style="font-size: 10px;">api gatewary</a> <a href="/tags/architecture/" style="font-size: 17.14px;">architecture</a> <a href="/tags/book/" style="font-size: 18.57px;">book</a> <a href="/tags/canvas/" style="font-size: 11.43px;">canvas</a> <a href="/tags/docker/" style="font-size: 11.43px;">docker</a> <a href="/tags/dod/" style="font-size: 10px;">dod</a> <a href="/tags/elasticsearch/" style="font-size: 11.43px;">elasticsearch</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/filebeat/" style="font-size: 11.43px;">filebeat</a> <a href="/tags/generic/" style="font-size: 10px;">generic</a> <a href="/tags/golang/" style="font-size: 17.14px;">golang</a> <a href="/tags/java/" style="font-size: 14.29px;">java</a> <a href="/tags/java-8/" style="font-size: 11.43px;">java 8</a> <a href="/tags/jpa/" style="font-size: 17.14px;">jpa</a> <a href="/tags/kibana/" style="font-size: 11.43px;">kibana</a> <a href="/tags/konvajs/" style="font-size: 11.43px;">konvajs</a> <a href="/tags/life/" style="font-size: 10px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/logstash/" style="font-size: 11.43px;">logstash</a> <a href="/tags/microservices/" style="font-size: 20px;">microservices</a> <a href="/tags/module-programming/" style="font-size: 10px;">module programming</a> <a href="/tags/msa/" style="font-size: 20px;">msa</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/pair-programming/" style="font-size: 10px;">pair programming</a> <a href="/tags/reactjs/" style="font-size: 14.29px;">reactjs</a> <a href="/tags/retro/" style="font-size: 15.71px;">retro</a> <a href="/tags/service-discovery/" style="font-size: 10px;">service discovery</a> <a href="/tags/whiteboard/" style="font-size: 11.43px;">whiteboard</a> <a href="/tags/%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80/" style="font-size: 18.57px;">개발일지</a> <a href="/tags/%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D/" style="font-size: 10px;">기술스택</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842017/" style="font-size: 10px;">애자일코리아2017</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842018/" style="font-size: 10px;">애자일코리아2018</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 Kihoon Kim</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'kihoonkim';
+    
+    
+    var disqus_url = 'https://kihoonkim.github.io/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/5.%20Event-Driven%20Data%20Management%20for%20Microservices/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-5196265384506352",
+    enable_page_level_ads: true
+  });
+</script> -->
+    <meta charset="utf-8">
+    
+    <title>golang configuration file 삽질기 | KihoonKim:Dev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="개발일지,golang" />
+    
+    <meta name="description" content="개발을 하다보면 local, development, production 등의 환경이 다르다. 예를 들면 데이터베이스 접속 정보가 있을 것 이다.소스코드에 하드코딩 되어 있다면, 데이터베이스 인스턴스의 IP, Port등이 변경되는 경우 소스를 재 빌드, 배포, 실행을 해줘야 할 것이다.보통 이런경우에 환경설정 파일을 배포환경 별로 관리를 하게된다.   123">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang configuration file 삽질기">
+<meta property="og:url" content="https://kihoonkim.github.io/2017/04/05/reactgo/reactgo-5-configuration/index.html">
+<meta property="og:site_name" content="KihoonKim:Dev">
+<meta property="og:description" content="개발을 하다보면 local, development, production 등의 환경이 다르다. 예를 들면 데이터베이스 접속 정보가 있을 것 이다.소스코드에 하드코딩 되어 있다면, 데이터베이스 인스턴스의 IP, Port등이 변경되는 경우 소스를 재 빌드, 배포, 실행을 해줘야 할 것이다.보통 이런경우에 환경설정 파일을 배포환경 별로 관리를 하게된다.   123">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://kihoonkim.github.io/images/gonfig_files.PNG">
+<meta property="article:published_time" content="2017-04-05T14:38:00.000Z">
+<meta property="article:modified_time" content="2021-07-31T09:28:29.079Z">
+<meta property="article:author" content="Kihoon Kim">
+<meta property="article:tag" content="개발일지">
+<meta property="article:tag" content="golang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kihoonkim.github.io/images/gonfig_files.PNG">
+    
+
+    
+        <link rel="alternate" href="/" title="KihoonKim:Dev" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-90999360-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Agile/">Agile</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/">DevTools</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/ELK/">ELK</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JPA/">JPA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Java8/">Java8</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Life/">Life</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Microservices/">Microservices</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/React/">React</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/">ReactGo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/golang/">golang</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/intro/">intro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/reactjs/">reactjs</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Retro/">Retro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linux/">linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" target="_blank" rel="noopener" href="https://about.me/kihoon">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/ReactGo/">ReactGo</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/ReactGo/golang/">golang</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-reactgo/reactgo-5-configuration" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        golang configuration file 삽질기
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/2017/04/05/reactgo/reactgo-5-configuration/" class="article-date">
+    <time datetime="2017-04-05T14:38:00.000Z" itemprop="datePublished">2017-04-05</time>
+</a>
+                
+    <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/" rel="tag">golang</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80/" rel="tag">개발일지</a></li></ul>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>개발을 하다보면 local, development, production 등의 환경이 다르다. 예를 들면 데이터베이스 접속 정보가 있을 것 이다.<br>소스코드에 하드코딩 되어 있다면, 데이터베이스 인스턴스의 IP, Port등이 변경되는 경우 소스를 재 빌드, 배포, 실행을 해줘야 할 것이다.<br>보통 이런경우에 환경설정 파일을 배포환경 별로 관리를 하게된다.  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">config</span><br><span class="line">  |------ config.local.json</span><br><span class="line">  |------ config.dev.json</span><br><span class="line">  |------ config.prod.json</span><br></pre></td></tr></table></figure>
+
+<p>하지만 <a target="_blank" rel="noopener" href="https://12factor.net/ko/config">Twelve Factor App</a>에 의하면 config 설정은 특정 언어나 OS에 의존하지 않도록 <strong>환경변수</strong> 를 사용하라고 나와있다.  </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/avelino/awesome-go#configuration">Go 언어를 위한  Configuration library</a>가 다양하게 존재한다.<br>이 라이브러리들도 크게 환경설정 파일을 이용하거나 환경변수를 이용하는 것들로 나뉘는 것 같다. 대부분의 사용법이나 컨셉은 비슷한 것 같다.   </p>
+<p>환경설정을 위해서 구글 검색을 하다가 <strong>설정파일 기반의  <a target="_blank" rel="noopener" href="https://github.com/Tkanos/gonfig">Gonfig</a></strong> 를 발견하고 적용해 보았다. <a target="_blank" rel="noopener" href="https://github.com/Tkanos/gonfig-sample">config-sample</a>에 나와있는 대로 설정하고 실행해 보면 잘 되는 것을 확인 할 수 있다.<br>아래 구성한 것은 gonfig 관련된 소스를 config 패키지로 뺀것만 다르다.  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~gogo&gt;  glide get github.com/tkanos/gonfig</span><br></pre></td></tr></table></figure>
+<p><img src="/images/gonfig_files.PNG" alt="배포 환경별 설정 파일들"><br><img src="/images/gonfig_config.PNG" alt="전체 소스"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">~gogo&gt; go run main.go</span><br><span class="line">8081</span><br><span class="line">local</span><br></pre></td></tr></table></figure>
+<p>테스트도 정상적으로 동작하는 것을 확인 할 수 있다.  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~gogo\config&gt; go test</span><br><span class="line">filePath C:\Users\kihoonkim\goworkspace\src\github.com\kihoonkim\gogo\config/config.local.json</span><br><span class="line">PASS</span><br><span class="line">ok      github.com/kihoonkim/gogo/config        0.036s</span><br></pre></td></tr></table></figure>
+<p>하지만 <strong>문제는 test coverage 를 측정할 때 오류</strong> 가 난다.<br><code>_test\_obj_test</code>가 경로에 추가되면서 제대로된 경로에서 찾지를 못하면서 오류가 난다.  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~gogo\config&gt;  go test -cover</span><br><span class="line">filePath github.com\kihoonkim\gogo\config\_test\_obj_test/config.local.json</span><br><span class="line">exit status 500</span><br><span class="line">FAIL    github.com/kihoonkim/gogo/config        0.033s</span><br></pre></td></tr></table></figure>
+<p>run, test 때와 cover 옵션을 붙였을 때 <code>runtime.Caller(0)</code>가 리턴해주는 경로가 다른 것이다.  </p>
+<p>해당 문제를 제대로 해결하지는 못했다. config 패키지의 전체 경로를 하드코딩하든가, <code>_test\_obj_test</code> 가 경로에 있는 경우 삭제하는 방식으로 해결 할 수 있었다. 하지만, 두 방법 다 좋아 보이지 않는다.   </p>
+<p>결국엔 <strong>환경변수</strong> 를 사용하는 방식으로 가기로 결정했다.<br><strong><a target="_blank" rel="noopener" href="https://github.com/caarlos0/env">env</a> library</strong> 를 사용해서 구현하였다.<br>라이브러리는 github star를 많이 받은 녀석 중 가장 간단해 보이는 것으로 선택했다.  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~gogo&gt;  glide get github.com/caarlos0/env</span><br></pre></td></tr></table></figure>
+<p>설치 후 configuration.go, configuration_test.go 를 아래와 같이 변경 후 실행하였다.  </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// gogo/config/configuration.go</span></span><br><span class="line"><span class="keyword">package</span> config</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;github.com/caarlos0/env&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Configuration <span class="keyword">struct</span> &#123;</span><br><span class="line">	Port  <span class="keyword">int</span>  <span class="string">`env:&quot;PORT&quot; envDefault:&quot;3000&quot;`</span>  <span class="comment">// env library</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">GetConfiguration</span><span class="params">()</span> <span class="title">Configuration</span></span> &#123;</span><br><span class="line">	configuration := Configuration&#123;&#125;</span><br><span class="line">	err := env.Parse(&amp;configuration)   <span class="comment">// env library</span></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;%+v\n&quot;</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> configuration</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// gogo/config/configuration_test.go</span></span><br><span class="line"><span class="keyword">package</span> config</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;testing&quot;</span></span><br><span class="line">	<span class="string">&quot;os&quot;</span></span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestGetConfiguration</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	<span class="comment">// mock env variable</span></span><br><span class="line">	os.Setenv(<span class="string">&quot;PORT&quot;</span>, <span class="string">&quot;1234&quot;</span>)</span><br><span class="line"></span><br><span class="line">	configuration := GetConfiguration()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> configuration.Port != <span class="number">1234</span> &#123;</span><br><span class="line">		fmt.Errorf(<span class="string">&quot;Expected %d, but Actual %d&quot;</span>, <span class="number">1234</span>, configuration.Port)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">~gogo\config&gt;  go test -cover</span><br><span class="line">PASS</span><br><span class="line">coverage: 80.0% of statements</span><br><span class="line">ok      github.com/kihoonkim/gogo/config        0.040s</span><br></pre></td></tr></table></figure>
+<p>테스트 및 커버리지 측정도 정상적으로 동작하는 것을 확인 할 수 있었다.  </p>
+<p>환경변수는 각 OS 별로 설정하면 될 것이다.  </p>
+<ul>
+<li>windows: 시스템속성 &gt; 환경변수  </li>
+<li>Linux/Mac:  export PORT=4321</li>
+</ul>
+<p>linux/mac 이라면 아래와 같이 실행시 넘겨줘도 된다.  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ PORT=1111 go run main.go</span><br><span class="line">1111</span><br></pre></td></tr></table></figure>
+<p>docker 를 사용해서 실행한다면 -e 옵션으로 넘겨주면 된다.  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run ... -e PORT=&quot;1111&quot; ...</span><br></pre></td></tr></table></figure>
+
+
+<p>환경설정파일을 사용하는 라이브러리와 환경변수를 사용하는 라이브러리에 대해서 테스트 해 보았다. 라이브러리를 떠나서 두 경우다 장단점이 있을 것이다.<br>각자의 환경에 맞게 구성하면 될 것 같다.  </p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://kihoonkim.github.io/2017/04/05/reactgo/reactgo-5-configuration/" data-id="cksej5puk003i9lv6hah61gk7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/koreakihoon" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/kihoonkim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/04/09/reactgo/reactgo-6-golang-ducktyping-di-test/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            golang interface. mockingl. dependency-injection. Test 하기 좋은 코드
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/04/03/reactgo/reactgo-4-test-vendor/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">golang test code.. vendor 이녀석!!</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/08/16/retro/10-years/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/10-years.png)" alt="지난 10년. 어떤 기술 흐름속에 살았을까?" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2021/08/16/retro/10-years/" class="title">지난 10년. 어떤 기술 흐름속에 살았을까?</a></p>
+                            <p class="item-date"><time datetime="2021-08-15T15:00:00.000Z" itemprop="datePublished">2021-08-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/12/31/retro/retro-2020/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2020/12/31/retro/retro-2020/" class="title">2020년 회고</a></p>
+                            <p class="item-date"><time datetime="2020-12-30T15:00:00.000Z" itemprop="datePublished">2020-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/mountain.webp)" alt="언젠가 또 힘들어 하고 있을지 모르는 나에게" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Life/">Life</a></p>
+                            <p class="item-title"><a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="title">언젠가 또 힘들어 하고 있을지 모르는 나에게</a></p>
+                            <p class="item-date"><time datetime="2020-09-25T04:30:00.000Z" itemprop="datePublished">2020-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-day1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/react/eslint-webstorm.png)" alt="React 개발 환경 구성 (react, webstorm)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-day1/" class="title">React 개발 환경 구성 (react, webstorm)</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T16:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-overview/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-overview/" class="title">React로 Whiteboard 만들기 overview</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T15:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Agile/">Agile</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/">DevTools</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/ELK/">ELK</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JPA/">JPA</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Java8/">Java8</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microservices/">Microservices</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/">ReactGo</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/golang/">golang</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/intro/">intro</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/reactjs/">reactjs</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retro/">Retro</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a><span class="category-list-count">8</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Duck-Typing/" style="font-size: 10px;">Duck Typing</a> <a href="/tags/Event-Driven/" style="font-size: 10px;">Event-Driven</a> <a href="/tags/FP/" style="font-size: 11.43px;">FP</a> <a href="/tags/IPC/" style="font-size: 10px;">IPC</a> <a href="/tags/Mockito/" style="font-size: 10px;">Mockito</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Robolectric/" style="font-size: 10px;">Robolectric</a> <a href="/tags/TDD/" style="font-size: 10px;">TDD</a> <a href="/tags/agile/" style="font-size: 12.86px;">agile</a> <a href="/tags/agile-course/" style="font-size: 10px;">agile course</a> <a href="/tags/agilekorea/" style="font-size: 10px;">agilekorea</a> <a href="/tags/agilekorea207/" style="font-size: 10px;">agilekorea207</a> <a href="/tags/api-gatewary/" style="font-size: 10px;">api gatewary</a> <a href="/tags/architecture/" style="font-size: 17.14px;">architecture</a> <a href="/tags/book/" style="font-size: 18.57px;">book</a> <a href="/tags/canvas/" style="font-size: 11.43px;">canvas</a> <a href="/tags/docker/" style="font-size: 11.43px;">docker</a> <a href="/tags/dod/" style="font-size: 10px;">dod</a> <a href="/tags/elasticsearch/" style="font-size: 11.43px;">elasticsearch</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/filebeat/" style="font-size: 11.43px;">filebeat</a> <a href="/tags/generic/" style="font-size: 10px;">generic</a> <a href="/tags/golang/" style="font-size: 17.14px;">golang</a> <a href="/tags/java/" style="font-size: 14.29px;">java</a> <a href="/tags/java-8/" style="font-size: 11.43px;">java 8</a> <a href="/tags/jpa/" style="font-size: 17.14px;">jpa</a> <a href="/tags/kibana/" style="font-size: 11.43px;">kibana</a> <a href="/tags/konvajs/" style="font-size: 11.43px;">konvajs</a> <a href="/tags/life/" style="font-size: 10px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/logstash/" style="font-size: 11.43px;">logstash</a> <a href="/tags/microservices/" style="font-size: 20px;">microservices</a> <a href="/tags/module-programming/" style="font-size: 10px;">module programming</a> <a href="/tags/msa/" style="font-size: 20px;">msa</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/pair-programming/" style="font-size: 10px;">pair programming</a> <a href="/tags/reactjs/" style="font-size: 14.29px;">reactjs</a> <a href="/tags/retro/" style="font-size: 15.71px;">retro</a> <a href="/tags/service-discovery/" style="font-size: 10px;">service discovery</a> <a href="/tags/whiteboard/" style="font-size: 11.43px;">whiteboard</a> <a href="/tags/%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80/" style="font-size: 18.57px;">개발일지</a> <a href="/tags/%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D/" style="font-size: 10px;">기술스택</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842017/" style="font-size: 10px;">애자일코리아2017</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842018/" style="font-size: 10px;">애자일코리아2018</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 Kihoon Kim</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'kihoonkim';
+    
+    
+    var disqus_url = 'https://kihoonkim.github.io/2017/04/05/reactgo/reactgo-5-configuration/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

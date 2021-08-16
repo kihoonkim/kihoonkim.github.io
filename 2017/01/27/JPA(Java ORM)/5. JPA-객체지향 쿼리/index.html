@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-5196265384506352",
+    enable_page_level_ads: true
+  });
+</script> -->
+    <meta charset="utf-8">
+    
+    <title>(JPA  - 5) 객체지향 쿼리 언어 | KihoonKim:Dev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="jpa" />
+    
+    <meta name="description" content="EntityManager.find()는 식별자로 하나의 엔티티를 조회할 수 있었다.JPA는 좀 더 복잡한 검색을 위해서 다양한 객체지향 쿼리 기술을 제공 한다.    JPQL: Java Persistence Query Language 네이티브 SQL: SQL을 직접 사용 Criteria 쿼리: JPQL을 쉽게 사용하더록 도와주는 API(빌더 클래스) Que">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(JPA  - 5) 객체지향 쿼리 언어">
+<meta property="og:url" content="https://kihoonkim.github.io/2017/01/27/JPA(Java%20ORM)/5.%20JPA-%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EC%BF%BC%EB%A6%AC/index.html">
+<meta property="og:site_name" content="KihoonKim:Dev">
+<meta property="og:description" content="EntityManager.find()는 식별자로 하나의 엔티티를 조회할 수 있었다.JPA는 좀 더 복잡한 검색을 위해서 다양한 객체지향 쿼리 기술을 제공 한다.    JPQL: Java Persistence Query Language 네이티브 SQL: SQL을 직접 사용 Criteria 쿼리: JPQL을 쉽게 사용하더록 도와주는 API(빌더 클래스) Que">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://kihoonkim.github.io/images/eclipse-ini-file.png">
+<meta property="article:published_time" content="2017-01-27T03:19:35.000Z">
+<meta property="article:modified_time" content="2021-07-31T09:28:29.079Z">
+<meta property="article:author" content="Kihoon Kim">
+<meta property="article:tag" content="jpa">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kihoonkim.github.io/images/eclipse-ini-file.png">
+    
+
+    
+        <link rel="alternate" href="/" title="KihoonKim:Dev" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-90999360-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Agile/">Agile</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/">DevTools</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/ELK/">ELK</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JPA/">JPA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Java8/">Java8</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Life/">Life</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Microservices/">Microservices</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/React/">React</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/">ReactGo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/golang/">golang</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/intro/">intro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/reactjs/">reactjs</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Retro/">Retro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linux/">linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" target="_blank" rel="noopener" href="https://about.me/kihoon">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Java/">Java</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Java/JPA/">JPA</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-JPA(Java ORM)/5. JPA-객체지향 쿼리" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        (JPA  - 5) 객체지향 쿼리 언어
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/2017/01/27/JPA(Java%20ORM)/5.%20JPA-%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EC%BF%BC%EB%A6%AC/" class="article-date">
+    <time datetime="2017-01-27T03:19:35.000Z" itemprop="datePublished">2017-01-27</time>
+</a>
+                
+    <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jpa/" rel="tag">jpa</a></li></ul>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <p>EntityManager.find()는 식별자로 하나의 엔티티를 조회할 수 있었다.<br>JPA는 좀 더 복잡한 검색을 위해서 다양한 객체지향 쿼리 기술을 제공 한다.  </p>
+<ul>
+<li>JPQL: Java Persistence Query Language</li>
+<li>네이티브 SQL: SQL을 직접 사용</li>
+<li>Criteria 쿼리: JPQL을 쉽게 사용하더록 도와주는 API(빌더 클래스)</li>
+<li>QueryDSL: Criteria 쿼리와 같음. 비표준 오픈소스 프레임워크.</li>
+<li>기타: JDBC나 MyBatis같은 매퍼 프레임워크를 JPA와 함께 사용 하는 방법도 제공한다.  </li>
+</ul>
+<h4 id="JPQL"><a href="#JPQL" class="headerlink" title="JPQL"></a>JPQL</h4><p>JPQL은 엔티티 객체를 조회하는 JPA 표준 객체지향 쿼리로 SQL과 유사하다.<br>JPQL은 SQL을 추상화 하기 때문에 데이터베이스에 종속되지 않고,<br>설정된 데이터베이스 Dialect가 각 데이터베이스 맞는 SQL을 생성 및 실행한다.<br>JPQL로 조회된 엔티티는 영속성 컨텍스트에서 관리된다.<br><strong>em.createQuery()</strong> 로 JPQL을 실행한다.  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String jpql = <span class="string">&quot;select e from Employee e where e.name = &#x27;kihoon&#x27;&quot;</span>;</span><br><span class="line">List&lt;Employee&gt; employees = em.createQuery(jpql, Employee.class).getResualtList();</span><br></pre></td></tr></table></figure>
+
+<h4 id="네이티브-SQL"><a href="#네이티브-SQL" class="headerlink" title="네이티브 SQL"></a>네이티브 SQL</h4><p><strong>em.createNativeQuery()</strong> 로 SQL을 직접 실행한다.  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String sql = <span class="string">&quot;select ID, NAME, DEPARTMENT_ID from EMPLOYEE where NAEM = &#x27;kihoon&#x27;&quot;</span>;</span><br><span class="line">List&lt;Employee&gt; employees = em.createNativeQuery(sql, Employee.class).getResualtList();</span><br></pre></td></tr></table></figure>
+<h4 id="Criteria-쿼리"><a href="#Criteria-쿼리" class="headerlink" title="Criteria 쿼리"></a>Criteria 쿼리</h4><p>Criteria 쿼리는 JPQL을 생성하는 빌더 클래스이다.<br>프로그래밍 코드 형식으로 JPQL 을 작성하기 때문에 컴파일 시점에 오류를 발견할 수 있는 등 여러 장점이 있지만,<br>아래 코드와 같이 코드자체가 복잡하고 가독성도 떨어진다.  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JPQL: &quot;select e from Employee e where e.name = &#x27;kihoon&#x27;&quot;</span></span><br><span class="line">CriteriaBuilder cb = em.getCriteriaBuilder();</span><br><span class="line"></span><br><span class="line">CriteriaQuery&lt;Employee&gt; query = cb.createQuery(Employee.class);</span><br><span class="line">Root&lt;Employee&gt; e = query.from(Employee.class);</span><br><span class="line">CriteriaQuery&lt;Employee&gt; cq = query.select(e).where(cb.equal(e.get(<span class="string">&quot;name&quot;</span>), <span class="string">&quot;kihoon&quot;</span>));</span><br><span class="line"></span><br><span class="line">List&lt;Employee&gt; employees = cq.createQuery(cq).getResualtList();</span><br></pre></td></tr></table></figure>
+
+<h4 id="QueryDSL"><a href="#QueryDSL" class="headerlink" title="QueryDSL"></a>QueryDSL</h4><p>Criteria 쿼리와 같은 JPQL을 생성하는 빌더 클래스이지만 더 단순하고 쉽다.<br>JPA표준은 아니지만 가장 많이 사용되는 오픈소스 프로젝트이다.<br>많이 사용되기 때문에 아래쪽에서 상세히 알아보도록 하자.  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// JPQL: &quot;select e from Employee e where e.name = &#x27;kihoon&#x27;&quot;</span></span><br><span class="line">JPAQuery query = <span class="keyword">new</span> JPAQuery(entityManager);</span><br><span class="line">QEmployee employee = QEmployee.employee; <span class="comment">// 엔티티 클래스 기반으로 쿼리전용 클래스를 미리 만들어야 된다.</span></span><br><span class="line"></span><br><span class="line">List&lt;Employee&gt; employees = query.from(employee)</span><br><span class="line">                                .where(employee.name.eq(<span class="string">&quot;kihoon&quot;</span>))</span><br><span class="line">                                .list(employee);</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">#### JDBC나 MyBatis 직접 사용</span><br><span class="line">JDBC나 MyBatis를 직접 사용하는 경우 영속성 컨텍스트에서 관리가 되지 않기 때문에 SQL 실행 전에 **강제로 플러시** 해줘야 된다.  </span><br><span class="line">```Java</span><br><span class="line">Session session = entityManager.unwrap(Session.class);</span><br><span class="line">session.doWork(<span class="keyword">new</span> Work() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Connection connection)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">        <span class="comment">// do something..</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="QueryDSL-상세"><a href="#QueryDSL-상세" class="headerlink" title="QueryDSL 상세"></a>QueryDSL 상세</h2><p><a target="_blank" rel="noopener" href="http://www.querydsl.com/static/querydsl/3.6.3/reference/ko-KR/html_single/">QueryDSL 레퍼런스 문서</a></p>
+<h4 id="메이븐-환경-설정"><a href="#메이븐-환경-설정" class="headerlink" title="메이븐 환경 설정"></a>메이븐 환경 설정</h4><ul>
+<li>Dependency 설정: querydsl-apt, querydsl-jpa</li>
+<li>APT 빌드 플러그인 설정: <strong>JPAAnnotationProcessor</strong> 는 <strong>@Entity</strong> 을 가진 도메인 타입을 찾아서 <strong>쿼리 타입</strong> 을 생성</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mysema.querydsl<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>querydsl-apt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.6.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mysema.querydsl<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>querydsl-jpa<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.6.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mysema.maven<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>apt-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">goal</span>&gt;</span>process<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">outputDirectory</span>&gt;</span>target/generated-sources/java<span class="tag">&lt;/<span class="name">outputDirectory</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">processor</span>&gt;</span>com.mysema.query.apt.jpa.JPAAnnotationProcessor<span class="tag">&lt;/<span class="name">processor</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>NOTE</strong><br>  pom.xml에 메이븐 설정 후 아래와 같은 에러가 난다면..<br>  <em>You need to run build with JDK or have tools.jar on the classpath.<br>  If this occures during eclipse build make sure you run eclipse under JDK as well   (com.mysema.maven:apt-maven-plugin:1.1.3:process:default:generate-sources)</em>   </p>
+</blockquote>
+<blockquote>
+<p>eclipse.ini 파일에 JDK가 설치된 경로를 추가해준다.(-vmargs 바로 위에 적어야 된다.)<br>  -vm C:\Program Files\Java\jdk1.8.0_25\bin\javaw.exe<br>  <img src="/images/eclipse-ini-file.png" alt="fig">  </p>
+</blockquote>
+<h4 id="조회-쿼리"><a href="#조회-쿼리" class="headerlink" title="조회 쿼리"></a>조회 쿼리</h4><p>쿼리타입을 사용한다. 쿼리타입의 변수명을 from에 넘겨주는데 이는 JPQL 생성시 alias로 사용된다.<br>from(), where(), orderBy(), offset(), limit(), groupBy(), having() 등을 사용하고,<br>최종 결과를 조회 할때 list(), uniqueResult(), singleResult() 를 사용할 수 있다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">selectQueryDSL</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  JPAQuery query = <span class="keyword">new</span> JPAQuery(em);</span><br><span class="line">  QMember member = QMember.member;  <span class="comment">// 쿼리 타입</span></span><br><span class="line">  List&lt;Member&gt; list = query.from(member)</span><br><span class="line">                           .where(member.username.eq(<span class="string">&quot;kihoon&quot;</span>))</span><br><span class="line">                           .groupBy(member.age)</span><br><span class="line">                           .having(member.age.gt(<span class="number">30</span>))</span><br><span class="line">                           .orderBy(member.age.desc())  <span class="comment">// 정령</span></span><br><span class="line">                           .offset(<span class="number">10</span>).limit(<span class="number">20</span>)        <span class="comment">// 페이징</span></span><br><span class="line">                           .list(member);               <span class="comment">// 결과 조회</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- hibernate에 의해 자동 생성된 SQL</span></span><br><span class="line"><span class="keyword">select</span> member0_.ID <span class="keyword">as</span> ID1_0_,</span><br><span class="line">       member0_.age <span class="keyword">as</span> age2_0_,</span><br><span class="line">       member0_.NAME <span class="keyword">as</span> NAME3_0_</span><br><span class="line">  <span class="keyword">from</span> <span class="keyword">MEMBER</span> member0_</span><br><span class="line"> <span class="keyword">where</span> member0_.NAME<span class="operator">=</span>?</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> member0_.age</span><br><span class="line">  <span class="keyword">having</span> member0_.age<span class="operator">&gt;</span>?</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> member0_.age <span class="keyword">desc</span></span><br><span class="line">  limit ?</span><br><span class="line"> <span class="keyword">offset</span> ?</span><br></pre></td></tr></table></figure>
+<h4 id="조인"><a href="#조인" class="headerlink" title="조인"></a>조인</h4><p>innerJoin(), leftJoin(), rightJoin(), fullJoin()을 지원하고,<br>조인 조건을 위해 on(), 페치 조인을 위해 fetch()를 지원한다.  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Inner 조인</span></span><br><span class="line">query.from(employee)</span><br><span class="line">     .innerJoin(department)</span><br><span class="line">     .on(department.name.eq(<span class="string">&quot;dev&quot;</span>))</span><br><span class="line">     .list();</span><br><span class="line"><span class="comment">// fetch 조인</span></span><br><span class="line">query.from(employee)</span><br><span class="line">     .innerJoin(department).fetch()</span><br><span class="line">     .leftJoin(meeting).fetch()</span><br><span class="line">     .list();</span><br><span class="line"><span class="comment">//  theta 조인</span></span><br><span class="line">query.from(employee, department)</span><br><span class="line">     .where(employee.department.eq(department))</span><br><span class="line">     .list();</span><br></pre></td></tr></table></figure>
+
+<h4 id="서브-쿼리"><a href="#서브-쿼리" class="headerlink" title="서브 쿼리"></a>서브 쿼리</h4><p><strong>com.mysema.query.jpa.JPASubQuery</strong> 를 사용한다.  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">query.from(member)</span><br><span class="line">		 .where(member.age.eq(</span><br><span class="line">			 <span class="keyword">new</span> JPASubQuery().from(subMember).unique(subMember.age.max())</span><br><span class="line">		 ))</span><br><span class="line">     .list(member);</span><br></pre></td></tr></table></figure>
+
+<h4 id="프로젝션"><a href="#프로젝션" class="headerlink" title="프로젝션"></a>프로젝션</h4><p><strong>프로젝션</strong> 이란 select 절이 조회할 대상을 지정하는 것이다.<br>JPA는 Map과 비슷한 <strong>com.mysema.query.Tuple</strong> 이라는 타입을 통해 결과를 반환하거나,<br><strong>com.mysema.query.types.Projections</strong> 를 통해 특정 객체(DTO)로 결과를 반환 할 수 있다.<br>프로젝션으로 조회된 값들은 엔티티가 아니므로 영속성 컨텍스트에서 관리되지 않는다.  </p>
+<ul>
+<li>프로젝션 대상 컬럼이 하나일때<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">JPAQuery query = <span class="keyword">new</span> JPAQuery(em);</span><br><span class="line">QMember member = QMember.member;</span><br><span class="line">List&lt;String&gt; names = query.from(member).list(member.username);</span><br><span class="line"><span class="keyword">for</span> (String name : names) &#123;</span><br><span class="line">	System.out.println(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>프로젝션 대상 컬럼이 여러개 일때<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">JPAQuery query = <span class="keyword">new</span> JPAQuery(em);</span><br><span class="line">QMember member = QMember.member;</span><br><span class="line">List&lt;Tuple&gt; tupleList = query.from(member).list(member.username, member.age);</span><br><span class="line"><span class="keyword">for</span> (Tuple tuple : tupleList) &#123;</span><br><span class="line">	System.out.println(tuple.get(member.username));</span><br><span class="line">	System.out.println(tuple.get(member.age));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>특정 객체에 자동 매핑하려고 할 때  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">JPAQuery query = <span class="keyword">new</span> JPAQuery(em);</span><br><span class="line">QMember member = QMember.member;</span><br><span class="line"><span class="comment">// setter를 통해 값을 세팅</span></span><br><span class="line">List&lt;MemberDTO&gt; dtoList1 = query.from(member).list(</span><br><span class="line">      	  			          Projections.bean(MemberDTO.class, member.username, member.age)</span><br><span class="line">      	  				);</span><br><span class="line"><span class="comment">// 멤버 필드를 통해 값을 세팅                          </span></span><br><span class="line">List&lt;MemberDTO&gt; dtoList2 = query.from(member).list(</span><br><span class="line">      	  			          Projections.fields(MemberDTO.class, member.username, member.age)</span><br><span class="line">      	  				);</span><br><span class="line"><span class="comment">// 생성자를 통해 값을 세팅. 파라메터 순서와 동일한 생성자가 존재해야 된다.</span></span><br><span class="line">List&lt;MemberDTO&gt; dtoList3 = query.from(member).list(</span><br><span class="line">      	  			          Projections.constructor(MemberDTO.class, member.username, member.age)</span><br><span class="line">      	  				);</span><br><span class="line"><span class="comment">// DTO 객체</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MemberDTO</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String username;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MemberDTO</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MemberDTO</span><span class="params">(String username, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.setUsername(username);</span><br><span class="line">		<span class="keyword">this</span>.setAge(age);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getUsername</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> username;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setUsername</span><span class="params">(String username)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.username = username;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> age;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="수정-삭제-쿼리"><a href="#수정-삭제-쿼리" class="headerlink" title="수정, 삭제 쿼리"></a>수정, 삭제 쿼리</h4><p>수정, 삭제 쿼리는 영속성 컨텍스트와 상관없이 데이터베이스에 직접 실행하므로 주의해야 한다.  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">QMember member = QMember.member;</span><br><span class="line">JPAUpdateClause  updateClause = <span class="keyword">new</span> JPAUpdateClause(em, member);</span><br><span class="line">updateClause.where(member.id.eq(<span class="string">&quot;id001&quot;</span>))</span><br><span class="line">            .set(member.username, <span class="string">&quot;kihoon&quot;</span>)</span><br><span class="line">            .set(member.age, <span class="number">30</span>)</span><br><span class="line">            .execute();</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">QMember member = QMember.member;</span><br><span class="line">JPADeleteClause deleteClause = <span class="keyword">new</span> JPADeleteClause(em, member);</span><br><span class="line">deleteClause.where(member.id.eq(<span class="string">&quot;id001&quot;</span>))</span><br><span class="line">            .execute()</span><br></pre></td></tr></table></figure>
+
+<h4 id="동적-쿼리"><a href="#동적-쿼리" class="headerlink" title="동적 쿼리"></a>동적 쿼리</h4><p><strong>com.mysema.query.BooleanBuilder</strong> 를 사용하여 동적쿼리를 작성할 수 있다.  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">String search_name = <span class="string">&quot;&quot;</span>;</span><br><span class="line">Integer search_age=<span class="number">30</span>;</span><br><span class="line"></span><br><span class="line">JPAQuery query = <span class="keyword">new</span> JPAQuery(em);</span><br><span class="line">QMember member = QMember.member;</span><br><span class="line"></span><br><span class="line">BooleanBuilder builder = <span class="keyword">new</span> BooleanBuilder();</span><br><span class="line"><span class="keyword">if</span>(StringUtils.hasText(search_name)) &#123;</span><br><span class="line">	builder.and(member.username.contains(search_name));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(search_age != <span class="keyword">null</span>) &#123;</span><br><span class="line">	builder.and(member.age.lt(search_age));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">List&lt;Member&gt; members = query.from(member).where(builder).list(member);</span><br></pre></td></tr></table></figure>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://kihoonkim.github.io/2017/01/27/JPA(Java%20ORM)/5.%20JPA-%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EC%BF%BC%EB%A6%AC/" data-id="cksej5ptu00199lv6crcr06od" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/koreakihoon" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/kihoonkim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/01/27/JPA(Java%20ORM)/6.%20JPA-%ED%8A%B8%EB%9E%9C%EC%A0%9D%EC%85%98/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            (JPA - 6) 트랜잭션
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/01/27/JPA(Java%20ORM)/4.%20JPA-%ED%94%84%EB%A1%9D%EC%8B%9C%20%EC%99%80%20%EC%A7%80%EC%97%B0%EB%A1%9C%EB%94%A9/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">(JPA - 4) 프록시 객체, 즉시로딩, 지연로딩</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/08/16/retro/10-years/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/10-years.png)" alt="지난 10년. 어떤 기술 흐름속에 살았을까?" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2021/08/16/retro/10-years/" class="title">지난 10년. 어떤 기술 흐름속에 살았을까?</a></p>
+                            <p class="item-date"><time datetime="2021-08-15T15:00:00.000Z" itemprop="datePublished">2021-08-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/12/31/retro/retro-2020/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2020/12/31/retro/retro-2020/" class="title">2020년 회고</a></p>
+                            <p class="item-date"><time datetime="2020-12-30T15:00:00.000Z" itemprop="datePublished">2020-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/mountain.webp)" alt="언젠가 또 힘들어 하고 있을지 모르는 나에게" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Life/">Life</a></p>
+                            <p class="item-title"><a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="title">언젠가 또 힘들어 하고 있을지 모르는 나에게</a></p>
+                            <p class="item-date"><time datetime="2020-09-25T04:30:00.000Z" itemprop="datePublished">2020-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-day1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/react/eslint-webstorm.png)" alt="React 개발 환경 구성 (react, webstorm)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-day1/" class="title">React 개발 환경 구성 (react, webstorm)</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T16:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-overview/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-overview/" class="title">React로 Whiteboard 만들기 overview</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T15:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Agile/">Agile</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/">DevTools</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/ELK/">ELK</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JPA/">JPA</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Java8/">Java8</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microservices/">Microservices</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/">ReactGo</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/golang/">golang</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/intro/">intro</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/reactjs/">reactjs</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retro/">Retro</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a><span class="category-list-count">8</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Duck-Typing/" style="font-size: 10px;">Duck Typing</a> <a href="/tags/Event-Driven/" style="font-size: 10px;">Event-Driven</a> <a href="/tags/FP/" style="font-size: 11.43px;">FP</a> <a href="/tags/IPC/" style="font-size: 10px;">IPC</a> <a href="/tags/Mockito/" style="font-size: 10px;">Mockito</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Robolectric/" style="font-size: 10px;">Robolectric</a> <a href="/tags/TDD/" style="font-size: 10px;">TDD</a> <a href="/tags/agile/" style="font-size: 12.86px;">agile</a> <a href="/tags/agile-course/" style="font-size: 10px;">agile course</a> <a href="/tags/agilekorea/" style="font-size: 10px;">agilekorea</a> <a href="/tags/agilekorea207/" style="font-size: 10px;">agilekorea207</a> <a href="/tags/api-gatewary/" style="font-size: 10px;">api gatewary</a> <a href="/tags/architecture/" style="font-size: 17.14px;">architecture</a> <a href="/tags/book/" style="font-size: 18.57px;">book</a> <a href="/tags/canvas/" style="font-size: 11.43px;">canvas</a> <a href="/tags/docker/" style="font-size: 11.43px;">docker</a> <a href="/tags/dod/" style="font-size: 10px;">dod</a> <a href="/tags/elasticsearch/" style="font-size: 11.43px;">elasticsearch</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/filebeat/" style="font-size: 11.43px;">filebeat</a> <a href="/tags/generic/" style="font-size: 10px;">generic</a> <a href="/tags/golang/" style="font-size: 17.14px;">golang</a> <a href="/tags/java/" style="font-size: 14.29px;">java</a> <a href="/tags/java-8/" style="font-size: 11.43px;">java 8</a> <a href="/tags/jpa/" style="font-size: 17.14px;">jpa</a> <a href="/tags/kibana/" style="font-size: 11.43px;">kibana</a> <a href="/tags/konvajs/" style="font-size: 11.43px;">konvajs</a> <a href="/tags/life/" style="font-size: 10px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/logstash/" style="font-size: 11.43px;">logstash</a> <a href="/tags/microservices/" style="font-size: 20px;">microservices</a> <a href="/tags/module-programming/" style="font-size: 10px;">module programming</a> <a href="/tags/msa/" style="font-size: 20px;">msa</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/pair-programming/" style="font-size: 10px;">pair programming</a> <a href="/tags/reactjs/" style="font-size: 14.29px;">reactjs</a> <a href="/tags/retro/" style="font-size: 15.71px;">retro</a> <a href="/tags/service-discovery/" style="font-size: 10px;">service discovery</a> <a href="/tags/whiteboard/" style="font-size: 11.43px;">whiteboard</a> <a href="/tags/%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80/" style="font-size: 18.57px;">개발일지</a> <a href="/tags/%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D/" style="font-size: 10px;">기술스택</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842017/" style="font-size: 10px;">애자일코리아2017</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842018/" style="font-size: 10px;">애자일코리아2018</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 Kihoon Kim</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'kihoonkim';
+    
+    
+    var disqus_url = 'https://kihoonkim.github.io/2017/01/27/JPA(Java%20ORM)/5.%20JPA-%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%20%EC%BF%BC%EB%A6%AC/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

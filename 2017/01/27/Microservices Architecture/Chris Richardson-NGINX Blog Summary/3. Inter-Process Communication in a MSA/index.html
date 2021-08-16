@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-5196265384506352",
+    enable_page_level_ads: true
+  });
+</script> -->
+    <meta charset="utf-8">
+    
+    <title>3. Inter-Process Communication in a Microservices Architecture | KihoonKim:Dev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="microservices,msa,architecture,IPC" />
+    
+    <meta name="description" content="Building Microservices: Inter-Process Communication in a Microservices ArchitectureInter-Process Communication in a Microservices Architecture에 대한 요약이다.  Monolithic 어플리케이션에서는 언어레벨의 메소드나 함수를 호출 함으로써 다른">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3. Inter-Process Communication in a Microservices Architecture">
+<meta property="og:url" content="https://kihoonkim.github.io/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/3.%20Inter-Process%20Communication%20in%20a%20MSA/index.html">
+<meta property="og:site_name" content="KihoonKim:Dev">
+<meta property="og:description" content="Building Microservices: Inter-Process Communication in a Microservices ArchitectureInter-Process Communication in a Microservices Architecture에 대한 요약이다.  Monolithic 어플리케이션에서는 언어레벨의 메소드나 함수를 호출 함으로써 다른">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.nginx.com/wp-content/uploads/2015/07/Richardson-microservices-part3-monolith-vs-microservices-1024x518.png">
+<meta property="article:published_time" content="2017-01-27T06:44:32.000Z">
+<meta property="article:modified_time" content="2021-07-31T09:28:29.079Z">
+<meta property="article:author" content="Kihoon Kim">
+<meta property="article:tag" content="microservices">
+<meta property="article:tag" content="msa">
+<meta property="article:tag" content="architecture">
+<meta property="article:tag" content="IPC">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.nginx.com/wp-content/uploads/2015/07/Richardson-microservices-part3-monolith-vs-microservices-1024x518.png">
+    
+
+    
+        <link rel="alternate" href="/" title="KihoonKim:Dev" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-90999360-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Agile/">Agile</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/">DevTools</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/ELK/">ELK</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JPA/">JPA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Java8/">Java8</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Life/">Life</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Microservices/">Microservices</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/React/">React</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/">ReactGo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/golang/">golang</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/intro/">intro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/reactjs/">reactjs</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Retro/">Retro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linux/">linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" target="_blank" rel="noopener" href="https://about.me/kihoon">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Microservices/">Microservices</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Microservices Architecture/Chris Richardson-NGINX Blog Summary/3. Inter-Process Communication in a MSA" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        3. Inter-Process Communication in a Microservices Architecture
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/3.%20Inter-Process%20Communication%20in%20a%20MSA/" class="article-date">
+    <time datetime="2017-01-27T06:44:32.000Z" itemprop="datePublished">2017-01-27</time>
+</a>
+                
+    <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IPC/" rel="tag">IPC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/architecture/" rel="tag">architecture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/microservices/" rel="tag">microservices</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/msa/" rel="tag">msa</a></li></ul>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="Building-Microservices-Inter-Process-Communication-in-a-Microservices-Architecture"><a href="#Building-Microservices-Inter-Process-Communication-in-a-Microservices-Architecture" class="headerlink" title="Building Microservices: Inter-Process Communication in a Microservices Architecture"></a>Building Microservices: Inter-Process Communication in a Microservices Architecture</h1><p><a target="_blank" rel="noopener" href="https://www.nginx.com/blog/building-microservices-inter-process-communication/">Inter-Process Communication in a Microservices Architecture</a>에 대한 요약이다.</p>
+<ul>
+<li>Monolithic 어플리케이션에서는 언어레벨의 메소드나 함수를 호출 함으로써 다른 컴포넌트를 실행 할 수 있었다.</li>
+<li>MSA기반 어플리케이션은 분산환경에서 개별 프로세스로 동작하기 때문에, inter-process communication (IPC) mechanism이 필요하다.<br><img src="https://www.nginx.com/wp-content/uploads/2015/07/Richardson-microservices-part3-monolith-vs-microservices-1024x518.png" alt="fig">  </li>
+</ul>
+<h2 id="Design시-고려사항"><a href="#Design시-고려사항" class="headerlink" title="Design시 고려사항"></a>Design시 고려사항</h2><h3 id="Interaction-Styles"><a href="#Interaction-Styles" class="headerlink" title="Interaction Styles"></a>Interaction Styles</h3><p>각 서비스들은 아래의 통신 스타일을 조합해서 사용하게 된다.  </p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>One-to-One</th>
+<th>One-to-Many</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Synchronous</strong></td>
+<td>Request/response</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>Asynchronous</strong></td>
+<td>Notification</td>
+<td>Publish/subscribe</td>
+</tr>
+<tr>
+<td></td>
+<td>Request/async response</td>
+<td>Publish/async responses</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Synchronous : 요청에대한 적절한 응답을 기대하고, 그때까지 기다리며 block.</li>
+<li>Asynchronous: 응답을 기다리며 block하지 않음.</li>
+<li>One-to-one: 각 요청이 한 서비스에서 실행됨<ul>
+<li>Request/response : 서비스에 요청을 하고, 응답을 기다린다.<br>적당한 시간 내에 응답이 올것을 기대하며, block 된 상태로 기다린다.</li>
+<li>Notification(one-way request): 서비스에 요청을 보내고, 응답을 받지 않는다.</li>
+<li>Request/async response: 서비스에 요청을 보내고, 비동기로 응답을 받는다.  </li>
+</ul>
+</li>
+<li>One-to-many: 각 요청이 여러 서비스에서 실행됨<ul>
+<li>Publish/subscribe: 메시지를 발행(publish)하면, 관심있는 서비스들이 이를 소비(consume)한다.</li>
+<li>Publish/async responses: 메시지를 publish하고, 이를 소비하는 서비스로 부터 응답을 기다린다.</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://www.nginx.com/wp-content/uploads/2015/07/Richardson-microservices-part3-taxi-service-1024x609.png" alt="fig"></p>
+<h3 id="Defining-APIs"><a href="#Defining-APIs" class="headerlink" title="Defining APIs"></a>Defining APIs</h3><p>API는 서비스와 이를 사용하는 클라이언트 간의 일종의 계약(contract)이다.<br>그렇기 때문에 API를 상세하게 정의하는 것이 중요하다. (참고 : <a target="_blank" rel="noopener" href="http://www.programmableweb.com/news/how-to-design-great-apis-api-first-design-and-raml/how-to/2015/07/10">API-first Approach</a>)<br>어떤 IPC 메카니즘을 사용하느냐에 따라 API를 정의하는 것이 달라질 것이다.  </p>
+<ul>
+<li>messaging : message channels, message types</li>
+<li>HTTP : URLs, request/response formats</li>
+</ul>
+<h3 id="Evolving-APIs"><a href="#Evolving-APIs" class="headerlink" title="Evolving APIs"></a>Evolving APIs</h3><p>서비스의 API는 시간이 지남에 따라 변경된다.<br>모놀리틱 어플리케이션에서는 API를 변경하고, 이를 호출하는 부분을 수정하면  간단히 해결된다.<br>하지만, MSA기반 어플리케이션에서는 매우 어렵기 때문에 전략적인 접근이 필요하다.<br>어떻게 API 변경에 대처할 지는, 변경의 크기에 따라 다르다.  </p>
+<p>속성이 추가되는 것과 같이 변경이 작고 사소한 것이라면,<br>기본값을 주거나 새로운 속성을 무시하게 함로써 쉽게 변경 할 수 있다.  </p>
+<p>major하고 큰 변경이라면, 클라이언트에게 즉시 변경하도록 강요 할 수 없기 때문에<br>서비스는 일정기간동안 두 버전의 API를 지원해야 한다.  </p>
+<ul>
+<li>참조 : <a target="_blank" rel="noopener" href="http://techblog.netflix.com/2013/08/deploying-netflix-api.html">Deploying the Netflix API</a>  </li>
+</ul>
+<h3 id="Handling-Partial-Failure"><a href="#Handling-Partial-Failure" class="headerlink" title="Handling Partial Failure"></a>Handling Partial Failure</h3><p>분산 시스템에서는 partial failure 위험이 항상 존재한다.<br>장애가 났거나, 유지보수상 이유로, 혹은 시스템 부하로 인해 응답속도가 너무 느린경우 발생 할 수 있다.<br>응답을 무한정 기다리며 block상태에 있다면, 사용자에게 안좋은 UX를 제공할 뿐만 아니라,<br>block상태인 thread가 늘어나면서 결국 해당 서비스도 장애가 발생 할 수 있다.  </p>
+<ul>
+<li>Network timeouts</li>
+<li>Limiting the number of outstanding requests</li>
+<li><a target="_blank" rel="noopener" href="http://martinfowler.com/bliki/CircuitBreaker.html">Circuit breaker pattern</a></li>
+<li>Provide fallbacks: cached data, default value</li>
+<li>참조 :<br><a target="_blank" rel="noopener" href="http://techblog.netflix.com/2012/02/fault-tolerance-in-high-volume.html">Fault Tolerance in a High Volume, Distributed System</a><br><a target="_blank" rel="noopener" href="https://github.com/Netflix/Hystrix">Netflix Hystrix</a></li>
+</ul>
+<h2 id="IPC-Technologies"><a href="#IPC-Technologies" class="headerlink" title="IPC Technologies"></a>IPC Technologies</h2><h3 id="Asynchronous-Message-Based-Communication"><a href="#Asynchronous-Message-Based-Communication" class="headerlink" title="Asynchronous, Message-Based Communication"></a>Asynchronous, Message-Based Communication</h3><ul>
+<li><strong>메시지(Message)</strong> 기반 통신은 메시지를 <strong>비동기</strong> 로 주고 받는 것이다.<br><img src="http://www.enterpriseintegrationpatterns.com/img/MessageChannelSolution.gif" alt="fig" title="Message Channel"></li>
+<li>만약 응답을 받기 원한다면 별도의 메시지를 보내야 한다.  </li>
+<li>비동기로 통신하기 때문에 응답을 받기위해 block상태로 기다리지 않는다.</li>
+<li>메시지는 <strong>헤더(header)</strong> 와 <strong>바디(message body)</strong> 로 구성된다.</li>
+<li>메시지는 <strong>채널(Channel)</strong> 을 통해 주고받는다.  <ul>
+<li>point‑to‑point 채널: 한 consumer에게 메시지를 전달. 1:1로 직접 통신시 사용</li>
+<li>publish‑subscribe 채널: 여러 consumer에게 메시지를 전달. 1:N 통신시 사용</li>
+</ul>
+</li>
+<li>표준 프로토콜: AMQP, STOMP</li>
+<li>오픈소스: <a target="_blank" rel="noopener" href="https://www.rabbitmq.com/">RabbitMQ</a>, <a target="_blank" rel="noopener" href="http://kafka.apache.org/">Apache Kafka</a>, <a target="_blank" rel="noopener" href="http://activemq.apache.org/">Apache ActiveMQ</a>, <a target="_blank" rel="noopener" href="https://github.com/bitly/nsq">NSQ</a></li>
+</ul>
+<h4 id="메지징-사용의-장점"><a href="#메지징-사용의-장점" class="headerlink" title="메지징 사용의 장점"></a>메지징 사용의 장점</h4><ul>
+<li>서비스와 클라이언트간 의존성을 줄임. 서비스의 위치를 몰라도 됨.</li>
+<li>메시지 버퍼링. consumer에의해 메시지가 소비될때까지 큐에 보관함.</li>
+<li>1:1, 1:N 등 모든 통신 스타일을 지원함</li>
+</ul>
+<h4 id="메지징-사용의-단점"><a href="#메지징-사용의-단점" class="headerlink" title="메지징 사용의 단점"></a>메지징 사용의 단점</h4><ul>
+<li>운영복잡도 증가: 메시징 시스템도 설치하고, 설정하고, 운영해야되는 시스템이다.</li>
+<li> request/response기반 통신 구현시 복잡함. 응답을 받기위해 추가작업 필요.(correlation ID)</li>
+</ul>
+<h3 id="Synchronous-Request-Response-IPC"><a href="#Synchronous-Request-Response-IPC" class="headerlink" title="Synchronous, Request/Response IPC"></a>Synchronous, Request/Response IPC</h3><ul>
+<li><strong>Request/Response</strong> 기반 통신은 클라이언트에서 서비스로 요청을 <strong>동기</strong> 로 보내는 것이다.</li>
+<li>응답을 받기위해 클라이언트의 thread는 block상태로 기다린다.</li>
+<li>client code에 <em>Futures, Rx..</em> 를 사용하여 asynchronous, event-driven하게 처리할 수도 있다.</li>
+</ul>
+<h4 id="REST"><a href="#REST" class="headerlink" title="REST"></a>REST</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Representational_state_transfer">RESTful</a>스타일의 API 개발 방법</li>
+<li>HTTP를 사용하는 IPC 메카니즘</li>
+<li>비지니스 객체(object)같은 자원(resources)을 표현(represent)하는 것이 주요 컨셉이다.</li>
+<li>GET, POST, PUT, DELETE..같은 HTTP 용어와 URL을 사용하여 자원을 조작한다.</li>
+<li>HTTP-based API가 RESTful 한 것은 아니다. (참고: <a target="_blank" rel="noopener" href="http://jinson.tistory.com/190">REST 성숙도 모델</a>)</li>
+<li><a target="_blank" rel="noopener" href="http://raml.org/">RAML</a>이나 <a target="_blank" rel="noopener" href="http://swagger.io/">Swagger</a>를 사용하여 RESTful API를 디자인 할 수 있다.</li>
+<li>장점 :<ul>
+<li>HTTP 는 단순하고 친숙하다.</li>
+<li>HTTP API는 browser나 curl을 사용하여 테스트하기 쉽다.</li>
+<li>request/response 스타일 통신을 지원한다.</li>
+<li>HTTP는 방화벽에 친화적이다.</li>
+<li>메시지 브로커 같은 중간 매개체가 필요없어 시스템 아키텍쳐가 단순하다.</li>
+</ul>
+</li>
+<li>단점 :<ul>
+<li>request/response 스타일 통신만 지원한다.<br>notification(one-way)을 HTTP로 구현하더라도 응답을 받아야한다.</li>
+<li>클라이언트와 서비스가 직접 통신하기 때문에 반드시 둘 다 동작 중이어야 한다.</li>
+<li>클라이언트는 서비스들의 위치를 알고있어야 한다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="Thrift"><a href="#Thrift" class="headerlink" title="Thrift"></a>Thrift</h4><ul>
+<li>다른 언어로 개발된 서비스들간 RPC통신을 위한 프레임워크</li>
+<li>클라이언트의 stub코드와 서비스의 skeleton코드를 생성(generate)해준다.</li>
+<li>request/response 스타일 통신과 one-way 스타일의 통신 모두 가능하다.</li>
+<li>C++, Java, Python, PHP, Ruby, Erlang, Perl, Haskell, C#, Cocoa, JavaScript, Node.js, Smalltalk, OCaml, Delphi…</li>
+<li>JSON, binary, compact binary 등의 메시지 포멧을 지원.</li>
+<li>TCP, HTTP 프로토콜 지원.</li>
+</ul>
+<h3 id="Message-Formats"><a href="#Message-Formats" class="headerlink" title="Message Formats"></a>Message Formats</h3><p>서비스들이 여러 언어로 개발되어 있는 경우, 통신시 사용할 메시지 포멧을 결정하는 것이 중요하다.  </p>
+<h4 id="텍스트-기반-포멧-text-based-format"><a href="#텍스트-기반-포멧-text-based-format" class="headerlink" title="텍스트 기반 포멧(text-based format)"></a>텍스트 기반 포멧(text-based format)</h4><ul>
+<li>JSON: 키(name)와 값(value)의 쌍으로 속성을 표현. <a target="_blank" rel="noopener" href="http://www.w3.org/XML/Schema">XML Schema</a></li>
+<li>XML: 요소(element)와 값(value)으로 속성을 표현. <a target="_blank" rel="noopener" href="http://json-schema.org/">JSON Schema</a></li>
+<li>장점 :<ul>
+<li>사람이 이해하기 쉽고, 그 자체로 설명가능(self-describing) 하다.</li>
+<li>관심있는 값만 보고 나머지는 무시한다. 속성 변경에 대처하기 쉽다.</li>
+</ul>
+</li>
+<li>단점 :<ul>
+<li>메시지가 너무 크고 정보가 많다. 특히 XML..</li>
+<li>텍스트 파싱(parsing)에 대한 오버해드가 있다.</li>
+</ul>
+</li>
+</ul>
+<h4 id="바이너리-포멧-binary-format"><a href="#바이너리-포멧-binary-format" class="headerlink" title="바이너리 포멧(binary format)"></a>바이너리 포멧(binary format)</h4><ul>
+<li>Thrift RPC</li>
+<li><a target="_blank" rel="noopener" href="https://avro.apache.org/">Apache Avro</a>: schema</li>
+<li><a target="_blank" rel="noopener" href="https://developers.google.com/protocol-buffers/docs/overview">Protocol Buffers</a>: tagged fields</li>
+<li>참고: <a target="_blank" rel="noopener" href="http://www.slideshare.net/IgorAnishchenko/pb-vs-thrift-vs-avro">Thrift vs Protocol Buffers vs Avro - Biased Comparison</a></li>
+</ul>
+<h2 id="결론"><a href="#결론" class="headerlink" title="결론"></a>결론</h2><p>Microservices는 IPC 메카니즘을 사용하여 통신해야 한다.<br>설계시 고려할 사항으로는 서비스간 어떻게 통신할지, API를 어떻게 정의할지,<br>API 변경에 어떻게 대응할지, 부분장애(partial failure)에 어떻게 대응할지등이 있다.<br>IPC 메카니즘으로는 메시지기반의 비동기 방식과 request/response기반의 동기 방식이 있다.  </p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://kihoonkim.github.io/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/3.%20Inter-Process%20Communication%20in%20a%20MSA/" data-id="cksej5puu004e9lv661bn17dr" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/koreakihoon" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/kihoonkim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/4.%20Service%20Discovery%20in%20a%20MSA/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            4. Service Discovery in a Microservices Architecture
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/2.%20Using%20an%20API%20Gateway/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">2. Using an API Gateway</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/08/16/retro/10-years/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/10-years.png)" alt="지난 10년. 어떤 기술 흐름속에 살았을까?" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2021/08/16/retro/10-years/" class="title">지난 10년. 어떤 기술 흐름속에 살았을까?</a></p>
+                            <p class="item-date"><time datetime="2021-08-15T15:00:00.000Z" itemprop="datePublished">2021-08-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/12/31/retro/retro-2020/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2020/12/31/retro/retro-2020/" class="title">2020년 회고</a></p>
+                            <p class="item-date"><time datetime="2020-12-30T15:00:00.000Z" itemprop="datePublished">2020-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/mountain.webp)" alt="언젠가 또 힘들어 하고 있을지 모르는 나에게" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Life/">Life</a></p>
+                            <p class="item-title"><a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="title">언젠가 또 힘들어 하고 있을지 모르는 나에게</a></p>
+                            <p class="item-date"><time datetime="2020-09-25T04:30:00.000Z" itemprop="datePublished">2020-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-day1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/react/eslint-webstorm.png)" alt="React 개발 환경 구성 (react, webstorm)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-day1/" class="title">React 개발 환경 구성 (react, webstorm)</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T16:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-overview/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-overview/" class="title">React로 Whiteboard 만들기 overview</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T15:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Agile/">Agile</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/">DevTools</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/ELK/">ELK</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JPA/">JPA</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Java8/">Java8</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microservices/">Microservices</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/">ReactGo</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/golang/">golang</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/intro/">intro</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/reactjs/">reactjs</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retro/">Retro</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a><span class="category-list-count">8</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Duck-Typing/" style="font-size: 10px;">Duck Typing</a> <a href="/tags/Event-Driven/" style="font-size: 10px;">Event-Driven</a> <a href="/tags/FP/" style="font-size: 11.43px;">FP</a> <a href="/tags/IPC/" style="font-size: 10px;">IPC</a> <a href="/tags/Mockito/" style="font-size: 10px;">Mockito</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Robolectric/" style="font-size: 10px;">Robolectric</a> <a href="/tags/TDD/" style="font-size: 10px;">TDD</a> <a href="/tags/agile/" style="font-size: 12.86px;">agile</a> <a href="/tags/agile-course/" style="font-size: 10px;">agile course</a> <a href="/tags/agilekorea/" style="font-size: 10px;">agilekorea</a> <a href="/tags/agilekorea207/" style="font-size: 10px;">agilekorea207</a> <a href="/tags/api-gatewary/" style="font-size: 10px;">api gatewary</a> <a href="/tags/architecture/" style="font-size: 17.14px;">architecture</a> <a href="/tags/book/" style="font-size: 18.57px;">book</a> <a href="/tags/canvas/" style="font-size: 11.43px;">canvas</a> <a href="/tags/docker/" style="font-size: 11.43px;">docker</a> <a href="/tags/dod/" style="font-size: 10px;">dod</a> <a href="/tags/elasticsearch/" style="font-size: 11.43px;">elasticsearch</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/filebeat/" style="font-size: 11.43px;">filebeat</a> <a href="/tags/generic/" style="font-size: 10px;">generic</a> <a href="/tags/golang/" style="font-size: 17.14px;">golang</a> <a href="/tags/java/" style="font-size: 14.29px;">java</a> <a href="/tags/java-8/" style="font-size: 11.43px;">java 8</a> <a href="/tags/jpa/" style="font-size: 17.14px;">jpa</a> <a href="/tags/kibana/" style="font-size: 11.43px;">kibana</a> <a href="/tags/konvajs/" style="font-size: 11.43px;">konvajs</a> <a href="/tags/life/" style="font-size: 10px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/logstash/" style="font-size: 11.43px;">logstash</a> <a href="/tags/microservices/" style="font-size: 20px;">microservices</a> <a href="/tags/module-programming/" style="font-size: 10px;">module programming</a> <a href="/tags/msa/" style="font-size: 20px;">msa</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/pair-programming/" style="font-size: 10px;">pair programming</a> <a href="/tags/reactjs/" style="font-size: 14.29px;">reactjs</a> <a href="/tags/retro/" style="font-size: 15.71px;">retro</a> <a href="/tags/service-discovery/" style="font-size: 10px;">service discovery</a> <a href="/tags/whiteboard/" style="font-size: 11.43px;">whiteboard</a> <a href="/tags/%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80/" style="font-size: 18.57px;">개발일지</a> <a href="/tags/%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D/" style="font-size: 10px;">기술스택</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842017/" style="font-size: 10px;">애자일코리아2017</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842018/" style="font-size: 10px;">애자일코리아2018</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 Kihoon Kim</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'kihoonkim';
+    
+    
+    var disqus_url = 'https://kihoonkim.github.io/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/3.%20Inter-Process%20Communication%20in%20a%20MSA/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>

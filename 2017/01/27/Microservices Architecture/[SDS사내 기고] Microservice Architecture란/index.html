@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-5196265384506352",
+    enable_page_level_ads: true
+  });
+</script> -->
+    <meta charset="utf-8">
+    
+    <title>(SDS 사내 기고) Microservices Architecture 란? | KihoonKim:Dev</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="microservices,msa,architecture" />
+    
+    <meta name="description" content="Microservices Architecture모놀리틱 아키텍쳐(Monolithic Architecture)우리가 전통적으로 SI나 솔루션을 개발하던 모습은 모든 기능을 패키지 단위로만 구분해서하나의 프로젝트에 넣어서 관리하는 것이었습니다. 심지어 모든 개발팀이 공유해서 말이죠.그리고 이 프로젝트 구성을 보면 뛰어난 SA들이 전체 구조를 잡고, 모든 기술">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(SDS 사내 기고) Microservices Architecture 란?">
+<meta property="og:url" content="https://kihoonkim.github.io/2017/01/27/Microservices%20Architecture/[SDS%EC%82%AC%EB%82%B4%20%EA%B8%B0%EA%B3%A0]%20Microservice%20Architecture%EB%9E%80/index.html">
+<meta property="og:site_name" content="KihoonKim:Dev">
+<meta property="og:description" content="Microservices Architecture모놀리틱 아키텍쳐(Monolithic Architecture)우리가 전통적으로 SI나 솔루션을 개발하던 모습은 모든 기능을 패키지 단위로만 구분해서하나의 프로젝트에 넣어서 관리하는 것이었습니다. 심지어 모든 개발팀이 공유해서 말이죠.그리고 이 프로젝트 구성을 보면 뛰어난 SA들이 전체 구조를 잡고, 모든 기술">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://kihoonkim.github.io/images/ms-article.png">
+<meta property="article:published_time" content="2017-01-27T06:44:39.000Z">
+<meta property="article:modified_time" content="2021-07-31T09:28:29.079Z">
+<meta property="article:author" content="Kihoon Kim">
+<meta property="article:tag" content="microservices">
+<meta property="article:tag" content="msa">
+<meta property="article:tag" content="architecture">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kihoonkim.github.io/images/ms-article.png">
+    
+
+    
+        <link rel="alternate" href="/" title="KihoonKim:Dev" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-90999360-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Agile/">Agile</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/">DevTools</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/ELK/">ELK</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JPA/">JPA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Java8/">Java8</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Life/">Life</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Microservices/">Microservices</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/React/">React</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/">ReactGo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/golang/">golang</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/intro/">intro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/reactjs/">reactjs</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Retro/">Retro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linux/">linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" target="_blank" rel="noopener" href="https://about.me/kihoon">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Microservices/">Microservices</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-Microservices Architecture/[SDS사내 기고] Microservice Architecture란" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        (SDS 사내 기고) Microservices Architecture 란?
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-subtitle">
+                <a href="/2017/01/27/Microservices%20Architecture/%5BSDS%EC%82%AC%EB%82%B4%20%EA%B8%B0%EA%B3%A0%5D%20Microservice%20Architecture%EB%9E%80/" class="article-date">
+    <time datetime="2017-01-27T06:44:39.000Z" itemprop="datePublished">2017-01-27</time>
+</a>
+                
+    <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/architecture/" rel="tag">architecture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/microservices/" rel="tag">microservices</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/msa/" rel="tag">msa</a></li></ul>
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <h1 id="Microservices-Architecture"><a href="#Microservices-Architecture" class="headerlink" title="Microservices Architecture"></a>Microservices Architecture</h1><h3 id="모놀리틱-아키텍쳐-Monolithic-Architecture"><a href="#모놀리틱-아키텍쳐-Monolithic-Architecture" class="headerlink" title="모놀리틱 아키텍쳐(Monolithic Architecture)"></a>모놀리틱 아키텍쳐(Monolithic Architecture)</h3><p>우리가 전통적으로 SI나 솔루션을 개발하던 모습은 모든 기능을 패키지 단위로만 구분해서<br>하나의 프로젝트에 넣어서 관리하는 것이었습니다. 심지어 모든 개발팀이 공유해서 말이죠.<br>그리고 이 프로젝트 구성을 보면 뛰어난 SA들이 전체 구조를 잡고, 모든 기술 스택을 정하고, 개발 표준을 잡아둡니다.<br>개발자들은 이 틀 안에서 개발가이드대로 업무 로직만 작성하면 되는 것이죠. 원하는 기술을 마음대로 적용할 수 없는 것이죠..  </p>
+<p>다른 팀의 서비스나 데이터가 필요하면 어떻게 했나요?<br>아마도 바로 클래스 참조를 하거나 DB Table을 Join 해서 처리 했을 겁니다.<br>이 방식으로 개발하면 모든 서비스마다 같은 기술, 같은 환경을 사용하기 때문에<br>유지보수도 쉽고 테스트하기도 쉽고 배포도 쉬운 장점이 있습니다.  </p>
+<h4 id="모놀리틱-아키텍쳐의-문제점"><a href="#모놀리틱-아키텍쳐의-문제점" class="headerlink" title="모놀리틱 아키텍쳐의 문제점"></a>모놀리틱 아키텍쳐의 문제점</h4><p>하지만, 소프트웨어는 시간이 지날수록 변경이 생기게 되어 있고,<br>규모가 점차 커지고 사용자가 많아지다 보면 문제가 생기게 됩니다.<br>이런 구조에서 다른 팀에서 오류 난 소스를 커밋하는 바람에 Jenkins 빌드가 안돼서<br>내가 수정한 소스가 반영이 안된 경험이 많이 있었죠.<br>(이문제로 프로젝트 내에 빌드관리자라는 특이한 역할자를 두기도 하죠..)  </p>
+<p>그 외에도 클래스를 직접 참조하다 보니 서비스간 의존성이 높아져서 수정하기 어려워지고,<br>서비스가 커질수록 빌드, 배포하는 시간이 오래 걸리는 등의 문제가 생기게 됩니다.<br>그리고 특정 서비스에 부하가 생겨서 해당 서비스의 인스턴스만 늘리고 싶더라도<br>모든 서비스가 하나의 WAS로 배포되기 때문에 전체 서비스를 함께 늘리는 방법 밖에 없습니다.  </p>
+<p>즉, 이런 방식은 프로젝트 관리는 용이 하지만 변화를 수용하는 것이 어려운 모델인 것입니다.<br>사람들은 이런 방식을 모놀리틱 아키텍처(Monolithic Architecture)라고 부릅니다.</p>
+<p>우리가 만든 서비스를 사용하는 사용자는 점점 글로벌 해지고,<br>클라이언트 종류는 웹, 모바일 뿐만 아니라 수많은 센서로까지 확장되고 있습니다.<br>이처럼 다양한 사용자 및 클라이언트가 보내는 요청에 대해 서비스가 잘 반응해야 됩니다.<br>잘 반응해야 된다는 말을 다시 풀어보면, 요구사항 변경에 대해 빠르게 대처 할 수 있어야 되고,<br>요청 량에 따라서 서비스 별로 스케일 인/아웃이 되는 등<br>시스템이 변화를 수용 할 수 있는 구조여야 된다는 말입니다.<br>모놀리틱 아키텍처만으로는 한계가 있는 시대가 된 것이죠.</p>
+<h3 id="마이크로서비스-아키텍처-Micoservices-Architecture"><a href="#마이크로서비스-아키텍처-Micoservices-Architecture" class="headerlink" title="마이크로서비스 아키텍처(Micoservices Architecture)"></a>마이크로서비스 아키텍처(Micoservices Architecture)</h3><p>그래서 새롭지만 새롭지 않은 마이크로서비스 아키텍처라는 용어가 나오게 되었습니다.<br>기존 CBD나 SOA를 접해본 사람이라면 새롭지 않을 것이고, 그렇지 않은 사람은 새로운 개념 일 것입니다.<br>서비스가 독립적으로 수행되고 재사용 가능해야 된다는 기본적인 사상아래<br>좀 더 대용량, 대규모 개발에 맞도록 경량화되고 변형된 아키텍처로 볼 수 있습니다.<br>그래도 말이 참 어렵고 잘 와 닿지가 안죠?</p>
+<p>마이크로 서비스 아키텍처는 옆의 그림처럼 서비스는 각각 다른 WAS로 배포되고 DB도 분리되어 있습니다.<br>즉, 다른 서비스에 영향을 받지 않고 WAS 인스턴스를 늘리고 줄이거나 다른 서비스로 대체할 수 있는 것이지요.<br>각 서비스들은 자신이 가진 기능들을 REST API로 노출 시킵니다.<br>클라이언트나 다른 서비스들과는 정의된 API를 보고 통신을 할 뿐,<br>내부적으로 어떻게 구현되고, 어떻게 변경되든 신경을 쓰지 않아도 됩니다.<br>클래스를 직접 참조하거나 테이블 조인을 하고 있었다면 변경에 대응하기 쉽지 않았겠죠.</p>
+<h4 id="마이크로서비스-아키텍처의-장점"><a href="#마이크로서비스-아키텍처의-장점" class="headerlink" title="마이크로서비스 아키텍처의 장점"></a>마이크로서비스 아키텍처의 장점</h4><p>이처럼 마이크로서비스 아키텍처는 많은 장점을 가지고 있습니다.<br>서비스단위로 작게 개발되기 때문에 빌드 및 배포시간이 상대적으로 짧습니다.<br>서비스 별로 독립적으로 내렸다 올릴 수 있고, 요청 량에 따라 인스턴스를 늘리고 줄이기도 쉽습니다.<br>또한 서비스 별로 적절한 기술 스택을 선택할 수 있죠.<br>예를 들면 파일 관리하는 서비스라면 Java보다는 node.js 같은 기술을 사용하는 것이 좋을 것이고,<br>로그를 관리하는 서비스라면 RDBMS보다는 NoSQL DB를 사용하는 것이 좋겠죠.</p>
+<h4 id="마이크로서비스-아키텍처의-담점"><a href="#마이크로서비스-아키텍처의-담점" class="headerlink" title="마이크로서비스 아키텍처의 담점"></a>마이크로서비스 아키텍처의 담점</h4><p>반면에 단점 또한 존재합니다.<br>무엇보다 분산환경을 구성해야 되기 때문에 복잡합니다.<br>트랜잭션을 구현하는 것도 매우 어렵고, 서비스마다 다른 기술을 사용하기 때문에 운영관점에서 힘든 점도 많이 있죠.<br>그리고 서비스 별로 중복되는 라이브러리도 존재하고,<br>WAS도 여러 개 뜨다 보니 CPU나 메모리 같은 자원의 오버헤드도 존재합니다.<br>따라서 MSA는 상황에 맞게 장단점을 잘 고려해서 도입하는 것이 중요합니다.</p>
+<h4 id="마이크로서비스-아키텍처의-구현-기술"><a href="#마이크로서비스-아키텍처의-구현-기술" class="headerlink" title="마이크로서비스 아키텍처의 구현 기술"></a>마이크로서비스 아키텍처의 구현 기술</h4><p>이제 실제 구현관점에서 패턴이나 관련 기술 대해 간략히 소개해 보겠습니다.<br>크리스 리차드슨의 블로그(<a target="_blank" rel="noopener" href="http://microservices.io/">http://microservices.io</a>) 에 잘 정리 되어 있으니 한번 들어가보면 좋을 것 같습니다.<br>GitHub(<a target="_blank" rel="noopener" href="https://github.com/cer">https://github.com/cer</a>) 를 통해 소스코드도 공유하고 있으니 같이 보면 좋을 것 같습니다.<br>MSA를 구현관점에서 고민한 흔적이 많이 보입니다.</p>
+<p>각 서비스 별로 독립적인 WAS로 구동되어야 하기 때문에 JVM 기반이라면 Spring Boot 사용을 추천하고 있고,<br>DB처리를 위해서는 JPA기술을 사용 하고 있는 것을 볼 수 있습니다.<br>그리고 각 서비스가 사용하는 주소(IP, Port)는 주로 동적으로 할당 되기 때문에<br>서비스를 등록 관리하기 위한 Service Discovery 패턴도 소개하고 있습니다.<br>Spring Cloud의 Netflix OSS 중 유레카(Eureka)를 사용하면 쉽게 서비스를 관리 할 수 있습니다.</p>
+<p>그리고 서비스 별로 다른 주소를 가지고 있기 때문에 클라이언트 입장에서 API를 호출하는 것이 쉽지 않습니다.<br>그래서 단일 엔드포인트를 제공하기 위해 다음 그림과 같은 API Gateway 패턴도 사용합니다.<br>WSO2 APIM이나 Netflix Zuul 등 오픈소스 API Gateway가 많이 있으니 잘 선택해서 사용 하면 될 것 같습니다.<br>배포 관점에서는 도커를 활용해서 서비스를 컨테이너화 해서 쉽게 배포하는 것도 좋은 방법일 것 같습니다.</p>
+<p>지금까지 MSA에 대해서 짧게 나마 알아봤습니다.<br>사실 아키텍처라는 것이 개발자 입장에서는 크게 와 닿지 않는 분야지만 워낙 이슈가 되고 있는 개념이라 소개해봤습니다.<br>개발자 관점에서 바라보면 마이크로 서비스는 SOLID 원칙과 많이 닮아있습니다.<br>결국 적절한 책임에 따라 나누고 인터페이스(API)를 통해 서로 통신하라는 것입니다.<br>이를 통해 변경에 적절히 대처 할 수 있는 것이고요.</p>
+<p>크리스가 강의 중에 서비스를 나누기 위한 Boundary Context나<br>데이터 관리를 위한 Eventually Consistent 등 강조한 개념이 많이 있는데,<br>지면상 급하게 마무리 해버린 것 같아 아쉬움이 남네요.<br>아래 링크를 통해 추가적인 내용을 보면 좋을 것 같습니다.<br>(Microservices Reading List : <a target="_blank" rel="noopener" href="http://www.mattstine.com/microservices">http://www.mattstine.com/microservices</a>)</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://kihoonkim.github.io/2017/01/27/Microservices%20Architecture/[SDS%EC%82%AC%EB%82%B4%20%EA%B8%B0%EA%B3%A0]%20Microservice%20Architecture%EB%9E%80/" data-id="cksej5ptx001k9lv6fgee82cf" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/koreakihoon" target="_blank">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/kihoonkim" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/01/27/Microservices%20Architecture/MSA%20Reading%20List/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            Microservices Reading List
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/6.%20Choosing%20a%20Microservices%20Deployment%20Strategy/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">6. Choosing a Microservices Deployment Strategy</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/08/16/retro/10-years/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/10-years.png)" alt="지난 10년. 어떤 기술 흐름속에 살았을까?" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2021/08/16/retro/10-years/" class="title">지난 10년. 어떤 기술 흐름속에 살았을까?</a></p>
+                            <p class="item-date"><time datetime="2021-08-15T15:00:00.000Z" itemprop="datePublished">2021-08-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/12/31/retro/retro-2020/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2020/12/31/retro/retro-2020/" class="title">2020년 회고</a></p>
+                            <p class="item-date"><time datetime="2020-12-30T15:00:00.000Z" itemprop="datePublished">2020-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/mountain.webp)" alt="언젠가 또 힘들어 하고 있을지 모르는 나에게" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Life/">Life</a></p>
+                            <p class="item-title"><a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="title">언젠가 또 힘들어 하고 있을지 모르는 나에게</a></p>
+                            <p class="item-date"><time datetime="2020-09-25T04:30:00.000Z" itemprop="datePublished">2020-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-day1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/react/eslint-webstorm.png)" alt="React 개발 환경 구성 (react, webstorm)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-day1/" class="title">React 개발 환경 구성 (react, webstorm)</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T16:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-overview/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-overview/" class="title">React로 Whiteboard 만들기 overview</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T15:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Agile/">Agile</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/">DevTools</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/ELK/">ELK</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JPA/">JPA</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Java8/">Java8</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microservices/">Microservices</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/">ReactGo</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/golang/">golang</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/intro/">intro</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/reactjs/">reactjs</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retro/">Retro</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a><span class="category-list-count">8</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Duck-Typing/" style="font-size: 10px;">Duck Typing</a> <a href="/tags/Event-Driven/" style="font-size: 10px;">Event-Driven</a> <a href="/tags/FP/" style="font-size: 11.43px;">FP</a> <a href="/tags/IPC/" style="font-size: 10px;">IPC</a> <a href="/tags/Mockito/" style="font-size: 10px;">Mockito</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Robolectric/" style="font-size: 10px;">Robolectric</a> <a href="/tags/TDD/" style="font-size: 10px;">TDD</a> <a href="/tags/agile/" style="font-size: 12.86px;">agile</a> <a href="/tags/agile-course/" style="font-size: 10px;">agile course</a> <a href="/tags/agilekorea/" style="font-size: 10px;">agilekorea</a> <a href="/tags/agilekorea207/" style="font-size: 10px;">agilekorea207</a> <a href="/tags/api-gatewary/" style="font-size: 10px;">api gatewary</a> <a href="/tags/architecture/" style="font-size: 17.14px;">architecture</a> <a href="/tags/book/" style="font-size: 18.57px;">book</a> <a href="/tags/canvas/" style="font-size: 11.43px;">canvas</a> <a href="/tags/docker/" style="font-size: 11.43px;">docker</a> <a href="/tags/dod/" style="font-size: 10px;">dod</a> <a href="/tags/elasticsearch/" style="font-size: 11.43px;">elasticsearch</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/filebeat/" style="font-size: 11.43px;">filebeat</a> <a href="/tags/generic/" style="font-size: 10px;">generic</a> <a href="/tags/golang/" style="font-size: 17.14px;">golang</a> <a href="/tags/java/" style="font-size: 14.29px;">java</a> <a href="/tags/java-8/" style="font-size: 11.43px;">java 8</a> <a href="/tags/jpa/" style="font-size: 17.14px;">jpa</a> <a href="/tags/kibana/" style="font-size: 11.43px;">kibana</a> <a href="/tags/konvajs/" style="font-size: 11.43px;">konvajs</a> <a href="/tags/life/" style="font-size: 10px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/logstash/" style="font-size: 11.43px;">logstash</a> <a href="/tags/microservices/" style="font-size: 20px;">microservices</a> <a href="/tags/module-programming/" style="font-size: 10px;">module programming</a> <a href="/tags/msa/" style="font-size: 20px;">msa</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/pair-programming/" style="font-size: 10px;">pair programming</a> <a href="/tags/reactjs/" style="font-size: 14.29px;">reactjs</a> <a href="/tags/retro/" style="font-size: 15.71px;">retro</a> <a href="/tags/service-discovery/" style="font-size: 10px;">service discovery</a> <a href="/tags/whiteboard/" style="font-size: 11.43px;">whiteboard</a> <a href="/tags/%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80/" style="font-size: 18.57px;">개발일지</a> <a href="/tags/%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D/" style="font-size: 10px;">기술스택</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842017/" style="font-size: 10px;">애자일코리아2017</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842018/" style="font-size: 10px;">애자일코리아2018</a>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 Kihoon Kim</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'kihoonkim';
+    
+    
+    var disqus_url = 'https://kihoonkim.github.io/2017/01/27/Microservices%20Architecture/[SDS%EC%82%AC%EB%82%B4%20%EA%B8%B0%EA%B3%A0]%20Microservice%20Architecture%EB%9E%80/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+    </div>
+</body>
+</html>
