@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://kihoonkim.github.io</loc>
+        <changefreq>daily</changefreq>
+        <priority>1</priority>
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2019/12/31/retro/retro-2019/</loc>
+        <lastmod>2021-08-17T00:04:32.706Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2020/12/31/retro/retro-2020/</loc>
+        <lastmod>2021-08-17T00:04:32.706Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2018/01/25/retro/retro-2017/</loc>
+        <lastmod>2021-08-17T00:04:32.705Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2018/12/31/retro/retro-2018/</loc>
+        <lastmod>2021-08-17T00:04:32.705Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2021/08/16/retro/10-years/</loc>
+        <lastmod>2021-08-17T00:04:32.704Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/04/05/reactgo/reactgo-5-configuration/</loc>
+        <lastmod>2021-08-17T00:04:32.703Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/04/29/reactgo/reactgo-7-create-react-app/</loc>
+        <lastmod>2021-08-17T00:04:32.703Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/04/09/reactgo/reactgo-6-golang-ducktyping-di-test/</loc>
+        <lastmod>2021-08-17T00:04:32.703Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/04/01/reactgo/reactgo-2-go-setting-run-test/</loc>
+        <lastmod>2021-08-17T00:04:32.702Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/04/03/reactgo/reactgo-4-test-vendor/</loc>
+        <lastmod>2021-08-17T00:04:32.702Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/04/02/reactgo/reactgo-3-packagemanager/</loc>
+        <lastmod>2021-08-17T00:04:32.702Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/03/26/reactgo/new_project_reactgo/</loc>
+        <lastmod>2021-08-17T00:04:32.701Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/03/27/reactgo/reactgo-1-development-env/</loc>
+        <lastmod>2021-08-17T00:04:32.701Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2020/02/08/react-canvas/react-canvas-day1/</loc>
+        <lastmod>2021-08-17T00:04:32.700Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2020/02/08/react-canvas/react-canvas-overview/</loc>
+        <lastmod>2021-08-17T00:04:32.700Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2020/09/25/life/%25ED%259E%2598%25EB%2593%25A0%25EB%2582%2598%25EC%2597%2590%25EA%25B2%258C/</loc>
+        <lastmod>2021-08-17T00:04:32.699Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/02/24/linux/</loc>
+        <lastmod>2021-08-17T00:04:32.699Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/09/09/java/noexception-in-stream-operations/</loc>
+        <lastmod>2021-08-17T00:04:32.698Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/01/functional_programming/java8/</loc>
+        <lastmod>2021-08-17T00:04:32.697Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/09/03/java/java-generics/</loc>
+        <lastmod>2021-08-17T00:04:32.697Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2018/04/10/boot_review/%25EC%259D%25B4%25EA%25B2%2583%25EC%259D%25B4%25EC%259E%2590%25EB%25B0%2594%25EB%258B%25A4/</loc>
+        <lastmod>2021-08-17T00:04:32.696Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2016/12/31/functional_programming/fp_%25EC%259A%25A9%25EC%2596%25B4%25EC%25A0%2595%25EB%25A6%25AC/</loc>
+        <lastmod>2021-08-17T00:04:32.696Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2018/10/05/boot_review/spring5recipes/</loc>
+        <lastmod>2021-08-17T00:04:32.695Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2019/04/16/boot_review/whatAlgorithmWant/</loc>
+        <lastmod>2021-08-17T00:04:32.695Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2018/08/15/boot_review/%25EB%25AA%25A8%25EB%258D%2598%25EC%258A%25A4%25ED%2583%2580%25ED%258A%25B8%25EC%2597%2585/</loc>
+        <lastmod>2021-08-17T00:04:32.695Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2018/05/22/boot_review/java9module/</loc>
+        <lastmod>2021-08-17T00:04:32.694Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2018/08/15/boot_review/nodejstextbook/</loc>
+        <lastmod>2021-08-17T00:04:32.694Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2019/06/09/boot_review/realWorldHttp/</loc>
+        <lastmod>2021-08-17T00:04:32.694Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2019/01/10/boot_review/6ai/</loc>
+        <lastmod>2021-08-17T00:04:32.693Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2018/03/25/Microservices%2520Architecture/first-msa-retro/</loc>
+        <lastmod>2021-08-17T00:04:32.693Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/Microservices%2520Architecture/MSA%2520Reading%2520List/</loc>
+        <lastmod>2021-08-17T00:04:32.692Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/Microservices%2520Architecture/%5BSDS%25EC%2582%25AC%25EB%2582%25B4%2520%25EA%25B8%25B0%25EA%25B3%25A0%5D%2520Microservice%2520Architecture%25EB%259E%2580/</loc>
+        <lastmod>2021-08-17T00:04:32.692Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/Microservices%2520Architecture/Chris%2520Richardson-NGINX%2520Blog%2520Summary/5.%2520Event-Driven%2520Data%2520Management%2520for%2520Microservices/</loc>
+        <lastmod>2021-08-17T00:04:32.691Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/Microservices%2520Architecture/Chris%2520Richardson-NGINX%2520Blog%2520Summary/6.%2520Choosing%2520a%2520Microservices%2520Deployment%2520Strategy/</loc>
+        <lastmod>2021-08-17T00:04:32.691Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/Microservices%2520Architecture/Chris%2520Richardson-NGINX%2520Blog%2520Summary/2.%2520Using%2520an%2520API%2520Gateway/</loc>
+        <lastmod>2021-08-17T00:04:32.690Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/Microservices%2520Architecture/Chris%2520Richardson-NGINX%2520Blog%2520Summary/3.%2520Inter-Process%2520Communication%2520in%2520a%2520MSA/</loc>
+        <lastmod>2021-08-17T00:04:32.690Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/Microservices%2520Architecture/Chris%2520Richardson-NGINX%2520Blog%2520Summary/4.%2520Service%2520Discovery%2520in%2520a%2520MSA/</loc>
+        <lastmod>2021-08-17T00:04:32.690Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/Microservices%2520Architecture/Chris%2520Richardson-NGINX%2520Blog%2520Summary/1.%2520Introduction%2520to%2520Microservices/</loc>
+        <lastmod>2021-08-17T00:04:32.689Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/JPA(Java%2520ORM)/6.%2520JPA-%25ED%258A%25B8%25EB%259E%259C%25EC%25A0%259D%25EC%2585%2598/</loc>
+        <lastmod>2021-08-17T00:04:32.688Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/JPA(Java%2520ORM)/7.%2520JPA-String%2520Data%2520JPA/</loc>
+        <lastmod>2021-08-17T00:04:32.688Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/JPA(Java%2520ORM)/5.%2520JPA-%25EA%25B0%259D%25EC%25B2%25B4%25EC%25A7%2580%25ED%2596%25A5%2520%25EC%25BF%25BC%25EB%25A6%25AC/</loc>
+        <lastmod>2021-08-17T00:04:32.687Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/JPA(Java%2520ORM)/4.%2520JPA-%25ED%2594%2584%25EB%25A1%259D%25EC%258B%259C%2520%25EC%2599%2580%2520%25EC%25A7%2580%25EC%2597%25B0%25EB%25A1%259C%25EB%2594%25A9/</loc>
+        <lastmod>2021-08-17T00:04:32.687Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/JPA(Java%2520ORM)/3.%2520JPA-%25EC%2597%2594%25ED%258B%25B0%25ED%258B%25B0%2520%25EB%25A7%25A4%25ED%2595%2591/</loc>
+        <lastmod>2021-08-17T00:04:32.687Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/JPA(Java%2520ORM)/2.%2520JPA-%25EC%2598%2581%25EC%2586%258D%25EC%2584%25B1%2520%25EA%25B4%2580%25EB%25A6%25AC/</loc>
+        <lastmod>2021-08-17T00:04:32.686Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/JPA(Java%2520ORM)/1.%2520JPA-%25ED%2599%2598%25EA%25B2%25BD%2520%25EC%2584%25A4%25EC%25A0%2595/</loc>
+        <lastmod>2021-08-17T00:04:32.685Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2016/01/20/Elasticsearch/Install%2520Beat-Logstash-Elasticsearch-Kibana/</loc>
+        <lastmod>2021-08-17T00:04:32.685Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/11/Elasticsearch/belk_v5/</loc>
+        <lastmod>2021-08-17T00:04:32.685Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2016/01/20/Docker/Docker%2520Commands/</loc>
+        <lastmod>2021-08-17T00:04:32.684Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2015/07/29/Docker/docker_%25EC%2586%258C%25EA%25B0%259C/</loc>
+        <lastmod>2021-08-17T00:04:32.684Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2018/11/26/Agile/agilekorea2018/</loc>
+        <lastmod>2021-08-17T00:04:32.683Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2018/01/01/Agile/pair-programming/</loc>
+        <lastmod>2021-08-17T00:04:32.683Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/03/11/Agile/TDD/</loc>
+        <lastmod>2021-08-17T00:04:32.682Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/09/30/Agile/agilekorea2017/</loc>
+        <lastmod>2021-08-17T00:04:32.682Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/Agile/Definition-of-Done-in-Agile/</loc>
+        <lastmod>2021-08-17T00:04:32.681Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/2017/01/27/Agile/AgileFundamentals/</loc>
+        <lastmod>2021-08-17T00:04:32.681Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+</urlset>
+<!-- XML Sitemap generated by Hexo SEO Friendly Sitemap Generator -->

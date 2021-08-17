@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>4. Service Discovery in a Microservices Architecture | KihoonKim:Dev</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="microservices,msa,architecture,service discovery" />
+    
+    <meta name="description" content="Service Discovery in a Microservices ArchitectureService Discovery in a Microservices Architecture에 대한 요약이다.   Service DiscoveryREST API, Thrift API등을 가진 서비스를 호출하려고 할때 네트워크 주소(IP, Port)를 알고 있어야 한다.기존">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4. Service Discovery in a Microservices Architecture">
+<meta property="og:url" content="https://kihoonkim.github.io/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/4.%20Service%20Discovery%20in%20a%20MSA/index.html">
+<meta property="og:site_name" content="KihoonKim:Dev">
+<meta property="og:description" content="Service Discovery in a Microservices ArchitectureService Discovery in a Microservices Architecture에 대한 요약이다.   Service DiscoveryREST API, Thrift API등을 가진 서비스를 호출하려고 할때 네트워크 주소(IP, Port)를 알고 있어야 한다.기존">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.wp.nginx.com/wp-content/uploads/2016/04/Richardson-microservices-part4-2_client-side-pattern.png">
+<meta property="article:published_time" content="2017-01-27T06:44:34.000Z">
+<meta property="article:modified_time" content="2021-08-17T00:04:32.690Z">
+<meta property="article:author" content="Kihoon Kim">
+<meta property="article:tag" content="microservices">
+<meta property="article:tag" content="msa">
+<meta property="article:tag" content="architecture">
+<meta property="article:tag" content="service discovery">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.wp.nginx.com/wp-content/uploads/2016/04/Richardson-microservices-part4-2_client-side-pattern.png">
+    
+
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-90999360-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Agile/">Agile</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/">DevTools</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/ELK/">ELK</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JPA/">JPA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Java8/">Java8</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Life/">Life</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Microservices/">Microservices</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/React/">React</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/">ReactGo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/golang/">golang</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/intro/">intro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/reactjs/">reactjs</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Retro/">Retro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linux/">linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Microservices/">Microservices</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-Microservices Architecture/Chris Richardson-NGINX Blog Summary/4. Service Discovery in a MSA" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        4. Service Discovery in a Microservices Architecture
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/4.%20Service%20Discovery%20in%20a%20MSA/" class="article-date">
+       <time datetime="2017-01-27T06:44:34.000Z" itemprop="datePublished">2017-01-27</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/4.%20Service%20Discovery%20in%20a%20MSA/" class="article-date">
+     <time datetime="2021-08-17T00:04:32.690Z" itemprop="dateModified">2021-08-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/architecture/" rel="tag">architecture</a>, <a class="tag-link-link" href="/tags/microservices/" rel="tag">microservices</a>, <a class="tag-link-link" href="/tags/msa/" rel="tag">msa</a>, <a class="tag-link-link" href="/tags/service-discovery/" rel="tag">service discovery</a>
+    </div>
+
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h1 id="Service-Discovery-in-a-Microservices-Architecture"><a href="#Service-Discovery-in-a-Microservices-Architecture" class="headerlink" title="Service Discovery in a Microservices Architecture"></a>Service Discovery in a Microservices Architecture</h1><p><a target="_blank" rel="noopener" href="https://www.nginx.com/blog/service-discovery-in-a-microservices-architecture/">Service Discovery in a Microservices Architecture</a>에 대한 요약이다.  </p>
+<h2 id="Service-Discovery"><a href="#Service-Discovery" class="headerlink" title="Service Discovery"></a>Service Discovery</h2><p>REST API, Thrift API등을 가진 서비스를 호출하려고 할때 네트워크 주소(IP, Port)를 알고 있어야 한다.<br>기존 방식에서는 일반적으로 물리적 하드웨어 주소는 고정(static)적 이고 가끔 변경된 경우 설정파일을 수정해주면 됐다.<br>요즘처럼 클라우드 기반의 MSA 어플리케이션인 경우에 네트워크 주소가 동적(dynamic)으로 할당된다.<br>따라서 클라이언트가 서비스를 호출하기위해서 서비스를 찾는 매커니즘(service discovery mechanism)이 필요하다.<br>Client-Side/Server-Side Discovery Pattern 두가지 패턴을 살펴보자.  </p>
+<h3 id="The-Client-Side-Discovery-Pattern"><a href="#The-Client-Side-Discovery-Pattern" class="headerlink" title="The Client-Side Discovery Pattern"></a>The Client-Side Discovery Pattern</h3><p><img src="https://cdn.wp.nginx.com/wp-content/uploads/2016/04/Richardson-microservices-part4-2_client-side-pattern.png" alt="fig">  </p>
+<p>사용가능한 서비스의 네트워크 주소를 찾고 로드밸런싱된 요청을 보내는 일이 클라이언트에서 이뤄진다.<br>즉, 클라이언트가 service registry에 질의를 해서 네트워크 주소를 얻고,<br>로드밸런싱 알고리즘을 통해 서비스를 선택 후 요청(request)을 생성한다.<br>서비스가 실행될 때 Service Registry에 자신의 네트워크 주소를 등록하고, 종료될 때 Service Registry에서 삭제한다.  </p>
+<p>Netflix OSS가 client-side discovery pattern의 대표적인 사례이다.   </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/Netflix/eureka">Netflix Eureka</a>: service registry</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Netflix/ribbon">Netflix Ribbon</a>: Eureka와 함께 동작하여 로드밸런싱된 요청(requests)을 생성</li>
+</ul>
+<h5 id="Client-Side-Discovery-Pattern-장점"><a href="#Client-Side-Discovery-Pattern-장점" class="headerlink" title="Client-Side Discovery Pattern 장점"></a>Client-Side Discovery Pattern 장점</h5><ul>
+<li>비교적 간단하다.</li>
+<li>클라이언트가 사용가능한 서비스를 알고 있기 때문에<br>서비스별로 알맞은 로드밸런싱 방법을 선택할 수 있다.</li>
+</ul>
+<h5 id="Client-Side-Discovery-Pattern-단점"><a href="#Client-Side-Discovery-Pattern-단점" class="headerlink" title="Client-Side Discovery Pattern 단점"></a>Client-Side Discovery Pattern 단점</h5><ul>
+<li>클라이언트와 service registry간 의존성이 생긴다.</li>
+<li>클라이언트에서 service를 찾는(discovery)하는 로직을 구현해야 된다.</li>
+</ul>
+<h3 id="The-Server-Side-Discovery-Pattern"><a href="#The-Server-Side-Discovery-Pattern" class="headerlink" title="The Server-Side Discovery Pattern"></a>The Server-Side Discovery Pattern</h3><p><img src="https://cdn.wp.nginx.com/wp-content/uploads/2016/04/Richardson-microservices-part4-3_server-side-pattern.png" alt="fig"><br>클라이언트는 로드밸런서를 통해 서비스에 요청을 보낸다.<br>로드밸런서는 service registry에 서비스의 네트워크 주소를 질의한 뒤, 사용가능한 서비스로 각 요청을 라우팅한다.<br>Client-Side Discovery와 동일하게 각 서비스는 Service Registry에 등록되고 해제된다.  </p>
+<p>AWS Elastic Load Balancer(ELB)가 Server-Side Discovery 라우터의 예이다.<br>ELB는 일반적으로 인터넷에서 들어오는 외부 트래픽을 로드밸런싱하는데 사용된다.<br>클라이언트는 DNS 이름을 사용하여 ELB를 통해 요청을 보낸다.<br>등록되어 있는 EC2 인스턴스나 ECS 컨테이너들이 사이에서 트래픽을 로드밸런싱한다.<br>별도의 Service Registry가 있는 것은 아니고 EC2나 ECS가 ELB에 직접 등록한다.  </p>
+<p> Kubernetes나 Marathon과 같은 배포환경은 클러스터내의 각 호스트에서 프록시(proxy)를 실행한다.<br> 이 프록시는 Server-Side Discovery 로드밸런서 역할을 수행한다.<br> 클라이언트는 서비스에 요청을 보내기위해서, IP나 port정보를 사용한다.<br> 프록시는 클러스터내의 사용가능한 서비스 인스턴스로 해당 요청을 포워딩한다.  </p>
+<h5 id="Server-Side-Discovery-Pattern-장점"><a href="#Server-Side-Discovery-Pattern-장점" class="headerlink" title="Server-Side Discovery Pattern 장점"></a>Server-Side Discovery Pattern 장점</h5><ul>
+<li>discovery 관련된 세부내용을 클라이언트로 부터 분리할 수 있다.</li>
+<li>클라이언트는 discovery관련 로직을 구현 할 필요가 없다.</li>
+<li>앞서 언급한 몇몇 배포환경에서는 이 기능을 무료로 제공한다.  </li>
+</ul>
+<h5 id="Server-Side-Discovery-Pattern-단점"><a href="#Server-Side-Discovery-Pattern-단점" class="headerlink" title="Server-Side Discovery Pattern 단점"></a>Server-Side Discovery Pattern 단점</h5><ul>
+<li>로드밸런서는 배포환경에 구축되어야 한다.</li>
+<li>즉, 높은 가용성이 요구되는 시스템 컴포넌트를 설정하고 관리해야한다.</li>
+</ul>
+<h2 id="The-Service-Registry"><a href="#The-Service-Registry" class="headerlink" title="The Service Registry"></a>The Service Registry</h2><p>service registry는 service discovery에서 매우 중요한 부분으로,<br>서비스 인스턴스들의 네트워크 주소를 가지고 있는 데이터베이스이다.<br>높은 가용성이 보장되어야 하고 항상 최신정보를 유지해야한다.  </p>
+<p><strong><a target="_blank" rel="noopener" href="https://github.com/Netflix/eureka">Netflix Eureka</a></strong>  </p>
+<ul>
+<li>REST API를 통해 서비스 인스턴스를 등록하거나 조회할 수 있다.</li>
+<li><em>POST</em> 방식으로 서비스 인스턴스의 네트워크 주소를 등록  </li>
+<li><em>PUT</em> 방식으로주기적으로(30초) 등록정보를 리프레쉬</li>
+<li><em>DELETE</em> 방식으로 서비스 인스턴스 등록정보를 삭제</li>
+<li><em>GET</em> 방식으로 등록된 서비스 인스턴스 정보를 조회</li>
+<li>참고: <a target="_blank" rel="noopener" href="https://github.com/Netflix/eureka/wiki/Configuring-Eureka-in-AWS-Cloud">Configuring Eureka in AWS Cloud</a></li>
+</ul>
+<p><strong><a target="_blank" rel="noopener" href="https://github.com/coreos/etcd">etcd</a></strong>  </p>
+<ul>
+<li>고가용성, 분산된, 일관성있는 key-value 저장소</li>
+<li>설정을 공유하고, service discover를 위해 사용된다.</li>
+<li>Kubernetes와 Cloud Foundry에서 사용 중</li>
+</ul>
+<p><strong><a target="_blank" rel="noopener" href="https://www.consul.io/">consul</a></strong>  </p>
+<ul>
+<li>서비스들을 발견discover하고 설정(configure)하기 위한 툴</li>
+<li>서비스를 등록하고 찾기위한 API를 제공</li>
+<li>health check를 통해 서비스 가용여부를 판별한다.</li>
+</ul>
+<p><strong><a target="_blank" rel="noopener" href="http://zookeeper.apache.org/">Apache Zookeeper</a></strong>  </p>
+<ul>
+<li>분산된 어플리케이션을 위해 널리사용되는 고사양 코디네이션(coordination) 서비스</li>
+</ul>
+<h2 id="Service-Registration-Options"><a href="#Service-Registration-Options" class="headerlink" title="Service Registration Options"></a>Service Registration Options</h2><p>서비스 인스턴스들은 service registry에 등록되거나 해제되어야 한다.<br>서비스의 등록/해제를 다루는 두가지 방식이 있다.  </p>
+<h3 id="The-Self-Registration-Pattern"><a href="#The-Self-Registration-Pattern" class="headerlink" title="The Self-Registration Pattern"></a>The Self-Registration Pattern</h3><p>서비스 인스턴스는 service registry에 스스로 등록/해제할 책임이 있다.<br>필요하다면 등록정보가 만료되지 않게 하기위해 heartbeat를 service registry에 보내야한다.<br><strong>Netflix OSS Eureka client</strong>  </p>
+<ul>
+<li>Eureka client는 Eureka(service registry)에 서비스 등록/해제를 자동으로 처리한다.</li>
+<li>서비스의 Java Configuration 클래스에 <strong>@EnableEurekaClient</strong> 어노테이션만 달아주면 된다.</li>
+</ul>
+<h5 id="Self-Registration-장점"><a href="#Self-Registration-장점" class="headerlink" title="Self-Registration 장점"></a>Self-Registration 장점</h5><ul>
+<li>비교적 단순하다.</li>
+<li>별도의 시스템 컴포넌트가 추가될 필요가 없다.</li>
+</ul>
+<h5 id="Self-Registration-단점"><a href="#Self-Registration-단점" class="headerlink" title="Self-Registration 단점"></a>Self-Registration 단점</h5><ul>
+<li>서비스 인스턴스와 Service Registry간의 높은 결합도(coupling)이 생긴다.</li>
+<li>서비스에서 등록/해제 관련된 코드를 구현해야된다.</li>
+</ul>
+<p><img src="https://cdn.wp.nginx.com/wp-content/uploads/2016/04/Richardson-microservices-part4-4_self-registration-pattern.png" alt="fig" title="Self-Registration Pattern"></p>
+<h3 id="The-Third-Party-Registration-Pattern"><a href="#The-Third-Party-Registration-Pattern" class="headerlink" title="The Third-Party Registration Pattern"></a>The Third-Party Registration Pattern</h3><p>서비스 인스턴스가 직접 service registry에 등록/해제에 대한 책임이 없다.<br>대신, 서비스 등록기(service registrar)가 service registry에 등록을 해준다.<br>서비스 등록기는 실행중인 서비스 인스턴스들에 polling을 하거나 이벤트를 구독하는 등의<br>작업을 통해서 서비스의 변경을 감지하고, service registry에 등록/해제를 한다.  </p>
+<p><strong><a target="_blank" rel="noopener" href="https://github.com/gliderlabs/registrator">Registrator</a></strong></p>
+<ul>
+<li>Docker 컨테이너로 배포된 서비스 인스턴스들을 자동으로 등록/해제 하는 오픈소스 프로젝트  </li>
+<li>etcd 나 Consul 같은 다양한 service registry를 지원한다.</li>
+</ul>
+<p><strong><a target="_blank" rel="noopener" href="https://github.com/netflix/Prana">NetflixOSS Prana</a></strong></p>
+<ul>
+<li>non-JVM 언어로 작성된 서비스를 위해 같이 실행시켜서 Eureka에 등록/해제를 한다.(sidecar application)</li>
+</ul>
+<h5 id="Third-Party-Registration-장점"><a href="#Third-Party-Registration-장점" class="headerlink" title="Third-Party Registration 장점"></a>Third-Party Registration 장점</h5><ul>
+<li>서비스 인스턴스와 service registry가의 결합도를 끊을(decoupled) 수 있다.</li>
+<li>서비스에 별도의 등록/해제 로직을 구현할 필요가 없다.</li>
+</ul>
+<h5 id="Third-Party-Registration-단점"><a href="#Third-Party-Registration-단점" class="headerlink" title="Third-Party Registration 단점"></a>Third-Party Registration 단점</h5><ul>
+<li>운영환경에 추가적인 시스템 컴포넌트가 필요하다.</li>
+<li>이 시스템은 설치 및 관리되어야 하고, 고가용성을 유지해야 한다.</li>
+</ul>
+<p><img src="https://cdn.wp.nginx.com/wp-content/uploads/2016/04/Richardson-microservices-part4-5_third-party-pattern.png" alt="fig" title="Third-Party Registration"></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><p>마이크로서비스 어플리케이션은 서비스 인스턴스가 동적으로 변경되고 네트워크 주소도 동적으로 할당된다.<br>따라서 클라이언트에서 서비스에 요청을 보내려면 service discovery 메카니즘이 필요하다.  </p>
+<p>service discovery에서 매우 중요한 부분이 service registry이다.<br>service registry는 사용가능한 서비스 인스턴스의 목록을 관리하고,<br>서비스 등록/해제/조회 등을 할 수 있는 API를 제공해야 한다.  </p>
+<p>service-discovery 패턴에는  client-side와 server-side discovery 패턴이 있다.  </p>
+<p>service registry에 등록/해제 하는 방법에는  self-registration과  third-party registration 패턴이 있다.  </p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://kihoonkim.github.io/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/4.%20Service%20Discovery%20in%20a%20MSA/" data-id="cksfb4gj7004bpku08ss24xt2" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Kihoon Kim"
+        },
+        "headline": "4. Service Discovery in a Microservices Architecture",
+        "image": "https://kihoonkim.github.iohttps://cdn.wp.nginx.com/wp-content/uploads/2016/04/Richardson-microservices-part4-2_client-side-pattern.png",
+        "keywords": "microservices msa architecture service discovery",
+        "genre": "Microservices",
+        "datePublished": "2017-01-27",
+        "dateCreated": "2017-01-27",
+        "dateModified": "2021-08-17",
+        "url": "https://kihoonkim.github.io/2017/01/27/Microservices Architecture/Chris Richardson-NGINX Blog Summary/4. Service Discovery in a MSA/",
+        "description": "Service Discovery in a Microservices ArchitectureService Discovery in a Microservices Architecture에 대한 요약이다.  
+Service DiscoveryREST API, Thrift API등을 가진 서비스를 호출하려고 할때 네트워크 주소(IP, Port)를 알고 있어야 한다.기존 ",
+        "wordCount": 755
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/koreakihoon" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/kihoonkim" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/5.%20Event-Driven%20Data%20Management%20for%20Microservices/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            5. Event-Driven Data Management for Microservices
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/3.%20Inter-Process%20Communication%20in%20a%20MSA/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">3. Inter-Process Communication in a Microservices Architecture</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/08/16/retro/10-years/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/10-years.png)" alt="지난 10년. 어떤 기술 흐름속에 살았을까?" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2021/08/16/retro/10-years/" class="title">지난 10년. 어떤 기술 흐름속에 살았을까?</a></p>
+                            <p class="item-date"><time datetime="2021-08-15T15:00:00.000Z" itemprop="datePublished">2021-08-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/12/31/retro/retro-2020/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2020/12/31/retro/retro-2020/" class="title">2020년 회고</a></p>
+                            <p class="item-date"><time datetime="2020-12-30T15:00:00.000Z" itemprop="datePublished">2020-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/mountain.webp)" alt="언젠가 또 힘들어 하고 있을지 모르는 나에게" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Life/">Life</a></p>
+                            <p class="item-title"><a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="title">언젠가 또 힘들어 하고 있을지 모르는 나에게</a></p>
+                            <p class="item-date"><time datetime="2020-09-25T04:30:00.000Z" itemprop="datePublished">2020-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-day1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/react/eslint-webstorm.png)" alt="React 개발 환경 구성 (react, webstorm)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-day1/" class="title">React 개발 환경 구성 (react, webstorm)</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T16:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-overview/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-overview/" class="title">React로 Whiteboard 만들기 overview</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T15:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Agile/">Agile</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/">DevTools</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/ELK/">ELK</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JPA/">JPA</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Java8/">Java8</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microservices/">Microservices</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/">ReactGo</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/golang/">golang</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/intro/">intro</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/reactjs/">reactjs</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retro/">Retro</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a><span class="category-list-count">8</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Duck-Typing/" rel="tag">Duck Typing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Event-Driven/" rel="tag">Event-Driven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FP/" rel="tag">FP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IPC/" rel="tag">IPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mockito/" rel="tag">Mockito</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOP/" rel="tag">OOP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Robolectric/" rel="tag">Robolectric</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TDD/" rel="tag">TDD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/agile/" rel="tag">agile</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/agile-course/" rel="tag">agile course</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/agilekorea/" rel="tag">agilekorea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/agilekorea207/" rel="tag">agilekorea207</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api-gatewary/" rel="tag">api gatewary</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/" rel="tag">architecture</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/book/" rel="tag">book</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dod/" rel="tag">dod</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/" rel="tag">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/exception/" rel="tag">exception</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/filebeat/" rel="tag">filebeat</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/generic/" rel="tag">generic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-8/" rel="tag">java 8</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/" rel="tag">jpa</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/" rel="tag">kibana</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/konvajs/" rel="tag">konvajs</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/life/" rel="tag">life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/logstash/" rel="tag">logstash</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservices/" rel="tag">microservices</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/module-programming/" rel="tag">module programming</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/msa/" rel="tag">msa</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pair-programming/" rel="tag">pair programming</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/" rel="tag">reactjs</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/retro/" rel="tag">retro</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/service-discovery/" rel="tag">service discovery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/whiteboard/" rel="tag">whiteboard</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80/" rel="tag">개발일지</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D/" rel="tag">기술스택</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842017/" rel="tag">애자일코리아2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842018/" rel="tag">애자일코리아2018</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Duck-Typing/" style="font-size: 10px;">Duck Typing</a> <a href="/tags/Event-Driven/" style="font-size: 10px;">Event-Driven</a> <a href="/tags/FP/" style="font-size: 11.43px;">FP</a> <a href="/tags/IPC/" style="font-size: 10px;">IPC</a> <a href="/tags/Mockito/" style="font-size: 10px;">Mockito</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Robolectric/" style="font-size: 10px;">Robolectric</a> <a href="/tags/TDD/" style="font-size: 10px;">TDD</a> <a href="/tags/agile/" style="font-size: 12.86px;">agile</a> <a href="/tags/agile-course/" style="font-size: 10px;">agile course</a> <a href="/tags/agilekorea/" style="font-size: 10px;">agilekorea</a> <a href="/tags/agilekorea207/" style="font-size: 10px;">agilekorea207</a> <a href="/tags/api-gatewary/" style="font-size: 10px;">api gatewary</a> <a href="/tags/architecture/" style="font-size: 17.14px;">architecture</a> <a href="/tags/book/" style="font-size: 18.57px;">book</a> <a href="/tags/canvas/" style="font-size: 11.43px;">canvas</a> <a href="/tags/docker/" style="font-size: 11.43px;">docker</a> <a href="/tags/dod/" style="font-size: 10px;">dod</a> <a href="/tags/elasticsearch/" style="font-size: 11.43px;">elasticsearch</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/filebeat/" style="font-size: 11.43px;">filebeat</a> <a href="/tags/generic/" style="font-size: 10px;">generic</a> <a href="/tags/golang/" style="font-size: 17.14px;">golang</a> <a href="/tags/java/" style="font-size: 14.29px;">java</a> <a href="/tags/java-8/" style="font-size: 11.43px;">java 8</a> <a href="/tags/jpa/" style="font-size: 17.14px;">jpa</a> <a href="/tags/kibana/" style="font-size: 11.43px;">kibana</a> <a href="/tags/konvajs/" style="font-size: 11.43px;">konvajs</a> <a href="/tags/life/" style="font-size: 10px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/logstash/" style="font-size: 11.43px;">logstash</a> <a href="/tags/microservices/" style="font-size: 20px;">microservices</a> <a href="/tags/module-programming/" style="font-size: 10px;">module programming</a> <a href="/tags/msa/" style="font-size: 20px;">msa</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/pair-programming/" style="font-size: 10px;">pair programming</a> <a href="/tags/reactjs/" style="font-size: 14.29px;">reactjs</a> <a href="/tags/retro/" style="font-size: 15.71px;">retro</a> <a href="/tags/service-discovery/" style="font-size: 10px;">service discovery</a> <a href="/tags/whiteboard/" style="font-size: 11.43px;">whiteboard</a> <a href="/tags/%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80/" style="font-size: 18.57px;">개발일지</a> <a href="/tags/%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D/" style="font-size: 10px;">기술스택</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842017/" style="font-size: 10px;">애자일코리아2017</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842018/" style="font-size: 10px;">애자일코리아2018</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 Kihoon Kim</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'kihoonkim';
+    
+    
+    var disqus_url = 'https://kihoonkim.github.io/2017/01/27/Microservices%20Architecture/Chris%20Richardson-NGINX%20Blog%20Summary/4.%20Service%20Discovery%20in%20a%20MSA/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

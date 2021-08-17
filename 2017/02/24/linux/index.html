@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>linux 정리 | KihoonKim:Dev</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="linux" />
+    
+    <meta name="description" content="Linux System Administration실습 환경 CentOS 5.4 kernel 2.6.18 vmware player *.100 : FTP, DNS *.200 : Web  VMWare deault Network host PC : 192.168.xxx.1 Router : 192.168.xxx.2 DNS : 192.168.xxx.2 DHCP : 19">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 정리">
+<meta property="og:url" content="https://kihoonkim.github.io/2017/02/24/linux/index.html">
+<meta property="og:site_name" content="KihoonKim:Dev">
+<meta property="og:description" content="Linux System Administration실습 환경 CentOS 5.4 kernel 2.6.18 vmware player *.100 : FTP, DNS *.200 : Web  VMWare deault Network host PC : 192.168.xxx.1 Router : 192.168.xxx.2 DNS : 192.168.xxx.2 DHCP : 19">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://kihoonkim.github.io/images/centos_logo.jpg">
+<meta property="article:published_time" content="2017-02-24T08:56:32.000Z">
+<meta property="article:modified_time" content="2021-08-17T00:04:32.699Z">
+<meta property="article:author" content="Kihoon Kim">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://kihoonkim.github.io/images/centos_logo.jpg">
+    
+
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-90999360-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">Home</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Agile/">Agile</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/">DevTools</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/Docker/">Docker</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/DevTools/ELK/">ELK</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/">Java</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Basic/">Basic</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/JPA/">JPA</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Java/Java8/">Java8</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Life/">Life</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Microservices/">Microservices</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/React/">React</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/">ReactGo</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/golang/">golang</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/intro/">intro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/ReactGo/reactjs/">reactjs</a></li></ul></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Retro/">Retro</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/linux/">linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/linux/">linux</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-linux" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        linux 정리
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2017/02/24/linux/" class="article-date">
+       <time datetime="2017-02-24T08:56:32.000Z" itemprop="datePublished">2017-02-24</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2017/02/24/linux/" class="article-date">
+     <time datetime="2021-08-17T00:04:32.699Z" itemprop="dateModified">2021-08-17</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/linux/" rel="tag">linux</a>
+    </div>
+
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h1 id="Linux-System-Administration"><a href="#Linux-System-Administration" class="headerlink" title="Linux System Administration"></a>Linux System Administration</h1><h2 id="실습-환경"><a href="#실습-환경" class="headerlink" title="실습 환경"></a>실습 환경</h2><ul>
+<li>CentOS 5.4</li>
+<li>kernel 2.6.18</li>
+<li>vmware player</li>
+<li>*.100 : FTP, DNS</li>
+<li>*.200 : Web</li>
+</ul>
+<h2 id="VMWare-deault-Network"><a href="#VMWare-deault-Network" class="headerlink" title="VMWare deault Network"></a>VMWare deault Network</h2><ul>
+<li>host PC : 192.168.xxx.1</li>
+<li>Router : 192.168.xxx.2</li>
+<li>DNS : 192.168.xxx.2</li>
+<li>DHCP : 192.168.xxx.254</li>
+</ul>
+<h2 id="Remote-Login"><a href="#Remote-Login" class="headerlink" title="Remote Login"></a>Remote Login</h2><ul>
+<li>server : Telnet#23, SSH#22</li>
+<li>Client : Secure-CRT, Tera-Term, Netterm, Putty….</li>
+<li>client 설정 : /etc/ssh/ssh_config</li>
+<li>server 설정 : /etc/ssh/sshd_config</li>
+<li>ssh / sshd</li>
+</ul>
+<h2 id="SSH의-보안강화-자동로그인"><a href="#SSH의-보안강화-자동로그인" class="headerlink" title="SSH의 보안강화 자동로그인"></a>SSH의 보안강화 자동로그인</h2><ul>
+<li>Server  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ll .ssh/</span><br><span class="line">-rw-r--r-- 1 root root 397  2월 23 17:15 known_hosts</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Client</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># ssh-keygen  -t dsa   &lt;-- key pair 생성</span><br><span class="line"># ll .ssh</span><br><span class="line">  -rw-------. 1 root root 736 2017-02-23 17:12 id_dsa       &lt;-- private key</span><br><span class="line">  -rw-r--r--. 1 root root 616 2017-02-23 17:12 id_dsa.pub   &lt;-- public key</span><br><span class="line"># scp  ~/.ssh/id_dsa.pub  &#123;server_ip&#125;:~/.ssh/authorized_keys</span><br><span class="line"># eval $(ssh-agent)</span><br><span class="line"># ssh-add</span><br><span class="line"></span><br><span class="line"># vi .bash_profile</span><br><span class="line">  eval $(ssh-agent)</span><br><span class="line">  ssh-add</span><br><span class="line"># vi .bash_logout</span><br><span class="line">  kill $SSH_AGENT_PID</span><br></pre></td></tr></table></figure>
+
+<h2 id="kernel-확인"><a href="#kernel-확인" class="headerlink" title="kernel 확인"></a>kernel 확인</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># ls /boot</span><br><span class="line">vmlinuz-2.6.18-164.el5</span><br><span class="line"># uname -r</span><br><span class="line">2.6.18-164.el5xen</span><br></pre></td></tr></table></figure>
+
+<h2 id="Shell-확인"><a href="#Shell-확인" class="headerlink" title="Shell 확인"></a>Shell 확인</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># ps</span><br><span class="line">  PID TTY          TIME CMD</span><br><span class="line"> 3953 pts/2    00:00:00 bash</span><br><span class="line"></span><br><span class="line"># cat /etc/passwd</span><br><span class="line">root:x:0:0:root:/root:/bin/bash</span><br></pre></td></tr></table></figure>
+
+<h2 id="Shell-variable"><a href="#Shell-variable" class="headerlink" title="Shell variable"></a>Shell variable</h2><ul>
+<li>지역변수 : name=KIM</li>
+<li>환경변수 : export name[=KIM]   : 자식 프로세스에게 복사되어 전달 됨</li>
+<li>variable substitution : $<br><code>ex) echo $PATH</code></li>
+</ul>
+<h2 id="command-substitution"><a href="#command-substitution" class="headerlink" title="command substitution"></a>command substitution</h2><ul>
+<li>$()</li>
+<li>day=`date +%d`  &lt;— bourne sh</li>
+<li>month=$(date +%m) &lt;— ksh</li>
+</ul>
+<h2 id="연산-substitution"><a href="#연산-substitution" class="headerlink" title="연산 substitution"></a>연산 substitution</h2><ul>
+<li>(( 연산 ))<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># x=100</span><br><span class="line"># y=200</span><br><span class="line"># (( sum=x+y ))</span><br><span class="line"># echo $sum</span><br><span class="line">300</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="Shell의-File-Generation-특수-문자"><a href="#Shell의-File-Generation-특수-문자" class="headerlink" title="Shell의 File Generation 특수 문자"></a>Shell의 File Generation 특수 문자</h2><ul>
+<li>* : zero를 포함한 more character</li>
+<li>? : any single character</li>
+<li>[…] : […]에 나열된 single character</li>
+</ul>
+<h2 id="PWD"><a href="#PWD" class="headerlink" title="PWD"></a>PWD</h2><ul>
+<li>cd -     &lt;– 이전 디렉토리로 이동</li>
+<li>set | grep PWD<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OLDPWD=/root</span><br><span class="line">PWD=/etc/sysconfig/network-scripts</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="Prompt"><a href="#Prompt" class="headerlink" title="Prompt"></a>Prompt</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># set | grep ^PS</span><br><span class="line">PS1=&#x27;[\u@\h \W]\$ &#x27;</span><br><span class="line">PS2=&#x27;&gt; &#x27;</span><br><span class="line">PS4=&#x27;+ &#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Shell-이-로그인시-실행하는-일련의-스크립트"><a href="#Shell-이-로그인시-실행하는-일련의-스크립트" class="headerlink" title="Shell 이 로그인시 실행하는 일련의 스크립트"></a>Shell 이 로그인시 실행하는 일련의 스크립트</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/etc/profile</span><br><span class="line">~/.bash_profile : User specific environment and startup programs</span><br><span class="line">~/.bashrc       : User specific aliases and functions</span><br><span class="line">/etc/bashrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="Shell의-숨은-파일"><a href="#Shell의-숨은-파일" class="headerlink" title="Shell의 숨은 파일"></a>Shell의 숨은 파일</h2><ul>
+<li>/etc/skel 에서 계성 생성시 복사 됨 (bash_history 는 로그아웃 될때 생성)</li>
+<li>.bash_history : exit 할 때 메모리에 가지고 있는 history 정보 저장</li>
+<li>.bash_profile</li>
+<li>.bashrc</li>
+<li>.bash_logout : logout 시 실행하는 스크립트</li>
+</ul>
+<h2 id="Shell-script-구동-원리"><a href="#Shell-script-구동-원리" class="headerlink" title="Shell script 구동 원리"></a>Shell script 구동 원리</h2><ul>
+<li>확장자는 의미 없음 : myjob.sh</li>
+<li>$? : 이전명령 성공 여부</li>
+<li>자식 shell 이 구동되며 실행  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># bash myjob.sh</span><br><span class="line">bash --&gt; bash --&gt; 명령들..</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>실행 권한을 허용하려면  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># mysum.sh</span><br><span class="line">  -bash: mysum.sh: command not found</span><br><span class="line"># ./mysum.sh</span><br><span class="line">  -bash: ./mysum.sh: 허가 거부됨</span><br><span class="line"># chmod 755 myjob.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>명령으로 실행 할때 어떤 쉘인지 알려주려면   </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># vi myjob.sh</span><br><span class="line">#! /bin/bash &lt;-- 제일 앞에 쉘 정보 알려줌</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>현재 쉘에서 실행하려면  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># . .bashrc</span><br><span class="line"># source .bashrc</span><br></pre></td></tr></table></figure>
+
+<h2 id="리눅스의-종료와-재시작"><a href="#리눅스의-종료와-재시작" class="headerlink" title="리눅스의 종료와 재시작"></a>리눅스의 종료와 재시작</h2><ol>
+<li>종료</li>
+</ol>
+<ul>
+<li>halt</li>
+<li>sutdown -h +10[0,now,hh:mm]</li>
+<li>init 0</li>
+</ul>
+<ol start="2">
+<li>재시작</li>
+</ol>
+<ul>
+<li>reboot</li>
+<li>sutdown -r +10[0,now,hh:mm]</li>
+<li>init 6</li>
+</ul>
+<h2 id="Run-Level"><a href="#Run-Level" class="headerlink" title="Run Level"></a>Run Level</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># /etc/inittab</span><br><span class="line">   0 - halt (Do NOT set initdefault to this)</span><br><span class="line">   1 - Single user mode  &lt;-- network 안됨</span><br><span class="line">   2 - Multiuser, without NFS (The same as 3, if you do not have networking)</span><br><span class="line">   3 - Full multiuser mode</span><br><span class="line">   4 - unused</span><br><span class="line">   5 - X11 &lt;-- GUI</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 런레벨별 실행, 중지되는 서비스 확인 K / S</span><br><span class="line"># ls /etc/rc?.d</span><br></pre></td></tr></table></figure>
+<ul>
+<li>POST : power on self test</li>
+<li>MBR(부트로더) GRUB</li>
+<li>Kernel load</li>
+<li>init process</li>
+</ul>
+<h2 id="GRUB"><a href="#GRUB" class="headerlink" title="GRUB"></a>GRUB</h2><ul>
+<li>/etc/grub.conf –&gt; /boot/grub/grub.conf</li>
+<li>hiddenmenu</li>
+<li>timeout=5</li>
+<li>title</li>
+<li>splashimage=(hd0,0)/grub/splash.xpm.gz</li>
+<li>(hd0,0) : 첫번째 하드디스크의 첫번째 파티션 == /boot</li>
+<li>grub passwd 설정  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># grub</span><br><span class="line">grub&gt; md5crypt</span><br><span class="line">Password: ***</span><br><span class="line">Encrypted: $1$fOVnB/$Ke.EE9GeW/TuEKQeXYq1V.</span><br><span class="line"></span><br><span class="line"># vi /etc/grub.conf</span><br><span class="line">password --md5 $1$fOVnB/$Ke.EE9GeW/TuEKQeXYq1V.</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="리눅스-시간"><a href="#리눅스-시간" class="headerlink" title="리눅스 시간"></a>리눅스 시간</h2><ul>
+<li>시스템 시간 : data</li>
+<li>H/W 시간 (CMOS 시간) : clock</li>
+<li>두시간 동기화 :  clock -s(시스템시간 바꾸기) / -w(하드웨어시간 바꾸기)</li>
+<li>시스템 시간 맞추기<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># rdate -s time.bora.net  (-p print,  -s setting)</span><br><span class="line"># date mmddHHMM[yy]</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="VI-editor"><a href="#VI-editor" class="headerlink" title="VI editor"></a>VI editor</h2><ul>
+<li>비정상 종료시 복구방법</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vi -r myfile</span><br><span class="line">rm .myfile.swp</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>VI 환경 설정<ul>
+<li>.exrc(Unix 호환)  / .vimrc</li>
+</ul>
+</li>
+<li>Tips<ul>
+<li>입력모드 : i, r, a, o</li>
+<li>단어변경 : cw</li>
+<li>set number / set nonumber</li>
+<li>set showmode   # 리눅스는 기본, – INSERT –</li>
+<li>set showmatch  # 괄호 매치</li>
+<li>set ts=4</li>
+</ul>
+</li>
+</ul>
+<h2 id="MAN-page-분류번호-ex-LS-1"><a href="#MAN-page-분류번호-ex-LS-1" class="headerlink" title="MAN page 분류번호 : ex) LS(1)"></a>MAN page 분류번호 : ex) LS(1)</h2><ul>
+<li>man 5 passwd</li>
+<li>man -a passwd</li>
+<li>Section 1 : 일반사용자 명령 ( /bin, /usr/bin )</li>
+<li>Section 8 : 관리자 명령 ( /sbin, /usr/sbin )</li>
+<li>Section 2 : System Call (Kernel 함수)</li>
+<li>Section 3 : Library Call ( /lib, /usr/lib )</li>
+<li>Section 5 : File Format ( /etc )</li>
+</ul>
+<h2 id="Linux-Directory"><a href="#Linux-Directory" class="headerlink" title="Linux Directory"></a>Linux Directory</h2><ul>
+<li>Tree 모양의 계층적 구조</li>
+<li>/ : 최상위 디렉토리</li>
+<li>/boot : 커널 관련</li>
+<li>/dev : 장치파일</li>
+<li>/bin : 명령어</li>
+<li>/sbin : 관리 명령어</li>
+<li>/lib : Library</li>
+<li>/usr : 추가적인..</li>
+<li>/root : root 계정 홈</li>
+<li>/home : user들의 홈</li>
+<li>/etc : 시스템 설정 파일</li>
+<li>/mnt : 새로 마운트 할 곳</li>
+<li>/media : 이동식 저장 장치를 시스템에서 auto mount</li>
+<li>/proc : process 관련된 정보 memory fs,   ls /proc/$$</li>
+<li>/sys : 하드웨어관련된 정보 memory fs</li>
+<li>/misc: NFS 관련</li>
+<li>/net : NFS 관련</li>
+<li>…</li>
+</ul>
+<h2 id="Mount"><a href="#Mount" class="headerlink" title="Mount"></a>Mount</h2><ul>
+<li>scsi : /dev/sda[a, b, c, d]</li>
+<li>IDE : /dev/hda[a, b, c, d]</li>
+<li>partition  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[DISK]</span><br><span class="line">-----</span><br><span class="line">|sda1  &lt;-- FS : mounted  /boot</span><br><span class="line">-----</span><br><span class="line">|sda2  &lt;-- SWAP</span><br><span class="line">-----</span><br><span class="line">|sda3  &lt;-- FS : mounted  /</span><br><span class="line">-----</span><br><span class="line"># df</span><br><span class="line">Filesystem    1K-blocks     Used  Available  Use%  Mounted on</span><br><span class="line">/dev/sda3     11165404   4003200    6585876   38%  /</span><br><span class="line">/dev/sda1       101086     18507      77360   20%  /boot</span><br><span class="line">/dev/hdc       3754570   3754570          0  100%  /media/CentOS_6.8_Final</span><br><span class="line"></span><br><span class="line"># swapon -s</span><br><span class="line">Filename      Type        Size      Used    Priority</span><br><span class="line">/dev/sda2     partition   4096564    964      -1</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li># umount /boot or [/dev/sda1]</li>
+<li># mount /dev/sda1 /boot</li>
+<li>/etc/fstab</li>
+<li>/mnt : 새로 마운트 할 곳</li>
+<li>fdisk -&gt; mkfs -&gt; mount</li>
+<li>리눅스에 따라서 CD/DVD 장치 명이 다를 수 있음 : ls /dev/cdrom</li>
+</ul>
+<h2 id="사용자와-그룹"><a href="#사용자와-그룹" class="headerlink" title="사용자와 그룹"></a>사용자와 그룹</h2><ul>
+<li>useradd  -u(ID) -g(group) -d(home) -s(shell) : /etc/default/useradd</li>
+<li>usermod</li>
+<li>userdel</li>
+<li>groupadd</li>
+<li>groupmod</li>
+<li>groupdel</li>
+<li>Primary Group : -g ,로그인 했을 때 기본 속한 그룹 /  Secondary Group : -G</li>
+<li>newgrp (group) : 그룹 변경    &lt;-&gt; exit</li>
+<li>passwd -l username : lock</li>
+<li>passwd -u username : unlock</li>
+<li>passwd -d username : delete password</li>
+<li>pwconv / pwunconv : shadow file 생성 삭제</li>
+<li>/etc/passwd : 계정 정보, Primary Group 정보</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">계정:패스워드:UID:GID:GECOS:디렉토리:쉘</span><br><span class="line">user:x:500:500::/home/user:/bin/bash</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>/etc/shadow : 비밀번호 정보</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">계정:암호화된패스워드:암호변경일:암호사용최소일자:암호사용최대일자:</span><br><span class="line">user:$1$R0qq4D8J$HM2Eq9PQwP.d/kL2ZhRRz/:17213:0:99999:7:::</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>/etc/group : 그룹 정보, 유저의 Secondary Group 정보</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">user:x:500:</span><br></pre></td></tr></table></figure>
+
+<h2 id="사용자별-공간-할당-quota"><a href="#사용자별-공간-할당-quota" class="headerlink" title="사용자별 공간 할당 - quota"></a>사용자별 공간 할당 - quota</h2><ul>
+<li>파일시스템마다 사용자나 그룹이 생성할 수 있는 파일의 용량과 개수를 제한하는 것   </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">1) # rpm -qa|grep quota</span><br><span class="line">2) # mkdir /userHome</span><br><span class="line">3) # vi /etc/fstab</span><br><span class="line">     /dev/sdb1    /userHome    ... defaults,usrquota ...</span><br><span class="line">   # mount  /userHome</span><br><span class="line">   혹은</span><br><span class="line">   # mount -o usrquota /dev/sdb1 /userHome</span><br><span class="line">   # mount</span><br><span class="line">      /dev/sdb1 on /userHome type ext3 (rw,usrquota)</span><br><span class="line">4) 테스트 user 생성</span><br><span class="line">   # useradd  -d  /userHome/john   john</span><br><span class="line">   # useradd  -d  /userHome/bann   bann</span><br><span class="line">   # passwd john</span><br><span class="line">   # passwd bann</span><br><span class="line"></span><br><span class="line">5) # cd /userHome</span><br><span class="line">   # quotacheck  -aum   (all, user, mount)  &lt;-- quota check 를 위한 db 생성</span><br><span class="line"></span><br><span class="line">6) # edquota -u john   &lt;--- Block 크기 or Inode(파일) 개수 제한</span><br><span class="line">     Disk quotas for user john (uid 507):</span><br><span class="line">     Filesystem   blocks   soft   hard   inodes   soft   hard</span><br><span class="line">     /dev/sdb1      40      0      0       10      0      0</span><br><span class="line"></span><br><span class="line">7) # quotaon  /userHome   &lt;=&gt;   # quotaoff  /userHome</span><br><span class="line"></span><br><span class="line">8) # edquota -p  john  bann</span><br><span class="line">   # repquota /userHome</span><br><span class="line">   # quota  bann</span><br></pre></td></tr></table></figure>
+
+<h2 id="File-유형"><a href="#File-유형" class="headerlink" title="File 유형"></a>File 유형</h2><ul>
+<li>- : file</li>
+<li>d : directory</li>
+<li>b: block device</li>
+<li>c : character device</li>
+<li>l : link</li>
+<li>s : socket</li>
+<li>p : pipe</li>
+</ul>
+<h4 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h4><ul>
+<li>양방향</li>
+<li>인터넷 소켓 : 네트워크 통신용 ==&gt; netstat 명령으로 확인</li>
+<li>유닉스 소켓 : IPC용</li>
+</ul>
+<h4 id="Pipe"><a href="#Pipe" class="headerlink" title="Pipe"></a>Pipe</h4><ul>
+<li>단방향</li>
+<li>Anonymous pipe : ps -e | grep init</li>
+<li>Named Pipe : mkfifo 명령으로 생성</li>
+</ul>
+<h2 id="File-Permission"><a href="#File-Permission" class="headerlink" title="File Permission"></a>File Permission</h2><ul>
+<li>user  group  other</li>
+<li> rwx    rwx    rwx</li>
+<li>chmod 777 file</li>
+<li>chmod 7777 file</li>
+<li>chown username[.groupname] file</li>
+<li>chgrp groupname file</li>
+<li>directory : rwx : ls / 파일 생성,삭제 / cd</li>
+<li>umask : 0022 -&gt;  000 010 010  허용하고 싶지 않은 비트 설정  (rw-r–r–)  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">type        u    g    o</span><br><span class="line">[0000][000][000][000][000]</span><br><span class="line">       set user id bit  : rws : owner uid 권한으로 실행 가능</span><br><span class="line">       set group id bit : rws : owner gid 권한으로 실행 가능</span><br><span class="line">       sticky bit       : rwt : swap 공간에 남아 있음. root 만 설정 가능  </span><br><span class="line"></span><br><span class="line">$ ll /usr/bin/chsh</span><br><span class="line">-rws--x--x 1 root root 19096  9월  4  2009 /usr/bin/chsh</span><br><span class="line">$ chsh  -&gt; /etc/passwd 수정해야 됨</span><br><span class="line">[ps table]</span><br><span class="line">* set user id bit == 1</span><br><span class="line">real user id : 일반 유저           : uid</span><br><span class="line">effective user id : 권한 체크 유저  : owner uid</span><br><span class="line">* set group id bit == 1</span><br><span class="line">real group id : 일반 그룹           : uid</span><br><span class="line">effective group id : 권한 체크 그룹 : owner gid</span><br><span class="line"></span><br><span class="line">$ ll -d /tmp</span><br><span class="line">drwxrwxrwt 12 root root 4096  2월 21 15:38 /tmp</span><br></pre></td></tr></table></figure>
+
+<h2 id="Switch-User"><a href="#Switch-User" class="headerlink" title="Switch User"></a>Switch User</h2><ul>
+<li>su : root는 생략되어 실행</li>
+<li>su username : 계정만 바꿈, bash 나 PATH 등은 유지</li>
+<li>su - username : username 으로 로그인 한 것과 동일</li>
+<li>su -l username : 위와 동일</li>
+<li>sudo : root의 제한된 명령을 일반 user에게 허용하기 위해.. (/etc/sudoers)</li>
+</ul>
+<h2 id="링크"><a href="#링크" class="headerlink" title="링크"></a>링크</h2><ul>
+<li>ls -i : inode 번호 까지</li>
+<li>ls -l : inode 에 있는 정보까지 같이 보여 줌</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[Filesystem]</span><br><span class="line">| SB |   INode Block    |     Data Block    |</span><br><span class="line">                               |-&gt; 1000 | fileA</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Hard Link : ln</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ vi fileA</span><br><span class="line">$ ln fileA fileA.ln</span><br><span class="line">$ ls -il</span><br><span class="line">229923 -rw-r----- 2 root root 12  2월 21 17:05 fileA</span><br><span class="line">229923 -rw-r----- 2 root root 12  2월 21 17:05 fileA.ln</span><br><span class="line"></span><br><span class="line">==&gt; inode#, file type, link count, file size 가 동일 함</span><br><span class="line">==&gt; INode block을 공유</span><br><span class="line">==&gt; data를 변경하더라도 둘이 동일. Data block은 동일하게 사용하기 때문에</span><br><span class="line">==&gt; inode, data block 둘다 동일</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Symbolic Link : ln -s</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># ln -s fileA fileA.sym</span><br><span class="line"># ll -i</span><br><span class="line"> 229923 -rw-r----- 2 root root   14  2월 21 17:08 fileA</span><br><span class="line"> 229561 lrwxrwxrwx 1 root root    5  2월 22 09:46 fileA.sym -&gt; fileA</span><br><span class="line"></span><br><span class="line"> ==&gt; INode block이 다름</span><br><span class="line"> ==&gt; Data block에 링크하고 있는 파일의 패스 정보가 들어있음</span><br><span class="line"> ==&gt; inode, data block 둘다 다름</span><br><span class="line"> ==&gt; 링크파일을 삭제하고 다시 만들어도 링크관계가 유지됨</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Hard link 제한 점<ul>
+<li>inode 번호를 참조 하기 때문에 다른 파일시스템에 있는 파일은 링크 불가</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ln /boot/grub/grub.conf mygrub.conf</span><br><span class="line">ln: creating hard link &#x27;mygrub.conf&#x27; to &#x27;/boot/grub/grub.conf&#x27;: 부적절한 장치간 연결</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>다렉토리는 링크 불가</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ln mydir testdir</span><br><span class="line">ln: &#x27;mydir&#x27;: 디렉토리는 하드링크할 수 없습니다</span><br></pre></td></tr></table></figure>
+
+<h2 id="프로그램-설치-명령"><a href="#프로그램-설치-명령" class="headerlink" title="프로그램 설치 명령"></a>프로그램 설치 명령</h2><ul>
+<li>RPM (Redhat Package Manager) : 의존성 문제 해결 X  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">설치 : # rpm -Uvh package_name.rpm</span><br><span class="line">삭제 : # rpm -e package_name</span><br><span class="line">조회 : # rpm -qa | grep telnet     (-qf  -ql  -qi)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>YUM (Yellowdog Update Modified) : 의존성 문제 해결 O  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># yum install package_name</span><br><span class="line"># yum localinstall package_name.rpm</span><br><span class="line"># yum check-update</span><br><span class="line"># yum update package_name</span><br><span class="line"># yum remove package_name</span><br><span class="line"># yum info package_name</span><br></pre></td></tr></table></figure>
+
+<h2 id="Telnet"><a href="#Telnet" class="headerlink" title="Telnet"></a>Telnet</h2><ul>
+<li>Telent 요청시 프로세스 생성 과정 (pstree 로 확인 가능)<br>init -&gt; xinetd (/etc/xinetd.d) -&gt; in.telnetd -&gt; login -&gt; bash</li>
+<li>telnet-server 설치 방법   </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1) # rpm -qa|grep telnet-server  </span><br><span class="line">2) # yum [-y] install telnet-server  </span><br><span class="line">3) # vi /etc/xinetd.d/telnet  </span><br><span class="line">        disable=no  </span><br><span class="line">   혹은  </span><br><span class="line">   # chkconfig telnet on  </span><br><span class="line">4) # service xinetd restart[start, stop, status]  </span><br><span class="line">5) Listen Socket 확인  </span><br><span class="line">   # netstat -a|grep telnet  </span><br><span class="line">6) 연결시도후 실패할 경우 방화벽 확인  </span><br><span class="line">   # system-config-securitylevel  </span><br><span class="line">7) root로 로그인할려면  </span><br><span class="line">	 # mv /etc/securetty /etc/securetty.bak  </span><br></pre></td></tr></table></figure>
+
+<h2 id="파일-묶기-tar"><a href="#파일-묶기-tar" class="headerlink" title="파일 묶기 : tar"></a>파일 묶기 : tar</h2><p><strong>절대경로 사용시 주의! 경로의 맨앞에 / 가 없음.</strong></p>
+<ul>
+<li>생성 : <code># tar -cvf 파일명 대상목록</code>  </li>
+<li>목록 : <code># tar -tvf 파일명</code>  </li>
+<li>풀기 : <code># tar -xvf 파일명</code>  </li>
+<li>압축 해제 및 tar 풀기  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># tar -xzvf 파일명  </span><br><span class="line">J : tar + xz   </span><br><span class="line">z : tar + gzip   </span><br><span class="line">j : tar + bzip2   </span><br></pre></td></tr></table></figure>
+
+<h2 id="파일-압축"><a href="#파일-압축" class="headerlink" title="파일 압축"></a>파일 압축</h2><ul>
+<li>zip unzip  : 원본 파일 놔두고 압축  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># zip etc.tar.zip etc.tar</span><br><span class="line"># unzip etc.tar.zip</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>gzip gunzip : 하드링크 관계, 원본 파일 삭제 후 압축  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># gzip etc.tar</span><br><span class="line"># gzip -d etc.tar.gz   # gunzip etc.tar.gz</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>bzip2 bunzip2 : Symbolic link, 원본 파일 삭제 후 압축  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># bzip2 etc.tar</span><br><span class="line"># bzip2 -d etc.tar.bz2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>xz : 원본 파일 삭제 후 압축  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># xz etc.tar</span><br><span class="line"># xz -d etc.tar.xz</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>압축률  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># ll etc*</span><br><span class="line">-rw-r--r-- 1 root root 13763954  2월 22 13:23 etc.tar.zip</span><br><span class="line">-rw-r--r-- 1 root root 13763834  2월 22 12:01 etc.tar.gz</span><br><span class="line">-rw-r--r-- 1 root root  9214644  2월 22 12:01 etc.tar.bz2</span><br><span class="line">-rw-r--r-- 1 root root  8282932  2월 22 12:01 etc.tar.xz</span><br></pre></td></tr></table></figure>
+
+<h2 id="dump-amp-restore"><a href="#dump-amp-restore" class="headerlink" title="dump &amp; restore"></a>dump &amp; restore</h2><ul>
+<li>dump  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">* Full Backup</span><br><span class="line"># dump -0uf /tmp/boot.dump /boot # /dev/sda1  </span><br><span class="line"></span><br><span class="line">* Incremental Backup</span><br><span class="line"># dump -2uf /tmp/boot.dump /boot # /dev/sda1</span><br><span class="line"></span><br><span class="line"># cat /etc/dumpdates</span><br><span class="line">/dev/sda1 0 Wed Feb 22 13:40:22 2017 +0900</span><br><span class="line">/dev/sda1 2 Wed Feb 22 13:43:42 2017 +0900</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>restore  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># restore -rf /tmp/boot.dump</span><br><span class="line"># restore -rf /tmp/boot.dump2</span><br></pre></td></tr></table></figure>
+
+<h2 id="파일-위치-검색"><a href="#파일-위치-검색" class="headerlink" title="파일 위치 검색"></a>파일 위치 검색</h2><ul>
+<li>find  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  find  찾는경로  찾는조건          동작</span><br><span class="line"># find /home  -name Filename    [-print]</span><br><span class="line">                -size +10k        -exec  리눅스명령  &#123;&#125; \;</span><br><span class="line">                -user KIM</span><br><span class="line">                -type f[d]</span><br><span class="line">                -inum 1000</span><br><span class="line">                -perm 777</span><br><span class="line">                -newer</span><br><span class="line"># find . -name fileA</span><br><span class="line"># find /bin -inum 1015859</span><br><span class="line"># find . -name fileA -exec ls -l &#123;&#125; \;</span><br><span class="line"># find . -name fileA -exec rm &#123;&#125; \;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>which : $PATH 에 설정된 디렉터리만 검색  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># which ifconfig</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>whereis : 실행 파일 및 소스, man 페이지 검색  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># whereis ifconfig</span><br></pre></td></tr></table></figure>
+
+<h2 id="Time-Schedule-작업"><a href="#Time-Schedule-작업" class="headerlink" title="Time-Schedule 작업"></a>Time-Schedule 작업</h2><ul>
+<li>일회성 작업 : at  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># at now + 3minutes</span><br><span class="line">at&gt; date &gt; /root/at.out</span><br><span class="line">at&gt; cal &gt;&gt; /root/at.out</span><br><span class="line">at&gt; &lt;EOT&gt;</span><br><span class="line">job 2 at 2017-02-22 14:35</span><br><span class="line"></span><br><span class="line"># at -l   &lt;==&gt; atq</span><br><span class="line">1       2017-02-22 15:29 a root</span><br><span class="line"># at -d 1 [작업번호]  &lt;==&gt; atrm 1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/etc/at.deny  : 사용 제한</span><br><span class="line">/etc/at.allow : 사용 허용</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>반복적인 작업 : crontab  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">crond 실행되면서 /etc/crontab 참조</span><br><span class="line">분 시 일 월 요일 사용자 실행명령</span><br><span class="line">01  *  * * *    root   run-parts /etc/cron.hourly</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">* /var/spool/cron/user_name 으로 크론테이블 생성됨 but root만 접근 가능</span><br><span class="line">$ ll /usr/bin/crontab  &lt;-- set user id bit</span><br><span class="line">-rwsr-sr-x 1 root root 315416  2월 27  2009 /usr/bin/crontab</span><br><span class="line"></span><br><span class="line"># crontab -l  : 리스트</span><br><span class="line"># crontab -e  : 크론 테이블 수정</span><br><span class="line">  45,46,47 14 * * 3 date &gt;&gt; /root/cron.out</span><br><span class="line">  45-47 14 * * 3 date &gt;&gt; /root/cron.out</span><br><span class="line"># crontab -r  : 삭제</span><br></pre></td></tr></table></figure>
+
+<h2 id="파이프"><a href="#파이프" class="headerlink" title="파이프"></a>파이프</h2><ul>
+<li>ls | more</li>
+<li>2개의 프로그램을 연결해주는 연결 통로</li>
+</ul>
+<h2 id="필터"><a href="#필터" class="headerlink" title="필터"></a>필터</h2><ul>
+<li>stdin 으로 받아 stdout으로 내보냄</li>
+<li>cat</li>
+<li>wc -[lwc] filename</li>
+<li>grep (global regx print) : grep ^root /etc/group</li>
+<li>awk</li>
+<li>sed</li>
+</ul>
+<h2 id="리다이렉션"><a href="#리다이렉션" class="headerlink" title="리다이렉션"></a>리다이렉션</h2><ul>
+<li>입출력 방향 변경  </li>
+<li>stdin 변경   </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ 명령 &lt; 파일</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>stdout 변경  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ 명령 &gt; 파일     overwrite  </span><br><span class="line">$ 명령 &gt;&gt; 파일    append                </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>stderr 변경  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ 명령 2&gt;파일  </span><br><span class="line">$ 명령 2&gt; /dev/null</span><br></pre></td></tr></table></figure>
+
+<h2 id="프로세스"><a href="#프로세스" class="headerlink" title="프로세스"></a>프로세스</h2><ul>
+<li>실행중인 프로그램</li>
+<li>$$ : 내 PID</li>
+<li>$? : 마지막 실행된 자식 프로세스의 종료 상태</li>
+<li>포그라운드 프로세스 : $ sleep 100</li>
+<li>백그라운드 프로세스 : $ sleep 100 &amp;</li>
+<li>좀비 프로세스 : $ ps -e | grep defunct</li>
+<li>고아 프로세스 : 백그라운드 프로세스 종료전에 부모 프로세스가 종료된 경우  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># ps -ef | grep sleep</span><br><span class="line">root      7926     1  0 16:12 ?        00:00:00 sleep 1000</span><br><span class="line">root      7948     1  0 16:17 ?        00:00:00 sleep 2000</span><br><span class="line">PPID : 1,  TTY : ? 로 변경 됨</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>작업 : 쉘에서 실행시킨 프로세스  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># sleep 1000 &amp;</span><br><span class="line">[1] 8018</span><br><span class="line"># jobs</span><br><span class="line">[1]-  Running                 sleep 1000 &amp;</span><br><span class="line">[2]+  Running                 sleep 1000 &amp;</span><br><span class="line"># fg</span><br><span class="line">sleep 1000</span><br><span class="line">[2]+  Stopped                 sleep 1000</span><br><span class="line"># jobs</span><br><span class="line">[1]-  Running                 sleep 1000 &amp;</span><br><span class="line">[2]+  Stopped                 sleep 1000</span><br><span class="line"># bg 2</span><br><span class="line">[2]+ sleep 1000 &amp;</span><br><span class="line"># jobs</span><br><span class="line">[1]-  Running                 sleep 1000 &amp;</span><br><span class="line">[2]+  Running                 sleep 1000 &amp;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>종료  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># kill 8018  &lt;- pid</span><br><span class="line"># kill %2    &lt;- job number</span><br><span class="line"># kill -l</span><br><span class="line"># kill $$    &lt;- default -15. bash 가 무시함</span><br><span class="line">9) SIGKILL  19)SIGSTOP  무시할 수 없음. 커널이 무조건 전달 함</span><br></pre></td></tr></table></figure>
+
+<h2 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h2><ul>
+<li>service network restart # status, start, stop</li>
+<li>데몬, 서버프로세스</li>
+<li>시스템과 독자적으로 구동되어 제공되는 프로세스</li>
+</ul>
+<h2 id="하드디스크-추가하기"><a href="#하드디스크-추가하기" class="headerlink" title="하드디스크 추가하기"></a>하드디스크 추가하기</h2><ul>
+<li>fdisk : 파티션 나누기   </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># fdisk  /dev/sdb</span><br><span class="line">      n -&gt; p -&gt; 1 -&gt; enter -&gt; enter -&gt; p -&gt; w</span><br><span class="line"># fdisk -l /dev/sdb</span><br><span class="line">  Disk /dev/sdb: 1073 MB, 1073741824 bytes</span><br><span class="line">  255 heads, 63 sectors/track, 130 cylinders</span><br><span class="line">  Units = cylinders of 16065 * 512 = 8225280 bytes</span><br><span class="line"></span><br><span class="line">     Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">  /dev/sdb1               1         130     1044193+  83  Linux</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mkfs : 파일시스템 생성</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># mkfs -t ext3 /dev/sdb1</span><br><span class="line">  mke2fs 1.39 (29-May-2006)</span><br><span class="line">  Filesystem label=</span><br><span class="line">  OS type: Linux</span><br><span class="line">  Block size=4096 (log=2)</span><br><span class="line">  Fragment size=4096 (log=2)</span><br><span class="line">  130560 inodes, 261048 blocks</span><br><span class="line">  13052 blocks (5.00%) reserved for the super user</span><br><span class="line">  First data block=0</span><br><span class="line">  Maximum filesystem blocks=268435456</span><br><span class="line">  8 block groups</span><br><span class="line">  32768 blocks per group, 32768 fragments per group</span><br><span class="line">  16320 inodes per group</span><br><span class="line">  Superblock backups stored on blocks:</span><br><span class="line">          32768, 98304, 163840, 229376</span><br><span class="line"></span><br><span class="line">  Writing inode tables: done</span><br><span class="line">  Creating journal (4096 blocks): done</span><br><span class="line">  Writing superblocks and filesystem accounting information: done</span><br><span class="line"></span><br><span class="line">  This filesystem will be automatically checked every 24 mounts or</span><br><span class="line">  180 days, whichever comes first.  Use tune2fs -c or -i to override</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mount  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># mkdir  /mydata</span><br><span class="line"># mount  /dev/sdb1  /mydata</span><br><span class="line"># ls /mydata</span><br><span class="line">  lost+found</span><br><span class="line"># mount</span><br><span class="line">  /dev/sdb1 on /mydata type ext3 (rw)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>/etc/fstab : 시스템 시작시 자동으로 마운트 되도록 설정  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># blkid /dev/sda3</span><br><span class="line">  /dev/sda3: LABEL=&quot;/&quot; UUID=&quot;22bf335b-fc20-4c8b-8694-760499058928&quot; TYPE=&quot;ext3&quot; SEC_TYPE=&quot;ext2&quot;</span><br><span class="line"># e2label /dev/sdb1 /mydata</span><br><span class="line"># vi /etc/fstab</span><br><span class="line">  장치명[LABEL, UUID]  마운트될디렉토리    FS타입   속성       덤프사용여부    파일시스템체크여부</span><br><span class="line">  /dev/sdb1           /mydata            ext3     defaults        1             1</span><br></pre></td></tr></table></figure>
+
+<h2 id="RAID"><a href="#RAID" class="headerlink" title="RAID"></a>RAID</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* 실습 환경</span><br><span class="line">scsi |------[sda]--[sdb]--[sdc]--[sdd]--[sde]--[sdf]--[sdg]</span><br><span class="line">boot        |--raid 0--|  |--raid 1--|&lt;--복구</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Linear RAID : 1번 하드디스크가 모두 채워진 뒤 2번째 하드디스크를 사용</li>
+<li>RAID 0(Stripping) : 여러 하드디스크에 동시에 저장. 저장성능 효츌적. 데이터 안전성 보장 못함</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">1) # fdisk  /dev/sdc</span><br><span class="line">	   n -&gt;  p  -&gt;  1  -&gt; enter  -&gt; enter  -&gt; t  -&gt; L -&gt; fd  -&gt; p  -&gt; w</span><br><span class="line">2) # fdisk  /dev/sdd</span><br><span class="line"> 위와 동일</span><br><span class="line">3) # ll /dev/md*</span><br><span class="line">            장치명     타입    메이져  마이너</span><br><span class="line">   # mknod  /dev/md0   b      9       0</span><br><span class="line">   - 매이져: /proc/devices 확인 가능</span><br><span class="line">   - 마이너: 하드웨어의 위치정보 ll /dev/sd*</span><br><span class="line">4) # mdadm  --create   /dev/md0    \</span><br><span class="line">            --level=0   \</span><br><span class="line">            --raid-devices=2  /dev/sdc1  /dev/sdd1</span><br><span class="line"> # mdadm --detail --scan</span><br><span class="line">  혹은</span><br><span class="line"> # mdadm -D -s</span><br><span class="line">5) # mkfs.ext3  /dev/md0</span><br><span class="line">6) # mkdir  /raid0</span><br><span class="line">   # mount  /dev/md0  /raid0</span><br><span class="line">7) # df =&gt; 용량확인</span><br><span class="line">   # cp /bin/c*   /raid0</span><br><span class="line">8) # vi /etc/fstab</span><br><span class="line">   /dev/md0   /raid0   ext3   defaults  1  1</span><br><span class="line"> # umount /raid0</span><br><span class="line"> # mount /raid0</span><br><span class="line">9) # halt</span><br><span class="line">============&gt;  disk 제거후 재시작  </span><br><span class="line">1) # vi /etc/fstab 에서 해당정보 제거  &lt;-- 복구모드에서는 readonly mode 로 마운트 됨</span><br><span class="line">2) # mount -o remount /              &lt;-- rw 모드로 다시 마운트 되도록 설정</span><br><span class="line"> # vi /etc/fstab</span><br><span class="line">3) # reboot</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>RAID 1(미러링) : 여러 하드디스크에 중복 저장, 데이터 안전성 보장됨  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">1) # fdisk  /dev/sdd</span><br><span class="line">   n -&gt;  p  -&gt;  1  -&gt; enter  -&gt; enter  -&gt; t  -&gt; L -&gt; fd  -&gt; p  -&gt; w</span><br><span class="line">2) # fdisk  /dev/sde</span><br><span class="line">   위와 동일</span><br><span class="line">3) # mdadm  --create   /dev/md1  \</span><br><span class="line">            --level=1    \</span><br><span class="line">            --raid-devices=2  /dev/sdd1  /dev/sde1</span><br><span class="line">   # mdadm -D /dev/md1</span><br><span class="line">4) # mkfs.ext3  /dev/md1</span><br><span class="line">5) # mkdir  /raid1</span><br><span class="line">   # mount  /dev/md1  /raid1</span><br><span class="line">6) # df =&gt; 용량이 1/2</span><br><span class="line">   # cp /bin/d*   /raid1</span><br><span class="line">7) # vi /etc/fstab</span><br><span class="line">     /dev/md1   /raid1   ext3   defaults  1  1</span><br><span class="line">   # umount /raid1</span><br><span class="line">   # mount /raid1</span><br><span class="line">8) # halt</span><br><span class="line">============&gt; disk 제거후 재시작</span><br><span class="line">1) 확인</span><br><span class="line">   # ll /dev/sd*</span><br><span class="line">   # df</span><br><span class="line">   # ll /raid1</span><br><span class="line">   # mdadm -D  /dev/md1</span><br><span class="line">   Number   Major   Minor   RaidDevice State</span><br><span class="line">     0       8       49        0      active sync   /dev/sdd1</span><br><span class="line">     1       0        0        1      removed</span><br><span class="line">2) # fdisk  /dev/sde</span><br><span class="line">    n -&gt;  p  -&gt;  1  -&gt;  enter  -&gt;  enter  -&gt; t  -&gt; fd  -&gt;  p  -&gt; w</span><br><span class="line">3) # mdadm  /dev/md1  --add  /dev/sde1 ; mdadm -D /dev/md1</span><br><span class="line">   Number   Major   Minor   RaidDevice State</span><br><span class="line">     0       8       49        0      active sync   /dev/sdd1</span><br><span class="line">     2       8       65        1      spare rebuilding   /dev/sde1</span><br><span class="line">   # mdadm -D /dev/md1</span><br><span class="line">  Number   Major   Minor   RaidDevice State</span><br><span class="line">     0       8       49        0      active sync   /dev/sdd1</span><br><span class="line">     1       8       65        1      active sync   /dev/sde1</span><br><span class="line">   # fdisk  -l</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>RAID 5 : 하드디스크 최소 3개 이상 필요. 패리트비트 사용. (0+0+0+pairity= 짝수). 공간효율 결함 허용. N-1 만큼 공간 사용  </li>
+</ul>
+<h2 id="LVM-Logical-Volume-Manager"><a href="#LVM-Logical-Volume-Manager" class="headerlink" title="LVM (Logical Volume Manager)"></a>LVM (Logical Volume Manager)</h2><ul>
+<li>여러개의 하드디스크를 합쳐서 한개의 파티션으로 구성 후 필요에 따라 여러 파티션으로 구성 가능  </li>
+<li>PV: Physical Volume   </li>
+<li>VG: Volume Group   </li>
+<li>LV: Logical Volume  </li>
+<li>PE: Physical Extent  </li>
+<li>LE: Logical Extent</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  PV            VG           LV</span><br><span class="line">[ 20G ]                    [ 30G ]</span><br><span class="line">          =&gt;  [ 40G ]  =&gt;</span><br><span class="line">[ 20G ]                    [ 10G ]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>pvcreate PV</li>
+<li>vgcreate [-s size] VGName PVPath</li>
+<li>lvcreate [-L size] [-n lvname] VGName</li>
+<li>pvdisplay / vgdisplay / lvdisplay  -m</li>
+<li>lvextend  &lt;–&gt; lvreduce</li>
+<li>vgextend  &lt;–&gt; vgreduce  </li>
+<li>실습  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">1) # fdisk /dev/sdc</span><br><span class="line">   # fdisk  /dev/sdd</span><br><span class="line">    n -&gt;  p  -&gt;  1  -&gt;  enter  -&gt;  enter  -&gt;  t  -&gt; L  -&gt; 8e -&gt; p -&gt; w</span><br><span class="line"></span><br><span class="line">2) # pvcreate [-f] /dev/sdc1  /dev/sdd1</span><br><span class="line">   # pvdisplay</span><br><span class="line"></span><br><span class="line">3) # vgcreate myVG  /dev/sdc1  /dev/sdd1</span><br><span class="line">   # vgdisplay  -v  myVG</span><br><span class="line"></span><br><span class="line">4) # lvcreate --size 500m  --name myLG1  myVG</span><br><span class="line">   # lvcreate --size 800m  --name myLG2  myVG</span><br><span class="line"></span><br><span class="line">5) # mkfs -t ext3  /dev/myVG/myLG1</span><br><span class="line">   # mkfs -t ext3  /dev/myVG/myLG2</span><br><span class="line"></span><br><span class="line">6) # mkdir /lvm1</span><br><span class="line">   # mkdir /lvm2</span><br><span class="line">   # mount /dev/myVG/myLG1  /lvm1</span><br><span class="line">   # mount /dev/myVG/myLG2  /lvm2</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="네트워크"><a href="#네트워크" class="headerlink" title="네트워크"></a>네트워크</h2><ul>
+<li>장치 정보 : ifconfig eth0</li>
+<li>ifup eth0 / ifdown eth0</li>
+<li>root 만 접근가능 하도록 설정</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># touch /etc/nologin</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>IP 고정하기  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># cat /etc/sysconfig/network-scripts/ifcfg-eth0</span><br><span class="line"># Advanced Micro Devices [AMD] 79c970 [PCnet32 LANCE]</span><br><span class="line">DEVICE=eth0</span><br><span class="line">BOOTPROTO=dhcp</span><br><span class="line">ONBOOT=yes</span><br><span class="line">HWADDR=00:0c:29:7c:ca:a6</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># system-config-network</span><br><span class="line"># service network restart</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>nslookup : DNS test  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># nslookup</span><br><span class="line">&gt; server</span><br><span class="line">Default server: 192.168.214.2</span><br><span class="line">Address: 192.168.214.2#53</span><br><span class="line"></span><br><span class="line">&gt; www.naver.com</span><br><span class="line">Server:         192.168.214.2</span><br><span class="line">Address:        192.168.214.2#53</span><br><span class="line"></span><br><span class="line">Non-authoritative answer:</span><br><span class="line">www.naver.com   canonical name = www.naver.com.nheos.com.</span><br><span class="line">Name:   www.naver.com.nheos.com</span><br><span class="line">Address: 125.209.222.141</span><br><span class="line">Name:   www.naver.com.nheos.com</span><br><span class="line">Address: 125.209.222.142</span><br><span class="line">&gt; exit</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>/etc/sysconfig/network : hostname 설정</li>
+<li>/etc/sysconfig/network-scripts/ifcfg-eth0 : 네트워크 정보</li>
+<li>/etc/nsswitch.conf :  정책  &gt; hosts:  files dns</li>
+<li>/etc/hosts :</li>
+<li>/etc/resolv.con : DNS 서버 정보</li>
+</ul>
+<h2 id="DNS-Domain-Name-System-서버-53"><a href="#DNS-Domain-Name-System-서버-53" class="headerlink" title="DNS(Domain Name System) 서버 : #53"></a>DNS(Domain Name System) 서버 : #53</h2><ul>
+<li>캐싱 전용 네임 서버 : URL의 IP 주소를 알려주는 네임 서버  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># yum install caching-nameserver</span><br><span class="line"># vi /etc/named.caching-nameserver.conf   &lt;-- 상위 버전에서는 /etc/named.conf</span><br><span class="line">  127.0.0.1  -&gt; any</span><br><span class="line">  localhost  -&gt; any</span><br><span class="line"># named-checkconf /etc/named.caching-nameserver.conf</span><br><span class="line"># service named start</span><br><span class="line"># nslookup    &lt;-- nameserver 테스트</span><br><span class="line">&gt; server 192.168.214.100        </span><br><span class="line">Default server: 192.168.214.100</span><br><span class="line">Address: 192.168.214.100#53</span><br><span class="line">&gt; www.naver.com</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"># vi /etc/resolv.conf</span><br><span class="line">nameserver 192.168.214.100</span><br><span class="line"></span><br><span class="line"># chkconfig --list named</span><br><span class="line"># chkconfig --level 235 named on</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>마스터 네임 서버 : 도메인에 속한 컴퓨터들의 이름을 관리하고, 외부에서 해당 컴퓨터 IP주소를 알기 원할 때 알려주는 네임 서버</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/named.rfc1912.zones   &lt;-- 상위 버전에서는 /etc/named.conf 에 같이 관리</span><br><span class="line">  zone &quot;test.com&quot; IN &#123;</span><br><span class="line">      type master;</span><br><span class="line">      file &quot;test.com.db&quot;;</span><br><span class="line">      allow-update &#123; none; &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line"># vi /var/named/chroot/var/named/test.com.db</span><br><span class="line">  $TTL    3H</span><br><span class="line">  @       SOA @   root. ( 2 1D 1H 1W 1H )</span><br><span class="line">          IN  NS  @</span><br><span class="line">          IN  A   192.168.214.100</span><br><span class="line">  www     IN  A   192.168.214.200</span><br><span class="line">  ftp     IN  A   192.168.214.100</span><br><span class="line">  blog    IN  A   192.168.214.150</span><br><span class="line">  ==&gt; TTL : time to live</span><br><span class="line">      @ : zone name       </span><br><span class="line"></span><br><span class="line"># named-checkzone  test.com  /var/named/chroot/var/named/test.com.db</span><br><span class="line">  zone test.com/IN: loaded serial 2</span><br><span class="line">  OK</span><br><span class="line"></span><br><span class="line"># service named restart</span><br></pre></td></tr></table></figure>
+
+<h2 id="FTP-서버구축-vsftpd"><a href="#FTP-서버구축-vsftpd" class="headerlink" title="FTP 서버구축 : vsftpd"></a>FTP 서버구축 : vsftpd</h2><ul>
+<li>설치 여부 확인  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># rpm -qa|grep vsftpd</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>설치  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># yum install vsftpd`</span><br><span class="line"># service  vsftpd  start [ stop, start, restart, status ]</span><br><span class="line"># netstat -a|grep ftp</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>부팅시 자동으로 실행되도록 설정  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># chkconfig --list vsftpd</span><br><span class="line">  vsftpd          0:해제  1:해제  2:해제  3:해제  4:해제  5:해제  6:해제   &lt;-- run level</span><br><span class="line"># chkconfig --level 235 vsftpd on    </span><br><span class="line"># ll /etc/rc2.d/S*vsftp*</span><br><span class="line">  lrwxrwxrwx 1 root root 16  2월 24 10:23 /etc/rc2.d/S60vsftpd -&gt; ../init.d/vsftpd</span><br><span class="line"># chkconfig --level 2 vsftpd off     &lt;-- 링크 삭제</span><br><span class="line"># ll /etc/rc2.d/K*vsftp*</span><br><span class="line">  lrwxrwxrwx 1 root root 16  2월 24 10:26 /etc/rc2.d/K50vsftpd -&gt; ../init.d/vsftpd</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>연결시도후 실패할 경우 방화벽 확인  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># system-config-securitylevel  or system-config-firewall</span><br><span class="line"># iptables -F</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>root로도 연결하려면  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">* root 주석처리</span><br><span class="line">/etc/vsftpd/ftpusers    &lt;-- not allowed to login</span><br><span class="line">/etc/vsftpd/user_list   &lt;-- denied user</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Anonymous User 연결  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># grep ^ftp /etc/passwd</span><br><span class="line">  ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin</span><br><span class="line"># cd /var/ftp  &lt;-- ftp의 home directory</span><br><span class="line"># ls -l</span><br><span class="line">  drwxr-xr-x 2 root root 4096  9월  4  2009 pub</span><br><span class="line"></span><br><span class="line"># vi /etc/vsftpd/vsftpd.conf</span><br><span class="line">  anon_upload_enable=YES    &lt;-- upload 허용</span><br><span class="line"># chmod 777 /var/ftp/pub  or   chown ftp.ftp /var/ftp/pub</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>xinetd 형태로 설치  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># service vsftpd stop</span><br><span class="line"># vi /etc/vsftpd/vsftpd.conf</span><br><span class="line">	listen=NO</span><br><span class="line"># cp /usr/share/doc/vsftpd2.x.x/vsftpd.xinetd</span><br><span class="line">	/etc/xinetd.d/vsftpd</span><br><span class="line"># vi /etc/xinetd.d/vsftpd</span><br><span class="line">	disable=no</span><br><span class="line"># service xinetd restart</span><br></pre></td></tr></table></figure>
+
+<h2 id="SELinux"><a href="#SELinux" class="headerlink" title="SELinux"></a>SELinux</h2><ul>
+<li>network의 application level의 보안 정책    </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># getenforce</span><br><span class="line">  Enforcing</span><br><span class="line"># getsebool -a | grep ftp</span><br><span class="line">  allow_ftpd_anon_write --&gt; off</span><br><span class="line">  allow_ftpd_full_access --&gt; off</span><br><span class="line">  allow_ftpd_use_cifs --&gt; off</span><br><span class="line">  allow_ftpd_use_nfs --&gt; off</span><br><span class="line">  ftp_home_dir --&gt; off</span><br><span class="line">  ftpd_connect_db --&gt; off</span><br><span class="line">  ftpd_use_fusefs --&gt; off</span><br><span class="line">  ftpd_use_passive_mode --&gt; off</span><br><span class="line">  httpd_enable_ftp_server --&gt; off</span><br><span class="line">  tftp_anon_write --&gt; off</span><br><span class="line">  tftp_use_cifs --&gt; off</span><br><span class="line">  tftp_use_nfs --&gt; off</span><br><span class="line"># setsebool -P allow_ftpd_full_access 1</span><br><span class="line"></span><br><span class="line"># vi /etc/sysconfig/seLinux</span><br><span class="line"># setenforce 0</span><br><span class="line"># getenforce</span><br><span class="line">  Permissive</span><br></pre></td></tr></table></figure>
+
+<h2 id="NFS-Network-File-System-서버"><a href="#NFS-Network-File-System-서버" class="headerlink" title="NFS (Network File System) 서버"></a>NFS (Network File System) 서버</h2><ul>
+<li>NFS server : 최소 runlevel 3</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># rpm -qa | grep nfs-utils</span><br><span class="line"># vi /etc/exports</span><br><span class="line">  /share  192.168.214.*(rw,sync)   # (rw,sync,no_root_squash)</span><br><span class="line"># mkdir /share</span><br><span class="line"># chmod 707 /share</span><br><span class="line"># service nfs start</span><br><span class="line"># exportfs -v</span><br><span class="line">  /share  192.168.214.*(rw,wdelay,root_squash,no_subtree_check,anonuid=65534,anongid=65534)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>nfs는 rpc를 사용하는데.. rpc는 고정된 port가 아니기 때문에, 중재자(111 포트)가 필요  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># ps -e|grep port  or  rpcbind  </span><br><span class="line"># rpcinfo -p</span><br><span class="line">  프로그램 버전 원형   포트</span><br><span class="line">  100000    2   tcp    111  portmapper</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>client  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># showmount -e 192.168.214.100</span><br><span class="line">  Export list for 192.168.214.100:</span><br><span class="line">  /share 192.168.214.*</span><br><span class="line"># mkdir /myShare</span><br><span class="line"># mount -t nfs 192.168.214.100:/share /myShare</span><br><span class="line"># df</span><br><span class="line">192.168.214.100:/share  11165408 4216736   6372352  40% /myShare</span><br><span class="line"></span><br><span class="line">- root 계정으로 파일을 생성시 NFS 서버 설정에 따라 계정이 다르게 보임</span><br><span class="line">-rw-r--r--. 1 nfsnobody nfsnobody    0 2017-02-24 15:04 rootfile    &lt;-- root_squash</span><br><span class="line">-rw-r--r--. 1 root      root         0 2017-02-24 15:06 rootfile2   &lt;-- no_root_squash</span><br></pre></td></tr></table></figure>
+
+<h2 id="NTP-Network-Time-Protocol"><a href="#NTP-Network-Time-Protocol" class="headerlink" title="NTP (Network Time Protocol)"></a>NTP (Network Time Protocol)</h2><ul>
+<li>Stratum 1~15 계층 구조로 시간을 맞출 수 있음</li>
+<li>설치</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># rpm -qa|grep ntp</span><br><span class="line"># yum install ntp</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>서버 (CentOS5)</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/ntp.conf</span><br><span class="line">	server 127.127.1.0  # local clock</span><br><span class="line">	fudge  127.127.1.0  stratum 10</span><br><span class="line"># service ntpd start</span><br><span class="line"># chkconfig --level 35 ntpd on</span><br><span class="line"># ntpq -p</span><br><span class="line">  remote           refid      st t when poll reach   delay   offset  jitter</span><br><span class="line">==============================================================================</span><br><span class="line">*LOCAL(0)        .LOCL.          10 l   27   64  377    0.000    0.000   0.001</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>클라이언트 (CentOS6)</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># vi /etc/ntp.conf</span><br><span class="line">	server 192.168.214.100</span><br><span class="line"># service ntpd start</span><br><span class="line"># chkconfig --level 35 ntpd on</span><br><span class="line"># ntpq -p     &lt;== stratum 16 으로 아직 맞춰지지 않았음</span><br><span class="line">  remote           refid      st t when poll reach   delay   offset  jitter</span><br><span class="line">==============================================================================</span><br><span class="line">192.168.214.100 .INIT.          16 u   37   64    0    0.000    0.000   0.000</span><br><span class="line"># ntpq -p     &lt;== stratum 11 (server st == 10)</span><br><span class="line">  remote           refid      st t when poll reach   delay   offset  jitter</span><br><span class="line">==============================================================================</span><br><span class="line">*192.168.214.100 LOCAL(0)        11 u    1   64    1    0.646    0.025   0.000</span><br></pre></td></tr></table></figure>
+
+<h2 id="autofs"><a href="#autofs" class="headerlink" title="autofs"></a>autofs</h2><ul>
+<li>NFS client service  </li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># rpm -qa | grep autofs</span><br><span class="line"># ps -e | grep auto</span><br><span class="line"> 1745 ?        00:00:00 automount</span><br><span class="line"># lsmod | grep auto</span><br><span class="line"> autofs4                21076  3</span><br><span class="line"></span><br><span class="line"># vi /etc/auto.master</span><br><span class="line">  /net    -hosts          : /net 아래에서 호스트명으로 접속(cd)시 자동 마운트</span><br><span class="line">  /misc   /etc/auto.misc  : auto.misc 에 설정된 정보로 자동 마운트</span><br><span class="line"># vi /etc/auto.misc</span><br><span class="line">  data            -fstype=nfs             192.168.214.100:/share</span><br><span class="line"></span><br><span class="line"># cd /net/192.168.214.100/share  </span><br><span class="line"># cd /misc/data</span><br></pre></td></tr></table></figure>
+
+<h2 id="Samba"><a href="#Samba" class="headerlink" title="Samba"></a>Samba</h2><ul>
+<li>Unix 계열, Windows 계열 모두 가능</li>
+<li>윈도우 : 공유 폴더</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># rpm -qa|grep samba</span><br><span class="line"># smbclient -L 192.168.214.1/smbShare -U linuxuser</span><br><span class="line">  Domain=[M13054] OS=[Windows 7 Enterprise 7601 Service Pack 1] Server=[Windows 7 Enterprise 6.1]</span><br><span class="line"></span><br><span class="line">          Sharename       Type      Comment</span><br><span class="line">          ---------       ----      -------</span><br><span class="line">          ADMIN$          Disk      원격 관리</span><br><span class="line">          C$              Disk      기본 공유</span><br><span class="line">          IPC$            IPC       원격 IPC</span><br><span class="line">          samShare        Disk</span><br><span class="line">  session request to 192.168.214.1 failed (Called name not present)</span><br><span class="line">  session request to 192 failed (Called name not present)</span><br><span class="line">  session request to *SMBSERVER failed (Called name not present)</span><br><span class="line">  NetBIOS over TCP disabled -- no workgroup available</span><br><span class="line"></span><br><span class="line"># mount -t cifs //192.168.214.1/smbShare  /sambaMount -o username=linuxuser</span><br></pre></td></tr></table></figure>
+
+<h2 id="Command"><a href="#Command" class="headerlink" title="Command"></a>Command</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">- 일반명령 : /bin/  or /usr/bin</span><br><span class="line">- 관리명령 : /sbin/ or /usr/sbin</span><br><span class="line">- $PATH 에서 명령을 찾아서 실행</span><br><span class="line">$ shutdown -h +10</span><br><span class="line">-bash: shutdown: command not found</span><br><span class="line">$ /sbin/shutdown -h +10</span><br><span class="line">shutdown: you must be root to do that!</span><br></pre></td></tr></table></figure>
+<ul>
+<li>id : 내 정보</li>
+<li>passwd : 패스워드 변경</li>
+<li>ipcs : ipc status</li>
+<li>whereis : 어디에 있나?</li>
+<li>pwd : 현재 디렉토리</li>
+<li>date : 시간 확인</li>
+<li>cal : 현재 달</li>
+<li>chsh : change shell</li>
+<li>touch : 0byte file 생성</li>
+<li>cat / head / tail / more / less : 파일 보기</li>
+<li>file : 어떤 종류의 파일인지 보기</li>
+<li>history: !number !character</li>
+<li>alias c=clear</li>
+<li>echo $hello &lt;– variable</li>
+<li>ps -f (현재 터미널에서 사용중인 프로세스)</li>
+<li>export : 지역변수 -&gt; 환경변수</li>
+<li>env : 환경변수 보기</li>
+<li>set : 지역변수 + 환경변수 보기</li>
+<li>who : 누가 접속해 있나</li>
+<li>who -r : run level 확인</li>
+<li>tty : 접속한 가상 터미널 확인</li>
+<li>date : 시스템 시간 확인</li>
+<li>clock : hardware 시간 확인</li>
+<li>rdate : 시간 재 설정</li>
+<li>df : 파일시스템 확인</li>
+<li>swapon : swap 공간 확인</li>
+<li>free : 메모리 공간 확인</li>
+<li>mount : 마운트, 장치를 특정 디렉토리에 연결</li>
+<li>umount : 언마운트</li>
+<li>eject : 언마운트 + 장치 제거</li>
+<li>pstree : 프로세스 부모 자식 관계 보기</li>
+<li>stty -a : 터미널 시그널 확인</li>
+<li>blkid /dev/sda3 : 블럭 ID</li>
+<li>scp src dest : 리모트 복사</li>
+<li>lsmod : 커널 모듈 확인</li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://kihoonkim.github.io/2017/02/24/linux/" data-id="cksfb4gkr00b8pku01kba490h" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Kihoon Kim"
+        },
+        "headline": "linux 정리",
+        "image": "https://kihoonkim.github.io/images/centos_logo.jpg",
+        "keywords": "linux",
+        "genre": "linux",
+        "datePublished": "2017-02-24",
+        "dateCreated": "2017-02-24",
+        "dateModified": "2021-08-17",
+        "url": "https://kihoonkim.github.io/2017/02/24/linux/",
+        "description": "Linux System Administration실습 환경
+CentOS 5.4
+kernel 2.6.18
+vmware player
+*.100 : FTP, DNS
+*.200 : Web
+
+VMWare deault Network
+host PC : 192.168.xxx.1
+Router : 192.168.xxx.2
+DNS : 192.168.xxx.2
+DHCP : 19",
+        "wordCount": 7731
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>follow:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="https://www.facebook.com/koreakihoon" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/kihoonkim" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/03/11/Agile/TDD/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">newer</strong>
+        <p class="article-nav-title">
+        
+            TDD (Android Unit Test) + QnA
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2017/01/27/Agile/Definition-of-Done-in-Agile/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">older</strong>
+        <p class="article-nav-title">Definition of Done</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">recents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2021/08/16/retro/10-years/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/10-years.png)" alt="지난 10년. 어떤 기술 흐름속에 살았을까?" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2021/08/16/retro/10-years/" class="title">지난 10년. 어떤 기술 흐름속에 살았을까?</a></p>
+                            <p class="item-date"><time datetime="2021-08-15T15:00:00.000Z" itemprop="datePublished">2021-08-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/12/31/retro/retro-2020/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Retro/">Retro</a></p>
+                            <p class="item-title"><a href="/2020/12/31/retro/retro-2020/" class="title">2020년 회고</a></p>
+                            <p class="item-date"><time datetime="2020-12-30T15:00:00.000Z" itemprop="datePublished">2020-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/mountain.webp)" alt="언젠가 또 힘들어 하고 있을지 모르는 나에게" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Life/">Life</a></p>
+                            <p class="item-title"><a href="/2020/09/25/life/%ED%9E%98%EB%93%A0%EB%82%98%EC%97%90%EA%B2%8C/" class="title">언젠가 또 힘들어 하고 있을지 모르는 나에게</a></p>
+                            <p class="item-date"><time datetime="2020-09-25T04:30:00.000Z" itemprop="datePublished">2020-09-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-day1/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/images/react/eslint-webstorm.png)" alt="React 개발 환경 구성 (react, webstorm)" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-day1/" class="title">React 개발 환경 구성 (react, webstorm)</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T16:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2020/02/08/react-canvas/react-canvas-overview/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/React/">React</a></p>
+                            <p class="item-title"><a href="/2020/02/08/react-canvas/react-canvas-overview/" class="title">React로 Whiteboard 만들기 overview</a></p>
+                            <p class="item-date"><time datetime="2020-02-07T15:00:00.000Z" itemprop="datePublished">2020-02-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">categories</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Agile/">Agile</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/">DevTools</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/Docker/">Docker</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/DevTools/ELK/">ELK</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">11</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Basic/">Basic</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/JPA/">JPA</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/Java8/">Java8</a><span class="category-list-count">3</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Microservices/">Microservices</a><span class="category-list-count">9</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/">ReactGo</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/golang/">golang</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/intro/">intro</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/ReactGo/reactjs/">reactjs</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Retro/">Retro</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%EC%B1%85%EB%A6%AC%EB%B7%B0/">책리뷰</a><span class="category-list-count">8</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">December 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/04/">April 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a><span class="archive-list-count">19</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a><span class="archive-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/" rel="tag">Android</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Duck-Typing/" rel="tag">Duck Typing</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Event-Driven/" rel="tag">Event-Driven</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FP/" rel="tag">FP</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IPC/" rel="tag">IPC</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mockito/" rel="tag">Mockito</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OOP/" rel="tag">OOP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Robolectric/" rel="tag">Robolectric</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TDD/" rel="tag">TDD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/agile/" rel="tag">agile</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/agile-course/" rel="tag">agile course</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/agilekorea/" rel="tag">agilekorea</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/agilekorea207/" rel="tag">agilekorea207</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/api-gatewary/" rel="tag">api gatewary</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/architecture/" rel="tag">architecture</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/book/" rel="tag">book</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/canvas/" rel="tag">canvas</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dod/" rel="tag">dod</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/" rel="tag">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/exception/" rel="tag">exception</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/filebeat/" rel="tag">filebeat</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/generic/" rel="tag">generic</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/golang/" rel="tag">golang</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java-8/" rel="tag">java 8</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/jpa/" rel="tag">jpa</a><span class="tag-list-count">7</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kibana/" rel="tag">kibana</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/konvajs/" rel="tag">konvajs</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/life/" rel="tag">life</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/logstash/" rel="tag">logstash</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microservices/" rel="tag">microservices</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/module-programming/" rel="tag">module programming</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/msa/" rel="tag">msa</a><span class="tag-list-count">9</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pair-programming/" rel="tag">pair programming</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reactjs/" rel="tag">reactjs</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/retro/" rel="tag">retro</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/service-discovery/" rel="tag">service discovery</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/whiteboard/" rel="tag">whiteboard</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80/" rel="tag">개발일지</a><span class="tag-list-count">8</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D/" rel="tag">기술스택</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842017/" rel="tag">애자일코리아2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842018/" rel="tag">애자일코리아2018</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Android/" style="font-size: 10px;">Android</a> <a href="/tags/Duck-Typing/" style="font-size: 10px;">Duck Typing</a> <a href="/tags/Event-Driven/" style="font-size: 10px;">Event-Driven</a> <a href="/tags/FP/" style="font-size: 11.43px;">FP</a> <a href="/tags/IPC/" style="font-size: 10px;">IPC</a> <a href="/tags/Mockito/" style="font-size: 10px;">Mockito</a> <a href="/tags/OOP/" style="font-size: 10px;">OOP</a> <a href="/tags/Robolectric/" style="font-size: 10px;">Robolectric</a> <a href="/tags/TDD/" style="font-size: 10px;">TDD</a> <a href="/tags/agile/" style="font-size: 12.86px;">agile</a> <a href="/tags/agile-course/" style="font-size: 10px;">agile course</a> <a href="/tags/agilekorea/" style="font-size: 10px;">agilekorea</a> <a href="/tags/agilekorea207/" style="font-size: 10px;">agilekorea207</a> <a href="/tags/api-gatewary/" style="font-size: 10px;">api gatewary</a> <a href="/tags/architecture/" style="font-size: 17.14px;">architecture</a> <a href="/tags/book/" style="font-size: 18.57px;">book</a> <a href="/tags/canvas/" style="font-size: 11.43px;">canvas</a> <a href="/tags/docker/" style="font-size: 11.43px;">docker</a> <a href="/tags/dod/" style="font-size: 10px;">dod</a> <a href="/tags/elasticsearch/" style="font-size: 11.43px;">elasticsearch</a> <a href="/tags/exception/" style="font-size: 10px;">exception</a> <a href="/tags/filebeat/" style="font-size: 11.43px;">filebeat</a> <a href="/tags/generic/" style="font-size: 10px;">generic</a> <a href="/tags/golang/" style="font-size: 17.14px;">golang</a> <a href="/tags/java/" style="font-size: 14.29px;">java</a> <a href="/tags/java-8/" style="font-size: 11.43px;">java 8</a> <a href="/tags/jpa/" style="font-size: 17.14px;">jpa</a> <a href="/tags/kibana/" style="font-size: 11.43px;">kibana</a> <a href="/tags/konvajs/" style="font-size: 11.43px;">konvajs</a> <a href="/tags/life/" style="font-size: 10px;">life</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/logstash/" style="font-size: 11.43px;">logstash</a> <a href="/tags/microservices/" style="font-size: 20px;">microservices</a> <a href="/tags/module-programming/" style="font-size: 10px;">module programming</a> <a href="/tags/msa/" style="font-size: 20px;">msa</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/pair-programming/" style="font-size: 10px;">pair programming</a> <a href="/tags/reactjs/" style="font-size: 14.29px;">reactjs</a> <a href="/tags/retro/" style="font-size: 15.71px;">retro</a> <a href="/tags/service-discovery/" style="font-size: 10px;">service discovery</a> <a href="/tags/whiteboard/" style="font-size: 11.43px;">whiteboard</a> <a href="/tags/%EA%B0%9C%EB%B0%9C%EC%9D%BC%EC%A7%80/" style="font-size: 18.57px;">개발일지</a> <a href="/tags/%EA%B8%B0%EC%88%A0%EC%8A%A4%ED%83%9D/" style="font-size: 10px;">기술스택</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842017/" style="font-size: 10px;">애자일코리아2017</a> <a href="/tags/%EC%95%A0%EC%9E%90%EC%9D%BC%EC%BD%94%EB%A6%AC%EC%95%842018/" style="font-size: 10px;">애자일코리아2018</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2021 Kihoon Kim</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'kihoonkim';
+    
+    
+    var disqus_url = 'https://kihoonkim.github.io/2017/02/24/linux/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>
