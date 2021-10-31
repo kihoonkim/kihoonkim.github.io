@@ -49,13 +49,6 @@
     </url>
 
     <url>
-        <loc>https://kihoonkim.github.io/categories/%25EC%25B1%2585%25EB%25A6%25AC%25EB%25B7%25B0/</loc>
-        <lastmod>2021-08-17T00:04:32.696Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://kihoonkim.github.io/categories/Java/Basic/</loc>
         <lastmod>2021-08-17T00:04:32.697Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -128,6 +121,13 @@
     <url>
         <loc>https://kihoonkim.github.io/categories/Retro/</loc>
         <lastmod>2021-08-17T00:04:32.706Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/categories/%25EC%25B1%2585%25EB%25A6%25AC%25EB%25B7%25B0/</loc>
+        <lastmod>2021-10-31T05:30:44.874Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

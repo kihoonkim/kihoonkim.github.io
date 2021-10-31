@@ -198,13 +198,6 @@
     </url>
 
     <url>
-        <loc>https://kihoonkim.github.io/tags/book/</loc>
-        <lastmod>2021-08-17T00:04:32.696Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://kihoonkim.github.io/tags/FP/</loc>
         <lastmod>2021-08-17T00:04:32.697Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -312,6 +305,20 @@
     <url>
         <loc>https://kihoonkim.github.io/tags/retro/</loc>
         <lastmod>2021-08-17T00:04:32.706Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/tags/book/</loc>
+        <lastmod>2021-10-31T05:30:44.874Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://kihoonkim.github.io/tags/kubernetes/</loc>
+        <lastmod>2021-10-31T05:30:44.874Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
